@@ -1,0 +1,12 @@
+.boton-cancelar {
+    background-color: #ff0000; /* Cambia el color de fondo */
+    color: rgb(255, 255, 255); /* Cambia el color del texto */
+    padding: 10px; /* Aumenta el espacio alrededor del texto */
+    border: 1px solid #000000; /* Elimina el borde */
+    font-size: 20px;
+    border-radius: 5px; /* Agrega bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+    transition: background-color 0.3s ease; /* Agrega una transición */
+    margin-right: 30px;
+    margin-left: 30px;
+  }

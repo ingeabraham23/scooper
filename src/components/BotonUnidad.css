@@ -1,0 +1,30 @@
+/* BotonUnidad.css */
+.boton-unidad {
+    background-color: #007bff;
+  
+    /* background-color: #00ff15; */
+    text-align: center;
+    color: #ffffff;
+    border: 1px solid #000; /* Elimina el borde */
+    margin: 1px;
+    padding: 1px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 30px;
+    font-weight: bold;
+    width: 62px;
+  }
+  
+  .boton-unidad:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  
+  .boton-unidad:not(:disabled) {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .boton-unidad:not(:disabled):hover {
+    background-color: #0056b3;
+  }

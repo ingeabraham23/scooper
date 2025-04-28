@@ -1,0 +1,1757 @@
+/* Tiempos.css */
+
+/* Estilos generales */
+body {
+  margin: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2px;
+}
+
+/* FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO */
+
+.form-container {
+  position: fixed; /* Fijo en la pantalla */
+  width: 80%;
+  top: 20%; /* Centrando verticalmente */
+  left: 50%; /* Centrando horizontalmente */
+  transform: translate(-50%, -50%); /* Ajustando el centrado */
+  z-index: 1001; /* Alto índice para estar al frente */
+  background-color: white; /* Fondo blanco */
+  padding: 5px; /* Espaciado interno */
+  border: 1px solid #ccc; /* Borde */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra */
+  border-radius: 8px; /* Esquinas redondeadas */
+  text-align: center;
+}
+
+.save-button-rojo {
+  background-color: #ca1212; /* Cambia el color de fondo */
+  color: white; /* Cambia el color del texto */
+  padding: 10px; /* Aumenta el espacio alrededor del texto */
+  border: 1px solid #000; /* Elimina el borde */
+  font-size: 25px;
+  border-radius: 5px; /* Agrega bordes redondeados */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
+  transition: background-color 0.3s ease; /* Agrega una transición */
+  margin-right: 5px;
+  font-weight: bold;
+}
+
+/* Estilo para el botón deshabilitado */
+.save-button-rojo[disabled] {
+  background-color: gray;
+  cursor: not-allowed; /* Cambia el cursor al pasar sobre el botón deshabilitado */
+  opacity: 0.1; /* Cambia la opacidad para indicar que está deshabilitado */
+}
+
+.save-button-r3 {
+  background-color: #ffffff; /* Cambia el color de fondo */
+  color: rgb(0, 0, 0); /* Cambia el color del texto */
+  padding: 10px; /* Aumenta el espacio alrededor del texto */
+  border: 1px solid #000; /* Elimina el borde */
+  font-size: 25px;
+  border-radius: 5px; /* Agrega bordes redondeados */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
+  transition: background-color 0.3s ease; /* Agrega una transición */
+  margin-right: 5px;
+  font-weight: bold;
+}
+
+.amotac {
+  background-color: #ffffff; /* Cambia el color de fondo */
+  color: rgb(0, 0, 0); /* Cambia el color del texto */
+  padding: 10px; /* Aumenta el espacio alrededor del texto */
+  border: 1px solid #ff0000; /* Elimina el borde */
+  font-size: 25px;
+  border-radius: 5px; /* Agrega bordes redondeados */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
+  transition: background-color 0.3s ease; /* Agrega una transición */
+  font-weight: bold;
+}
+
+.al-momento {
+  background-color: lightblue;
+  color: rgb(0, 0, 0); /* Cambia el color del texto */
+  padding: 10px; /* Aumenta el espacio alrededor del texto */
+  border: 1px solid #000; /* Elimina el borde */
+  font-size: 25px;
+  border-radius: 5px; /* Agrega bordes redondeados */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
+  transition: background-color 0.3s ease; /* Agrega una transición */
+  margin-right: 5px;
+  font-weight: bold;
+}
+
+.esta-pasando {
+  background-color: lightcoral;
+  color: rgb(0, 0, 0); /* Cambia el color del texto */
+  padding: 10px; /* Aumenta el espacio alrededor del texto */
+  border: 1px solid #000; /* Elimina el borde */
+  font-size: 25px;
+  border-radius: 5px; /* Agrega bordes redondeados */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
+  transition: background-color 0.3s ease; /* Agrega una transición */
+  margin-right: 5px;
+  font-weight: bold;
+}
+
+.te-llevas {
+  background-color: lightgreen;
+  color: rgb(0, 0, 0); /* Cambia el color del texto */
+  padding: 10px; /* Aumenta el espacio alrededor del texto */
+  border: 1px solid #000; /* Elimina el borde */
+  font-size: 25px;
+  border-radius: 5px; /* Agrega bordes redondeados */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
+  transition: background-color 0.3s ease; /* Agrega una transición */
+  margin-right: 5px;
+  font-weight: bold;
+}
+
+.atras-de-ti {
+  background-color: lightyellow;
+  color: rgb(0, 0, 0); /* Cambia el color del texto */
+  padding: 10px; /* Aumenta el espacio alrededor del texto */
+  border: 1px solid #000; /* Elimina el borde */
+  font-size: 25px;
+  border-radius: 5px; /* Agrega bordes redondeados */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
+  transition: background-color 0.3s ease; /* Agrega una transición */
+  margin-right: 5px;
+  font-weight: bold;
+}
+
+.cerrar-copy-paste {
+  background-color: #ff0000;
+  color: rgb(255, 255, 255); /* Cambia el color del texto */
+  padding: 10px; /* Aumenta el espacio alrededor del texto */
+  border: 1px solid #000; /* Elimina el borde */
+  font-size: 25px;
+  border-radius: 5px; /* Agrega bordes redondeados */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
+  transition: background-color 0.3s ease; /* Agrega una transición */
+  margin-right: 5px;
+  margin-top: 25px;
+  font-weight: bold;
+  width: 200px;
+}
+
+.save-button-r3[disabled] {
+  background-color: gray;
+  cursor: not-allowed; /* Cambia el cursor al pasar sobre el botón deshabilitado */
+  opacity: 0.1; /* Cambia la opacidad para indicar que está deshabilitado */
+}
+
+.cancel-button {
+  background-color: #000000; /* Cambia el color de fondo */
+  color: rgb(255, 255, 255); /* Cambia el color del texto */
+  padding: 10px; /* Aumenta el espacio alrededor del texto */
+  border: 1px solid #000; /* Elimina el borde */
+  font-size: 10px;
+  border-radius: 5px; /* Agrega bordes redondeados */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
+  transition: background-color 0.3s ease; /* Agrega una transición */
+  margin-right: 30px;
+  margin-left: 30px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+
+.add-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.add-form label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.styled-input {
+  width: 80%;
+  max-width: 400px; /* Controla el tamaño máximo del campo */
+  padding: 10px;
+  margin: 0 auto; /* Centra el campo horizontalmente */
+  display: block;
+  font-size: 25px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 5px;
+}
+
+table {
+  margin-top: 3px;
+  width: 100%;
+  border-collapse: separate;
+  padding: 1px;
+  text-align: center;
+  border: 2px solid #000000;
+  font-size: 18px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* RUTAS RUTAS RUTAS RUTAS RUTAS RUTAS RUTAS RUTAS RUTAS RUTAS RUTAS RUTAS RUTAS RUTAS RUTAS RUTAS */
+
+.white-bg {
+  width: 50px;
+  background-color: #ffffff;
+  text-align: center;
+  color: #000000;
+  border: 1px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.red-bg {
+  width: 50px;
+  background-color: #ff0000;
+  text-align: center;
+  color: #ffffff;
+  border: 1px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.celda-talzintan {
+  background-color: #58ff66;
+  padding: 0px;
+}
+
+.button-se-lleva-talzintan {
+  width: 80px;
+  background-color: #58ff66;
+  text-align: center;
+  color: #000000;
+  border: 3px solid #000000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.celda-loma {
+  background-color: #adf7b3;
+  padding: 0px;
+}
+
+.button-se-lleva-loma {
+  width: 80px;
+  background-color: #adf7b3;
+  text-align: center;
+  color: #000000;
+  border: 3px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+
+.button-se-lleva-tezotepec {
+  width: 80px;
+  background-color: #eb9d36;
+  text-align: center;
+  color: #000000;
+  border: 3px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.button-se-lleva-calicapan {
+  width: 80px;
+  background-color: #00c3ff;
+  text-align: center;
+  color: #000000;
+  border: 3px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.celda-sosa {
+  background-color: #ea00ff;
+  padding: 0px;
+}
+
+.button-se-lleva-sosa {
+  width: 80px;
+  background-color: #ea00ff;
+  text-align: center;
+  color: #000000;
+  border: 3px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* celda san isidro */
+
+.celda-sanisidro {
+  background-color: #9c9c9c;
+  padding: 0px;
+}
+
+.button-se-lleva-sanisidro {
+  width: 80px;
+  background-color: #9c9c9c;
+  text-align: center;
+  color: #000000;
+  border: 3px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.celda-tacopan {
+  background-color: #fffb00;
+  padding: 0px;
+  color: #000;
+}
+
+.button-se-lleva-tacopan {
+  width: 80px;
+  background-color: #fffb00;
+  text-align: center;
+  color: #000000;
+  border: 3px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.celda-calanorte {
+  background-color: #006100;
+  padding: 0px;
+}
+
+.button-se-lleva-calanorte {
+  width: 80px;
+  background-color: #006100;
+  text-align: center;
+  color: #000000;
+  border: 3px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.celda-pajaco {
+  background-color: #ff0000;
+  padding: 0px;
+}
+
+.button-se-lleva-pajaco {
+  width: 80px;
+  background-color: #ff0000;
+  text-align: center;
+  color: #000000;
+  border: 3px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.celda-analco {
+  background-color: #0051ff;
+  padding: 0px;
+}
+
+.button-se-lleva-analco {
+  width: 80px;
+  background-color: #0051ff;
+  text-align: center;
+  color: #000000;
+  border: 3px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.celda-analco {
+  background-color: #0051ff;
+  padding: 0px;
+}
+
+.button-se-lleva-analco {
+  width: 80px;
+  background-color: #0051ff;
+  text-align: center;
+  color: #000000;
+  border: 3px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.celda-yopi {
+  background-color: #9350ff;
+  padding: 0px;
+}
+
+.button-se-lleva-yopi {
+  width: 80px;
+  background-color: #9350ff;
+  text-align: center;
+  color: #000000;
+  border: 3px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.celda-yopiescuela {
+  background-color: #6200ff;
+  padding: 0px;
+}
+
+.button-se-lleva-yopiescuela {
+  width: 80px;
+  background-color: #6200ff;
+  text-align: center;
+  color: #000000;
+  border: 3px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.celda-tequimila {
+  background-color: #a6ff00;
+  padding: 0px;
+  color: #000;
+}
+
+.button-se-lleva-tequimila {
+  width: 80px;
+  background-color: #a6ff00;
+  text-align: center;
+  color: #000000;
+  border: 3px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.celda-quinta {
+  background-color: #6ca700;
+  padding: 0px;
+  color: #ffffff;
+}
+
+.button-se-lleva-quinta {
+  width: 80px;
+  background-color: #6ca700;
+  text-align: center;
+  color: #000000;
+  border: 3px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.celda-otra {
+  background-color: #ffffff;
+  padding: 0px;
+  color: #000;
+}
+
+.button-se-lleva-otra {
+  width: 80px;
+  background-color: #ffffff;
+  text-align: center;
+  color: #000000;
+  border: 3px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+
+.boton-cronometro {
+  width: 80px;
+  background-color: #000000;
+  text-align: center;
+  color: #ffffff;
+  border: 1px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+.rojo-rojo {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background-color: red;
+  display: inline-block;
+  margin: 4px;
+  border: 1px solid black;
+  padding: 1px;
+  text-align: center;
+  line-height: 15px;
+  font-size: 10px;
+}
+
+
+.rojo-texto {
+  font-size: 10px;
+  display: inline-block;
+}
+
+.rojo-texto-negro {
+  font-size: 10px;
+  display: inline-block;
+  color: #000;
+}
+
+.texto-chico {
+  font-size: 10px;
+  margin: 0px;
+  padding: 0px;
+  font-size: 15px;
+}
+
+.texto-chico-negro {
+  font-size: 10px;
+  margin: 0px;
+  padding: 0px;
+  color: #000;
+  font-size: 15px;
+}
+
+.ruta-display {
+  margin-top: 0px;
+  font-weight: bold;
+  border: 1px solid #ccc;
+  margin: 0px;
+  border-radius: 4px;
+  background-color: #9dff00;
+  color: #000000;
+  font-size: 20px;
+}
+
+.floating-list-talzintan {
+  position: fixed; /* or absolute depending on your needs */
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  width: 300px; /* Adjust width as needed */
+  max-width: 85vh;
+  max-height: 600px; /* Adjust height as needed */
+  overflow-y: auto; /* Add scroll if content exceeds max height */
+  z-index: 1000; /* Ensure it stays on top */
+  background-color: #58ff66; /* Background color */
+  border: 1px solid #000000; /* Border style */
+  border-radius: 5px; /* Rounded corners */
+  /*box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);  Shadow for floating effect */
+  padding: 10px; /* Padding inside the container */
+  text-align: center;
+  color: #000000;
+}
+
+.lista-talzintan{
+  border: 1px solid black;
+  border-collapse: collapse;
+  background-color: #58ff66;
+}
+
+.close-button-talzintan {
+  display: block;
+  top: 5px;
+  right: 5px;
+  width: 100%;
+  height: 40px;
+  background-color: #565756;
+  text-align: center;
+  color: #ffffff;
+  border: 1px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.capturar-button-talzintan {
+  display: block;
+  top: 5px;
+  right: 5px;
+  width: 100%;
+  height: 40px;
+  background-color: #565756;
+  text-align: center;
+  color: #ffffff;
+  border: 1px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+
+
+.floating-list-loma {
+  position: fixed; /* or absolute depending on your needs */
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  width: 300px; /* Adjust width as needed */
+  max-height: 600px; /* Adjust height as needed */
+  overflow-y: auto; /* Add scroll if content exceeds max height */
+  z-index: 1000; /* Ensure it stays on top */
+  background-color: #adf7b3; /* Background color */
+  border: 1px solid #000000; /* Border style */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow for floating effect */
+  padding: 10px; /* Padding inside the container */
+  text-align: center;
+  color: #000000;
+}
+
+.lista-loma{
+  border: 1px solid black;
+  border-collapse: collapse;
+  background-color: #adf7b3;
+}
+
+.celda-loma{
+  border: 1px solid black;
+  background-color: #adf7b3;
+  padding: 3px;
+  font-size: 8px;
+}
+
+.close-button-loma {
+  display: block;
+  top: 5px;
+  right: 5px;
+  width: 100%;
+  height: 40px;
+  background-color: #565756;
+  text-align: center;
+  color: #ffffff;
+  border: 1px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.capturar-button-loma {
+  display: block;
+  top: 5px;
+  right: 5px;
+  width: 100%;
+  height: 40px;
+  background-color: #565756;
+  text-align: center;
+  color: #ffffff;
+  border: 1px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.close-button-loma:hover {
+  color: #555;
+}
+
+.floating-list-tezotepec {
+  position: fixed; /* or absolute depending on your needs */
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  width: 300px; /* Adjust width as needed */
+  max-width: 85vh;
+  max-height: 600px; /* Adjust height as needed */
+  overflow-y: auto; /* Add scroll if content exceeds max height */
+  z-index: 1000; /* Ensure it stays on top */
+  background-color: #eb9d36; /* Background color */
+  border: 1px solid #000000; /* Border style */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow for floating effect */
+  padding: 10px; /* Padding inside the container */
+  text-align: center;
+  color: #000000;
+}
+
+.floating-list-tezotepec-blancas {
+  position: fixed; /* or absolute depending on your needs */
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  width: 350px;  /* Ancho por defecto */
+  max-width: 95vw;  /* Máximo 95% del ancho de la pantalla */
+  max-height: 600px;  /* Altura máxima */
+  overflow: auto;  /* Agrega scroll si el contenido excede */
+  overflow-y: auto; /* Add scroll if content exceeds max height */
+  z-index: 1000; /* Ensure it stays on top */
+  background-color: #eb9d36; /* Background color */
+  border: 1px solid #000000; /* Border style */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow for floating effect */
+  padding: 10px; /* Padding inside the container */
+  text-align: center;
+  color: #000000;
+}
+
+.lista-tezotepec{
+  border: 1px solid black;
+  border-collapse: collapse;
+  background-color: #eb9d36;
+}
+
+.lista-tezotepec-prediccion{
+  border: 1px solid black;
+  border-collapse: collapse;
+  background-color: #eb9d36;
+}
+
+.celda-tezotepec{
+  border: 1px solid black;
+  background-color: #eb9d36;
+  padding: 3px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.celda-tezotepec-prediccion{
+  border: 1px solid black;
+  background-color: #eb9d36;
+  padding: 3px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.celda-tezotepec-prediccion-tezo{
+  border: 1px solid black;
+  background-color: #a0e95d;
+  padding: 3px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.celda-tezotepec-prediccion-tenex{
+  border: 1px solid black;
+  background-color: #f12e2e;
+  padding: 3px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.close-button-tezotepec {
+  display: block;
+  top: 5px;
+  right: 5px;
+  width: 100%;
+  height: 40px;
+  background-color: #565756;
+  text-align: center;
+  color: #ffffff;
+  border: 1px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.capturar-button-tezotepec {
+  display: block;
+  top: 5px;
+  right: 5px;
+  width: 100%;
+  height: 40px;
+  background-color: #565756;
+  text-align: center;
+  color: #ffffff;
+  border: 1px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.close-button-tezotepec:hover {
+  color: #555;
+}
+
+.floating-list-calicapan {
+  position: fixed; /* or absolute depending on your needs */
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  width: 300px; /* Adjust width as needed */
+  max-width: 85vh;
+  max-height: 600px; /* Adjust height as needed */
+  overflow-y: auto; /* Add scroll if content exceeds max height */
+  z-index: 1000; /* Ensure it stays on top */
+  background-color: #00c3ff; /* Background color */
+  border: 1px solid #000000; /* Border style */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow for floating effect */
+  padding: 10px; /* Padding inside the container */
+  text-align: center;
+  color: #000000;
+}
+
+.lista-calicapan{
+  border: 1px solid black;
+  border-collapse: collapse;
+  background-color: #00c3ff;
+  font-size: 8px;
+}
+
+.celda-calicapan{
+  border: 1px solid black;
+  background-color: #00c3ff;
+  padding: 3px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.close-button-calicapan {
+  display: block;
+  top: 5px;
+  right: 5px;
+  width: 100%;
+  height: 40px;
+  background-color: #565756;
+  text-align: center;
+  color: #ffffff;
+  border: 1px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.capturar-button-calicapan {
+  display: block;
+  top: 5px;
+  right: 5px;
+  width: 100%;
+  height: 40px;
+  background-color: #565756;
+  text-align: center;
+  color: #ffffff;
+  border: 1px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.close-button-calicapan:hover {
+  color: #555;
+}
+
+.floating-list-sosa {
+  position: fixed; /* or absolute depending on your needs */
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  width: 300px; /* Adjust width as needed */
+  max-width: 85vh;
+  max-height: 600px; /* Adjust height as needed */
+  overflow-y: auto; /* Add scroll if content exceeds max height */
+  z-index: 1000; /* Ensure it stays on top */
+  background-color: #ea00ff; /* Background color */
+  border: 1px solid #000000; /* Border style */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow for floating effect */
+  padding: 10px; /* Padding inside the container */
+  text-align: center;
+  color: #000000;
+}
+
+.floating-list-sosa-blancas {
+  position: fixed; /* or absolute depending on your needs */
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  width: 270px; /* Adjust width as needed */
+  max-height: 80vh; /* 80% de la altura de la pantalla */
+  overflow-y: auto; /* Add scroll if content exceeds max height */
+  z-index: 1000; /* Ensure it stays on top */
+  background-color: #ea00ff; /* Background color */
+  border: 1px solid #000000; /* Border style */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow for floating effect */
+  padding: 10px; /* Padding inside the container */
+  text-align: center;
+  color: #000000;
+}
+
+.lista-sosa{
+  border: 1px solid black;
+  border-collapse: collapse;
+  background-color: #ea00ff;
+}
+
+.lista-sosa-prediccion{
+  border: 1px solid black;
+  border-collapse: collapse;
+  background-color: #ea00ff;
+}
+
+.celda-sosa{
+  border: 1px solid black;
+  background-color: #ea00ff;
+  padding: 3px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.close-button-sosa {
+  display: block;
+  top: 5px;
+  right: 5px;
+  width: 100%;
+  height: 40px;
+  background-color: #565756;
+  text-align: center;
+  color: #ffffff;
+  border: 1px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.capturar-button-sosa {
+  display: block;
+  top: 5px;
+  right: 5px;
+  width: 100%;
+  height: 40px;
+  background-color: #565756;
+  text-align: center;
+  color: #ffffff;
+  border: 1px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.close-button-sosa-blancas {
+  top: 5px;
+  right: 5px;
+
+  width: 95%;
+  height: 40px;
+  background-color: #565756;
+  text-align: center;
+  color: #ffffff;
+  border: 1px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.close-button-sosa:hover {
+  color: #555;
+}
+
+.floating-list-sanisidro {
+  position: fixed; /* or absolute depending on your needs */
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  width: 300px; /* Adjust width as needed */
+  max-width: 85vh;
+  max-height: 600px; /* Adjust height as needed */
+  overflow-y: auto; /* Add scroll if content exceeds max height */
+  z-index: 1000; /* Ensure it stays on top */
+  background-color: #9c9c9c; /* Background color */
+  border: 1px solid #000000; /* Border style */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow for floating effect */
+  padding: 10px; /* Padding inside the container */
+  text-align: center;
+  color: #000000;
+}
+
+.floating-list-sanisidro-blancas {
+  position: fixed; /* or absolute depending on your needs */
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  width: 270px; /* Adjust width as needed */
+  max-height: 80vh; /* 80% de la altura de la pantalla */
+  overflow-y: auto; /* Add scroll if content exceeds max height */
+  z-index: 1000; /* Ensure it stays on top */
+  background-color: #9c9c9c; /* Background color */
+  border: 1px solid #000000; /* Border style */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow for floating effect */
+  padding: 10px; /* Padding inside the container */
+  text-align: center;
+  color: #000000;
+}
+
+.lista-sanisidro{
+  border: 1px solid black;
+  border-collapse: collapse;
+  background-color: #9c9c9c;
+}
+
+.lista-sanisidro-prediccion{
+  border: 1px solid black;
+  border-collapse: collapse;
+  background-color: #9c9c9c;
+}
+
+.celda-sanisidro{
+  border: 1px solid black;
+  background-color: #9c9c9c;
+  padding: 3px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.close-button-sanisidro {
+  display: block;
+  top: 5px;
+  right: 5px;
+  width: 100%;
+  height: 40px;
+  background-color: #565756;
+  text-align: center;
+  color: #ffffff;
+  border: 1px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.capturar-button-sanisidro {
+  display: block;
+  top: 5px;
+  right: 5px;
+  width: 100%;
+  height: 40px;
+  background-color: #565756;
+  text-align: center;
+  color: #ffffff;
+  border: 1px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.close-button-sanisidro-blancas {
+  top: 5px;
+  right: 5px;
+
+  width: 95%;
+  height: 40px;
+  background-color: #565756;
+  text-align: center;
+  color: #ffffff;
+  border: 1px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.close-button-sanisidro:hover {
+  color: #555;
+}
+
+.floating-list-tacopan {
+  position: fixed; /* or absolute depending on your needs */
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  width: 225px; /* Adjust width as needed */
+  max-height: 600px; /* Adjust height as needed */
+  overflow-y: auto; /* Add scroll if content exceeds max height */
+  z-index: 1000; /* Ensure it stays on top */
+  background-color: #fffb00; /* Background color */
+  border: 1px solid #000000; /* Border style */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow for floating effect */
+  padding: 10px; /* Padding inside the container */
+  text-align: center;
+  color: #000000;
+}
+
+.lista-tacopan{
+  border: 1px solid black;
+  border-collapse: collapse;
+  background-color: #fffb00;
+}
+
+.celda-tacopan{
+  border: 1px solid black;
+  background-color: #fffb00;
+  padding: 3px;
+}
+
+.close-button-tacopan {
+  display: block;
+  top: 5px;
+  right: 5px;
+
+  width: 220px;
+  height: 40px;
+  background-color: #565756;
+  text-align: center;
+  color: #ffffff;
+  border: 1px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.close-button-tacopan:hover {
+  color: #555;
+}
+
+.floating-list-tequimila {
+  position: fixed; /* or absolute depending on your needs */
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  width: 290px; /* Adjust width as needed */
+  max-height: 600px; /* Adjust height as needed */
+  overflow-y: auto; /* Add scroll if content exceeds max height */
+  z-index: 1000; /* Ensure it stays on top */
+  background-color: #a6ff00; /* Background color */
+  border: 1px solid #000000; /* Border style */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow for floating effect */
+  padding: 10px; /* Padding inside the container */
+  text-align: center;
+  color: #000000;
+}
+
+.lista-tequimila{
+  border: 1px solid black;
+  border-collapse: collapse;
+  background-color: #a6ff00;
+}
+
+.celda-tequimila{
+  border: 1px solid black;
+  background-color: #a6ff00;
+  padding: 3px;
+}
+
+.encabezado-tequimila{
+  border: 1px solid black;
+  background-color: #a6ff00;
+  padding: 3px;
+}
+
+.close-button-tequimila {
+  display: block;
+  top: 5px;
+  right: 5px;
+
+  width: 285px;
+  height: 40px;
+  background-color: #565756;
+  text-align: center;
+  color: #ffffff;
+  border: 1px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.close-button-tequimila:hover {
+  color: #555;
+}
+
+.floating-list-quinta {
+  position: fixed; /* or absolute depending on your needs */
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  width: 290px; /* Adjust width as needed */
+  max-height: 600px; /* Adjust height as needed */
+  overflow-y: auto; /* Add scroll if content exceeds max height */
+  z-index: 1000; /* Ensure it stays on top */
+  background-color: #6ca700; /* Background color */
+  border: 1px solid #000000; /* Border style */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow for floating effect */
+  padding: 10px; /* Padding inside the container */
+  text-align: center;
+  color: #000000;
+}
+
+.lista-quinta{
+  border: 1px solid black;
+  border-collapse: collapse;
+  background-color: #6ca700;
+}
+
+.celda-quinta{
+  border: 1px solid black;
+  background-color: #6ca700;
+  padding: 3px;
+}
+
+.encabezado-quinta{
+  border: 1px solid black;
+  background-color: #6ca700;
+  padding: 3px;
+}
+
+.close-button-quinta {
+  display: block;
+  top: 5px;
+  right: 5px;
+
+  width: 285px;
+  height: 40px;
+  background-color: #565756;
+  text-align: center;
+  color: #ffffff;
+  border: 1px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.close-button-quinta:hover {
+  color: #555;
+}
+
+.floating-list-calanorte {
+  position: fixed; /* or absolute depending on your needs */
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  width: 225px; /* Adjust width as needed */
+  max-height: 600px; /* Adjust height as needed */
+  overflow-y: auto; /* Add scroll if content exceeds max height */
+  z-index: 1000; /* Ensure it stays on top */
+  background-color: #006100; /* Background color */
+  border: 1px solid #000000; /* Border style */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow for floating effect */
+  padding: 10px; /* Padding inside the container */
+  text-align: center;
+  color: #000000;
+}
+
+.lista-calanorte{
+  border: 1px solid black;
+  border-collapse: collapse;
+  background-color: #006100;
+}
+
+.celda-calanorte{
+  border: 1px solid black;
+  background-color: #006100;
+  padding: 3px;
+}
+
+.encabezado-calanorte{
+  border: 1px solid black;
+  background-color: #006100;
+  padding: 3px;
+}
+
+.close-button-calanorte {
+  display: block;
+  top: 5px;
+  right: 5px;
+
+  width: 220px;
+  height: 40px;
+  background-color: #565756;
+  text-align: center;
+  color: #ffffff;
+  border: 1px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.close-button-calanorte:hover {
+  color: #555;
+}
+
+.floating-list-pajaco {
+  position: fixed; /* or absolute depending on your needs */
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  width: 290px; /* Adjust width as needed */
+  max-height: 600px; /* Adjust height as needed */
+  overflow-y: auto; /* Add scroll if content exceeds max height */
+  z-index: 1000; /* Ensure it stays on top */
+  background-color: #ff0000; /* Background color */
+  border: 1px solid #000000; /* Border style */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow for floating effect */
+  padding: 10px; /* Padding inside the container */
+  text-align: center;
+  color: #000000;
+}
+
+.lista-pajaco{
+  border: 1px solid black;
+  border-collapse: collapse;
+  background-color: #ff0000;
+}
+
+.celda-pajaco{
+  border: 1px solid black;
+  background-color: #ff0000;
+  padding: 3px;
+}
+
+.encabezado-pajaco{
+  border: 1px solid black;
+  background-color: #ff0000;
+  padding: 3px;
+}
+
+.close-button-pajaco{
+  display: block;
+  top: 5px;
+  right: 5px;
+
+  width: 285px;
+  height: 40px;
+  background-color: #565756;
+  text-align: center;
+  color: #ffffff;
+  border: 1px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.close-button-pajaco:hover {
+  color: #555;
+}
+
+.floating-list-analco {
+  position: fixed; /* or absolute depending on your needs */
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  width: 290px; /* Adjust width as needed */
+  max-height: 600px; /* Adjust height as needed */
+  overflow-y: auto; /* Add scroll if content exceeds max height */
+  z-index: 1000; /* Ensure it stays on top */
+  background-color: #0051ff; /* Background color */
+  border: 1px solid #000000; /* Border style */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow for floating effect */
+  padding: 10px; /* Padding inside the container */
+  text-align: center;
+  color: #000000;
+}
+
+.lista-analco{
+  border: 1px solid black;
+  border-collapse: collapse;
+  background-color: #0051ff;
+}
+
+.celda-analco{
+  border: 1px solid black;
+  background-color: #0051ff;
+  padding: 3px;
+}
+
+.encabezado-analco{
+  border: 1px solid black;
+  background-color: #0051ff;
+  padding: 3px;
+}
+
+.close-button-analco{
+  display: block;
+  top: 5px;
+  right: 5px;
+
+  width: 285px;
+  height: 40px;
+  background-color: #565756;
+  text-align: center;
+  color: #ffffff;
+  border: 1px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.close-button-analco:hover {
+  color: #555;
+}
+
+.floating-list-yopi {
+  position: fixed; /* or absolute depending on your needs */
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  width: 225px; /* Adjust width as needed */
+  max-height: 600px; /* Adjust height as needed */
+  overflow-y: auto; /* Add scroll if content exceeds max height */
+  z-index: 1000; /* Ensure it stays on top */
+  background-color: #9350ff; /* Background color */
+  border: 1px solid #000000; /* Border style */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow for floating effect */
+  padding: 10px; /* Padding inside the container */
+  text-align: center;
+  color: #000000;
+}
+
+.lista-yopi{
+  border: 1px solid black;
+  border-collapse: collapse;
+  background-color: #9350ff;
+}
+
+.celda-yopi{
+  border: 1px solid black;
+  background-color: #9350ff;
+  padding: 3px;
+}
+
+.encabezado-yopi{
+  border: 1px solid black;
+  background-color: #9350ff;
+  padding: 3px;
+}
+
+.close-button-yopi{
+  display: block;
+  top: 5px;
+  right: 5px;
+
+  width: 220px;
+  height: 40px;
+  background-color: #565756;
+  text-align: center;
+  color: #ffffff;
+  border: 1px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.close-button-yopi:hover {
+  color: #555;
+}
+
+.floating-list-otra {
+  position: fixed; /* or absolute depending on your needs */
+  top: 10px; /* Adjust as needed */
+  right: 10px; /* Adjust as needed */
+  width: 225px; /* Adjust width as needed */
+  max-height: 600px; /* Adjust height as needed */
+  overflow-y: auto; /* Add scroll if content exceeds max height */
+  z-index: 1000; /* Ensure it stays on top */
+  background-color: #ffffff; /* Background color */
+  border: 1px solid #000000; /* Border style */
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Shadow for floating effect */
+  padding: 10px; /* Padding inside the container */
+  text-align: center;
+  color: #000000;
+}
+
+.lista-otra{
+  border: 1px solid black;
+  border-collapse: collapse;
+  background-color: #ffffff;
+}
+
+.celda-otra{
+  border: 1px solid black;
+  background-color: #ffffff;
+  padding: 3px;
+}
+
+.encabezado-otra{
+  border: 1px solid black;
+  background-color: #ffffff;
+  padding: 3px;
+}
+
+.close-button-otra{
+  display: block;
+  top: 5px;
+  right: 5px;
+
+  width: 220px;
+  height: 40px;
+  background-color: #565756;
+  text-align: center;
+  color: #ffffff;
+  border: 1px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.close-button-otra:hover {
+  color: #555;
+}
+
+.unidad-button-prediccion {
+  /* display: block; */
+  width: 100%;
+  width: 60px;
+  height: 25px;
+
+  text-align: center;
+  background-color: white;
+  color: black;
+  border: 1px solid #000; /* Elimina el borde */
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.celda-sosa-prediccion{
+  font-size: 16px;
+  border: 1px solid black;
+  text-align: center;
+  font-weight: bold;
+  background-color: #ea00ff;
+}
+
+.celda-sanisidro-prediccion{
+  font-size: 16px;
+  border: 1px solid black;
+  text-align: center;
+  font-weight: bold;
+  background-color: #858585;
+}
+
+.unidad-button.rojo {
+  background-color: red;
+  color: white;
+}
+
+.unidad-button:not(.rojo) {
+  background-color: white;
+  color: black;
+}
+
+.close-button {
+  top: 5px;
+  right: 5px;
+
+  width: 100%px;
+  height: 40px;
+  background-color: #565756;
+  text-align: center;
+  color: #ffffff;
+  border: 1px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.close-button-blancas {
+  top: 5px;
+  right: 5px;
+
+  width: 95%;
+  height: 40px;
+  background-color: #565756;
+  text-align: center;
+  color: #ffffff;
+  border: 1px solid #000; /* Elimina el borde */
+  margin: 2px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.close-button:hover {
+  color: #555;
+}
+
+.custom-datetime-input {
+  padding: 2px;
+  border-radius: 5px;
+  width: 200px;
+  background-color: #9350ff;
+  border: 1px solid #cccccc;
+  font-size: 18px;
+}
+
+.custom-datetime-input:disabled {
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+}
+
+.boton-editar-hora{
+  background-color: #b7ff65; /* Cambia el color de fondo */
+  color: rgb(0, 0, 0); /* Cambia el color del texto */
+  padding: 1px; /* Aumenta el espacio alrededor del texto */
+  border: 1px solid #000; /* Elimina el borde */
+  font-size: 16px;
+  border-radius: 5px; /* Agrega bordes redondeados */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
+  transition: background-color 0.3s ease; /* Agrega una transición */
+}
+
+.hora-registro-container{
+  display: flex;
+  text-align: center;
+  color: #000;
+  padding: 5px;
+  background-color: #ffffff;
+}
+
+.color-ocho {
+  background-color: #ffcc00; /* Amarillo */
+  color: black;
+}
+
+.color-nueve {
+  background-color: #ff6600; /* Naranja */
+  color: white;
+}
+
+.color-diez {
+  background-color: #ff0000; /* Rojo */
+  color: white;
+}
+
+.celda-fecha-informe{
+  font-size: 10px;
+  border: 1px solid black;
+}
+
+.celda-lista{
+  border: 1px solid black;
+  background-color: #58ff66;
+  padding: 3px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.unidad-button {
+  display: block;
+  width: 100%;
+  cursor: pointer;
+  height: 30px;
+  text-align: center;
+  color: #ffffff;
+  border: 1px solid #000; /* Elimina el borde */
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+}

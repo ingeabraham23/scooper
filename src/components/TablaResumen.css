@@ -1,0 +1,55 @@
+/* TablaResumen.css */
+
+
+
+.tabla-resumen {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 18px;
+    text-align: center;
+    background-color: #ffffff;
+  }
+  
+  .encabezado {
+    background-color: #009879;
+    color: #ffffff;
+    font-weight: bold;
+    border: 1px solid white;
+  }
+
+  .entrada-de-texto {
+    width: 90%;
+    margin-bottom: 10px;
+    padding: 8px;
+    font-size: 16px;
+  }
+  
+  .pie-resumen{
+    color: black;
+    border: 1px solid black;
+    font-size: 24px;
+  }
+  
+  .fila-privado {
+    background-color: #fff89d; /* Color para tipo 'privado' */
+    color: #000000;
+  }
+  
+  .fila-grupal {
+    background-color: #6cc4ff; /* Color para tipo 'grupal' */
+    color: #000000;
+  }
+  
+  .celda-resumen{
+    border: 1px solid black;
+    font-size: 14px;
+  }
+  
+  .boton-capturar {
+    background-color: #7c11c4;
+    border-radius: 5px;
+    margin-top: 5px;
+    font-size: 30px;
+    border: 1px solid black;
+  }
+  
