@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars
 import React, { useState, useEffect, useRef } from "react";
 //import Dexie from 'dexie';
 import { toast } from "react-toastify";
@@ -6,15 +5,42 @@ import "react-toastify/dist/ReactToastify.css";
 import "./Tiempos.css"; // Asegúrate de tener el archivo CSS para los estilos
 import db from "../db";
 import ClockButton from "./Reloj";
+import BotonEliminarUnidad from "./BotonEliminarUnidad";
+import Comision from "./Comision";
+import {
+  buscarUnidadYRelacionadas,
+  buscarSanIsidroParaPrediccion,
+  buscarSosaParaPrediccion,
+  buscarQuintaParaPrediccion,
+  obtenerUltimasUnidadesTacopan,
+  buscarTezotepecParaPrediccion,
+  buscarTezotepecParaPrediccionReverse,
+  buscarCalicapanParaPrediccion,
+  buscarLomaParaPrediccion,
+  buscarTalzintanParaPrediccion,
+} from "./constantes";
 
 import html2canvas from "html2canvas";
 import { CopyToClipboard } from "react-copy-to-clipboard";
+
+// ✅ Función que se ejecuta una sola vez al montar (React Router friendly)
+const obtenerPilaInicial = () => {
+  try {
+    const data = localStorage.getItem("pila");
+    return data ? JSON.parse(data) : [];
+  } catch {
+    return [];
+  }
+};
 
 const UnidadesComponent = () => {
   const [ruta, setRuta] = useState("");
   const [tipo, setTipo] = useState("");
   const [numeroUnidad, setNumeroUnidad] = useState("");
   const [isFormVisible, setFormVisible] = useState(false);
+  const [pila, setPila] = useState(obtenerPilaInicial); // 🔥 carga inicial directa
+  const [nuevoElemento, setNuevoElemento] = useState("");
+
   const [menuVisibleTalzintan, setMenuVisibleTalzintan] = useState(false);
   const [menuVisibleLoma, setMenuVisibleLoma] = useState(false);
   const [menuVisibleTezotepec, setMenuVisibleTezotepec] = useState(false);
@@ -123,6 +149,10 @@ const UnidadesComponent = () => {
   const [penultimaUnidadRojaCalicapan, setPenultimaUnidadRojaCalicapan] =
     useState(null);
 
+  const [ultimaUnidadRojaTacopan, setUltimaUnidadRojaTacopan] = useState(null);
+  const [penultimaUnidadRojaTacopan, setPenultimaUnidadRojaTacopan] =
+    useState(null);
+
   // Estados para tiempos transcurridos
   const [tiempoTranscurridoTalzintan, setTiempoTranscurridoTalzintan] =
     useState(0);
@@ -159,6 +189,8 @@ const UnidadesComponent = () => {
   ] = useState(0);
   const [tiempoTranscurridoRojaSanIsidro, setTiempoTranscurridoRojaSanIsidro] =
     useState(0);
+  const [tiempoTranscurridoRojaTacopan, setTiempoTranscurridoRojaTacopan] =
+    useState(0);
 
   // Estados para diferencias de tiempo entre último y penúltimo registro
   const [diferenciaTalzintan, setDiferenciaTalzintan] = useState(0);
@@ -182,12 +214,202 @@ const UnidadesComponent = () => {
   const [diferenciaRojaCalicapan, setDiferenciaRojaCalicapan] = useState(0);
   const [diferenciaRojaSosaEscuela, setDiferenciaRojaSosaEscuela] = useState(0);
   const [diferenciaRojaSanIsidro, setDiferenciaRojaSanIsidro] = useState(0);
+  const [diferenciaRojaTacopan, setDiferenciaRojaTacopan] = useState(0);
 
   const [horaRegistro, setHoraRegistro] = useState(new Date().toISOString());
   const [isEditable, setIsEditable] = useState(false);
   const [isHoraVisible, setIsHoraVisible] = useState(false);
-  // eslint-disable-next-line no-unused-vars
+
   const [color, setColor] = useState("#FFFFFF");
+
+  const [unidades, setUnidades] = useState([]);
+  const [unidadesSosa, setUnidadesSosa] = useState([]);
+  const [unidadesSanIsidro, setUnidadesSanIsidro] = useState([]);
+  const [unidadesQuinta, setUnidadesQuinta] = useState([]);
+  const [ultimasTacopan, setUltimasTacopan] = useState([]);
+  const [unidadesTezotepec, setUnidadesTezotepec] = useState([]);
+  const [unidadesTezotepecReverse, setUnidadesTezotepecReverse] = useState([]);
+
+  const [unidadesCalicapan, setUnidadesCalicapan] = useState([]);
+  const [unidadesLoma, setUnidadesLoma] = useState([]);
+  const [unidadesTalzintan, setUnidadesTalzintan] = useState([]);
+
+  /* // ✅ Guardar en localStorage cada vez que cambia la pila
+  useEffect(() => {
+    localStorage.setItem("pila", JSON.stringify(pila));
+  }, [pila]);
+
+  const agregarElemento = (elemento) => {
+    const nuevo = (elemento || nuevoElemento).trim().toLowerCase();
+    if (!nuevo) return;
+
+    setPila((prev) => {
+      let nuevaPila = [...prev];
+
+      if (nuevo === "talzintan") {
+        const indices = nuevaPila
+          .map((e, i) => (e === "talzintan" ? i : -1))
+          .filter((i) => i !== -1);
+
+        if (indices.length >= 2) {
+          const ultimoIndex = indices[indices.length - 1];
+          nuevaPila.splice(ultimoIndex, 1);
+        }
+
+        nuevaPila.unshift("talzintan");
+      } else {
+        nuevaPila = nuevaPila.filter((e) => e !== nuevo);
+        nuevaPila.unshift(nuevo);
+      }
+
+      return nuevaPila;
+    });
+
+    setNuevoElemento("");
+  }; */
+
+  const agregarElemento = (elemento) => {
+  const nuevo = (elemento || nuevoElemento).trim().toLowerCase();
+  if (!nuevo || nuevo === "tacopan") return; // ⛔️ Ignorar si es vacío o "tacopan"
+
+  setPila((prev) => {
+    let nuevaPila = [...prev];
+
+    if (nuevo === "talzintan") {
+      const indices = nuevaPila
+        .map((e, i) => (e === "talzintan" ? i : -1))
+        .filter((i) => i !== -1);
+
+      if (indices.length >= 2) {
+        const ultimoIndex = indices[indices.length - 1];
+        nuevaPila.splice(ultimoIndex, 1);
+      }
+
+      nuevaPila.unshift("talzintan");
+    } else {
+      nuevaPila = nuevaPila.filter((e) => e !== nuevo);
+      nuevaPila.unshift(nuevo);
+    }
+
+    return nuevaPila;
+  });
+
+  setNuevoElemento("");
+};
+
+
+  const obtenerColor = (nombre) => {
+    switch (nombre) {
+      case "talzintan":
+        return "#4caf50"; // verde
+      case "tezotepec":
+        return "#ff9800"; // naranja
+      case "calicapan":
+        return "#2196f3"; // azul
+      case "sosa":
+        return "#e14eff"; // rosa
+      case "sani":
+        return "#9e9e9e"; // gris
+      default:
+        return "#000"; // negro para otros
+    }
+  };
+
+  const limpiarPila = () => {
+    setPila([]);
+    localStorage.removeItem("pila");
+  };
+
+  useEffect(() => {
+    const obtenerDatos = async () => {
+      const resultado = await buscarUnidadYRelacionadas();
+      if (resultado) setUnidades(resultado);
+    };
+
+    obtenerDatos();
+  }, [isFormVisible]);
+
+  useEffect(() => {
+    const obtenerDatos = async () => {
+      const resultado = await buscarSanIsidroParaPrediccion();
+      if (resultado) setUnidadesSanIsidro(resultado);
+    };
+
+    obtenerDatos();
+  }, [isFormVisible]);
+
+  useEffect(() => {
+    const obtenerDatos = async () => {
+      const resultado = await buscarSosaParaPrediccion();
+      if (resultado) setUnidadesSosa(resultado);
+    };
+
+    obtenerDatos();
+  }, [isFormVisible]);
+
+  useEffect(() => {
+    const obtenerDatos = async () => {
+      const resultado = await buscarQuintaParaPrediccion();
+      if (resultado) setUnidadesQuinta(resultado);
+    };
+
+    obtenerDatos();
+  }, [isFormVisible]);
+
+  useEffect(() => {
+    const obtenerDatos = async () => {
+      const resultado = await buscarTezotepecParaPrediccion();
+      if (resultado) setUnidadesTezotepec(resultado);
+    };
+
+    obtenerDatos();
+  }, [isFormVisible]);
+
+  useEffect(() => {
+    const obtenerDatos = async () => {
+      const resultado = await buscarTezotepecParaPrediccionReverse();
+      if (resultado && resultado.length) {
+        setUnidadesTezotepecReverse(resultado);
+      }
+    };
+    obtenerDatos();
+  }, [isFormVisible]);
+
+  useEffect(() => {
+    const obtenerDatos = async () => {
+      const resultado = await buscarCalicapanParaPrediccion();
+      if (resultado) setUnidadesCalicapan(resultado);
+    };
+
+    obtenerDatos();
+  }, [isFormVisible]);
+
+  useEffect(() => {
+    const obtenerDatos = async () => {
+      const resultado = await buscarLomaParaPrediccion();
+      if (resultado) setUnidadesLoma(resultado);
+    };
+
+    obtenerDatos();
+  }, [isFormVisible]);
+
+  useEffect(() => {
+    const obtenerDatos = async () => {
+      const resultado = await buscarTalzintanParaPrediccion();
+      if (resultado) setUnidadesTalzintan(resultado);
+    };
+
+    obtenerDatos();
+  }, [isFormVisible]);
+
+  useEffect(() => {
+    const cargarUltimasUnidades = async () => {
+      const unidades = await obtenerUltimasUnidadesTacopan();
+      setUltimasTacopan(unidades);
+    };
+
+    cargarUltimasUnidades();
+  }, [isFormVisible]);
 
   const tablaTalzintanRef = useRef(null);
   const tablaLomaRef = useRef(null);
@@ -232,6 +454,7 @@ const UnidadesComponent = () => {
         "rojo"
       );
       const unidadesRojaSanIsidro = await obtenerUnidades("san isidro", "rojo");
+      const unidadesRojaTacopan = await obtenerUnidades("tacopan", "rojo");
 
       // Unidades de cualquier tipo
       actualizarEstadoUnidades(
@@ -369,6 +592,13 @@ const UnidadesComponent = () => {
         setTiempoTranscurridoRojaSanIsidro,
         setDiferenciaRojaSanIsidro
       );
+      actualizarEstadoUnidades(
+        unidadesRojaTacopan,
+        setUltimaUnidadRojaTacopan,
+        setPenultimaUnidadRojaTacopan,
+        setTiempoTranscurridoRojaTacopan,
+        setDiferenciaRojaTacopan
+      );
 
       // Verificar si el tiempo transcurrido es de 6 minutos (360 segundos)
       if (
@@ -437,14 +667,14 @@ const UnidadesComponent = () => {
       unidades = await db.unidades
         .where({ ruta, tipo })
         .reverse() // Ordenar en orden descendente
-        .limit(10) // Limitar a los últimos 7 registros
+        .limit(15) // Limitar a los últimos 7 registros
         .toArray();
     } else {
       unidades = await db.unidades
         .where("ruta")
         .equals(ruta)
         .reverse() // Ordenar en orden descendente
-        .limit(10) // Limitar a los últimos 7 registros
+        .limit(15) // Limitar a los últimos 7 registros
         .toArray();
     }
 
@@ -530,19 +760,23 @@ const UnidadesComponent = () => {
   };
 
   const agregarUnidad = async () => {
-    if (ruta && tipo && numeroUnidad) {
-      const numeroUnidadNumerico = parseInt(numeroUnidad, 10);
-      if (isNaN(numeroUnidadNumerico)) {
-        alert("Por favor ingresa un número válido para la unidad.");
+    if (ruta && tipo && numeroUnidad.trim() !== "") {
+      const unidadValida = /^[0-9.\-+]+$/.test(numeroUnidad);
+      if (!unidadValida) {
+        alert(
+          "La unidad solo puede contener números, puntos, guiones o signos de más."
+        );
         return;
       }
+
       await db.unidades.add({
         ruta,
         tipo,
-        numeroUnidad: numeroUnidadNumerico,
+        numeroUnidad: numeroUnidad.trim(), // Guardado como string
         horaRegistro,
         color,
       });
+
       setRuta("");
       setTipo("");
       setNumeroUnidad("");
@@ -1793,11 +2027,11 @@ const UnidadesComponent = () => {
     return date;
   };
 
-  const add60Minutes = (horaRegistro) => {
+  /* const add60Minutes = (horaRegistro) => {
     const date = new Date(horaRegistro);
     date.setMinutes(date.getMinutes() + 60);
     return date;
-  };
+  }; */
 
   const add75Minutes = (horaRegistro) => {
     const date = new Date(horaRegistro);
@@ -2256,7 +2490,7 @@ const UnidadesComponent = () => {
 
   return (
     <div>
-      {/*FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO*/}
+      {/*FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO*/}
       {isFormVisible && (
         <div>
           <div className="form-container">
@@ -2275,12 +2509,12 @@ const UnidadesComponent = () => {
                 <label>
                   <input
                     className="styled-input"
-                    type="number"
+                    type="text" // Cambiado de "number" a "text"
                     ref={inputRef}
                     value={numeroUnidad}
                     onChange={(e) => setNumeroUnidad(e.target.value)}
-                    inputMode="numeric"
-                    pattern="\d*"
+                    inputMode="numeric" // Esto sigue activando teclado numérico en móviles
+                    pattern="[0-9.\-+]*" // Expresión regular para permitir números, punto, guion y más
                   />
                 </label>
               </div>
@@ -2289,7 +2523,10 @@ const UnidadesComponent = () => {
                 <button
                   className="save-button-rojo"
                   type="button"
-                  onClick={() => handleAgregarTipo("rojo")}
+                  onClick={() => {
+                    handleAgregarTipo("rojo");
+                    agregarElemento(nuevoElemento);
+                  }}
                   disabled={[
                     "loma",
                     "tequimila",
@@ -2342,7 +2579,9 @@ const UnidadesComponent = () => {
           </div>
         </div>
       )}
-      {/* Menú */}
+      {/* FIN DE FORMULARIO PRINCIPAL  FIN DE FORMULARIO PRINCIPAL  FIN DE FORMULARIO PRINCIPAL */}
+
+      {/* MENU COPY PASTE AL MOMENTO, ESTA PASANDO, TE LLENAS, ATRAS DE TI */}
       {menuVisibleTalzintan && (
         <div
           style={{
@@ -2775,6 +3014,38 @@ const UnidadesComponent = () => {
                 <button className="amotac">Amotac</button>
               </CopyToClipboard>
             </td>
+            <td>
+              <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                <button
+                  onClick={limpiarPila}
+                  style={{
+                    marginTop: 20,
+                    backgroundColor: "red",
+                    color: "#fff",
+                    padding: "8px 12px",
+                    border: "none",
+                    borderRadius: 6,
+                  }}
+                >
+                  Limpiar
+                </button>
+                {pila.map((el, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      backgroundColor: obtenerColor(el),
+                      color: "#fff",
+                      padding: "1px 4px",
+                      minWidth: "30px",
+                      textAlign: "center",
+                    }}
+                    title={el}
+                  >
+                    {el.slice(0, 2)}
+                  </div>
+                ))}
+              </div>
+            </td>
           </tr>
 
           {/*FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  */}
@@ -2786,6 +3057,7 @@ const UnidadesComponent = () => {
                 onClick={() => {
                   setRuta("talzintan");
                   setColor("#58ff66");
+                  setNuevoElemento("talzintan");
                   setFormVisible(true);
                 }}
               >
@@ -2821,6 +3093,13 @@ const UnidadesComponent = () => {
                     >
                       {penultimaUnidadTalzintan.numeroUnidad}
                     </button>
+                    <input
+                      type="number"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      className="numeric-input"
+                    />
+                    <BotonEliminarUnidad ruta="talzintan" />
                     <br></br>
                     {ultimaUnidadRojaTalzintan && (
                       <>
@@ -2847,6 +3126,33 @@ const UnidadesComponent = () => {
                 )}
               </td>
             )}
+            <td className="celda-talzintan">
+              <div>
+                {unidadesLoma.length > 0 ? (
+                  unidadesLoma.map((u) => (
+                    <div
+                      key={u.id}
+                      style={{
+                        marginBottom: -5, // separación entre elementos
+                        color: "#333", // color del texto
+                        fontSize: 16, // tamaño de fuente en px
+                      }}
+                    >
+                      <span style={{ fontWeight: "bold", marginRight: 8 }}>
+                        {u.numeroUnidad}
+                      </span>
+                      <span>
+                        {formatHoraRegistro(add70Minutes(u.horaRegistro))}
+                      </span>
+                    </div>
+                  ))
+                ) : (
+                  <div style={{ color: "gray", fontStyle: "italic" }}>
+                    JoyBoy
+                  </div>
+                )}
+              </div>
+            </td>
           </tr>
 
           {/*FILA LOMA  FILA LOMA  FILA LOMA  FILA LOMA  FILA LOMA  FILA LOMA  FILA LOMA  FILA LOMA   */}
@@ -2893,8 +3199,38 @@ const UnidadesComponent = () => {
                     </button>
                   </>
                 )}
+                <BotonEliminarUnidad ruta="loma" />
               </td>
             )}
+            <td className="celda-loma">
+              <div>
+                {unidadesTalzintan.length > 0 ? (
+                  unidadesTalzintan.map((u) => (
+                    <div
+                      key={u.id}
+                      style={{
+                        marginBottom: -5, // separación entre elementos
+                        color: "#333", // color del texto
+                        fontSize: 16, // tamaño de fuente en px
+                      }}
+                    >
+                      <span style={{ fontWeight: "bold", marginRight: 8 }}>
+                        {u.numeroUnidad}
+                      </span>
+                      <span>
+                        {formatHoraRegistro(add70Minutes(u.horaRegistro))}
+                      </span>
+                    </div>
+                  ))
+                ) : (
+                  <div
+                    style={{ color: "gray", fontStyle: "italic", fontSize: 16 }}
+                  >
+                    JoyBoy
+                  </div>
+                )}
+              </div>
+            </td>
           </tr>
 
           {/*FILA TEZOTEPEC  FILA TEZOTEPEC  FILA TEZOTEPEC  FILA TEZOTEPEC  FILA TEZOTEPEC  FILA TEZOTEPEC  */}
@@ -2906,6 +3242,7 @@ const UnidadesComponent = () => {
                 onClick={() => {
                   setRuta("tezotepec");
                   setColor("#eb9d36");
+                  setNuevoElemento("tezotepec");
                   setFormVisible(true);
                 }}
               >
@@ -2943,6 +3280,13 @@ const UnidadesComponent = () => {
                     >
                       {penultimaUnidadTezotepec.numeroUnidad}
                     </button>
+                    <input
+                      type="number"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      className="numeric-input"
+                    />
+                    <BotonEliminarUnidad ruta="tezotepec" />
                     <br></br>
                     {ultimaUnidadRojaTezotepec && (
                       <>
@@ -2969,6 +3313,60 @@ const UnidadesComponent = () => {
                 )}
               </td>
             )}
+            <td className="celda-tezotepec">
+              <div>
+                {unidadesTezotepec.length > 0 ? (
+                  unidadesTezotepec.map((u, index) => (
+                    <div
+                      key={u.id}
+                      style={{
+                        fontSize: 16,
+                        marginBottom: -5,
+                        fontWeight: index === 0 ? "bold" : "normal",
+                        color: index === 0 ? "#0070f3" : "inherit", // color destacado para el primero
+                      }}
+                    >
+                      {u.numeroUnidad}{" "}
+                      {formatHoraRegistro(add75Minutes(u.horaRegistro))}
+                    </div>
+                  ))
+                ) : (
+                  <div style={{ color: "gray", fontStyle: "italic" }}>
+                    JoyBoy
+                  </div>
+                )}
+              </div>
+            </td>
+            <td className="celda-tezotepec">
+              <div>
+                {unidadesTezotepecReverse.length > 0 ? (
+                  unidadesTezotepecReverse.map((u, index) => (
+                    <div
+                      key={u.id}
+                      style={{
+                        fontSize: 16,
+                        marginBottom: -5,
+                        fontWeight:
+                          index === unidadesTezotepecReverse.length - 1
+                            ? "bold"
+                            : "normal",
+                        color:
+                          index === unidadesTezotepecReverse.length - 1
+                            ? "#0070f3"
+                            : "inherit",
+                      }}
+                    >
+                      {u.numeroUnidad}{" "}
+                      {formatHoraRegistro(add75Minutes(u.horaRegistro))}
+                    </div>
+                  ))
+                ) : (
+                  <div style={{ color: "gray", fontStyle: "italic" }}>
+                    JoyBoy
+                  </div>
+                )}
+              </div>
+            </td>
           </tr>
 
           {/*FILA CALICAPAN FILA CALICAPAN FILA CALICAPAN FILA CALICAPAN FILA CALICAPAN FILA CALICAPAN FILA CALICAPAN*/}
@@ -2980,6 +3378,7 @@ const UnidadesComponent = () => {
                 onClick={() => {
                   setRuta("calicapan");
                   setColor("#00c3ff");
+                  setNuevoElemento("calicapan");
                   setFormVisible(true);
                 }}
               >
@@ -3014,6 +3413,13 @@ const UnidadesComponent = () => {
                     >
                       {penultimaUnidadCalicapan.numeroUnidad}
                     </button>
+                    <input
+                      type="number"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      className="numeric-input"
+                    />
+                    <BotonEliminarUnidad ruta="calicapan" />
                     <br></br>
                     {ultimaUnidadRojaCalicapan && (
                       <>
@@ -3040,6 +3446,50 @@ const UnidadesComponent = () => {
                 )}
               </td>
             )}
+            <td className="celda-calicapan">
+              <div>
+                {unidades.length > 0 &&
+                  unidades.map((u, index) => (
+                    <div
+                      key={u.id}
+                      style={{
+                        fontSize: 16,
+                        marginBottom: -5,
+                        fontWeight: index === 0 ? "bold" : "normal",
+                        color: index === 0 ? "#0051ff" : "inherit", // color destacado para el primero
+                        textShadow:
+                          index === 0
+                            ? "1px 1px 2px white"
+                            : "0px 0px 0px white",
+                      }}
+                    >
+                      {u.numeroUnidad}{" "}
+                      {formatHoraRegistro(add46Minutes(u.horaRegistro))}
+                    </div>
+                  ))}
+              </div>
+            </td>
+            <td className="celda-calicapan">
+              <div
+                style={{
+                  fontSize: "0.75rem",
+                  lineHeight: "1.2",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "2px",
+                }}
+              >
+                {numerosTequimila
+                  .slice(-6, -2) // 🔹 Excluye los dos últimos, muestra los 4 anteriores
+                  .reverse()
+                  .map((unidad, index) => (
+                    <div key={index}>
+                      {unidad.numeroUnidad} -{" "}
+                      {formatHoraRegistro(add46Minutes(unidad.horaRegistro))}
+                    </div>
+                  ))}
+              </div>
+            </td>
           </tr>
 
           {/*FILA SOSA ESCUELA  FILA SOSA ESCUELA  FILA SOSA ESCUELA  FILA SOSA ESCUELA  FILA SOSA ESCUELA  */}
@@ -3051,6 +3501,7 @@ const UnidadesComponent = () => {
                 onClick={() => {
                   setRuta("sosa escuela");
                   setColor("#ea00ff");
+                  setNuevoElemento("sosa");
                   setFormVisible(true);
                 }}
               >
@@ -3090,6 +3541,13 @@ const UnidadesComponent = () => {
                     >
                       {penultimaUnidadSosaEscuela.numeroUnidad}
                     </button>
+                    <input
+                      type="number"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      className="numeric-input"
+                    />
+                    <BotonEliminarUnidad ruta="sosa escuela" />
                     <br></br>
                     {ultimaUnidadRojaSosaEscuela && (
                       <>
@@ -3116,6 +3574,39 @@ const UnidadesComponent = () => {
                 )}
               </td>
             )}
+            <td className="celda-sosa">
+              <div>
+                {unidadesSosa.length > 0 &&
+                  unidadesSosa.map((u) => (
+                    <div key={u.id} style={{ fontSize: 16, marginBottom: -5 }}>
+                      <span style={{ fontWeight: "bold", marginRight: 8 }}>
+                        {u.numeroUnidad}
+                      </span>
+                      <span>
+                        {formatHoraRegistro(add80Minutes(u.horaRegistro))}
+                      </span>
+                    </div>
+                  ))}
+              </div>
+            </td>
+            <td className="celda-sosa">
+              {ultimasTacopan.length > 0 &&
+                ultimasTacopan.map((u) => (
+                  <div
+                    key={u.id}
+                    style={{
+                      marginTop: 0,
+                      fontWeight: "bold",
+                      color: "yellow",
+                      textShadow: "1px 1px 2px black",
+                    }}
+                  >
+                    {u.numeroUnidad}
+                    {" / "}
+                    {formatHoraRegistro(add70Minutes(u.horaRegistro))}
+                  </div>
+                ))}
+            </td>
           </tr>
 
           {/*FILA SAN ISIDRO  FILA SAN ISIDRO  FILA SAN ISIDRO  FILA SAN ISIDRO  FILA SAN ISIDRO    */}
@@ -3127,6 +3618,7 @@ const UnidadesComponent = () => {
                 onClick={() => {
                   setRuta("san isidro");
                   setColor("#9c9c9c");
+                  setNuevoElemento("sani");
                   setFormVisible(true);
                 }}
               >
@@ -3164,6 +3656,13 @@ const UnidadesComponent = () => {
                     >
                       {penultimaUnidadSanIsidro.numeroUnidad}
                     </button>
+                    <input
+                      type="number"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      className="numeric-input"
+                    />
+                    <BotonEliminarUnidad ruta="san isidro" />
                     <br></br>
                     {ultimaUnidadRojaSanIsidro && (
                       <>
@@ -3190,6 +3689,30 @@ const UnidadesComponent = () => {
                 )}
               </td>
             )}
+            <td className="celda-sanisidro">
+              <div>
+                {unidadesSanIsidro.length > 0 &&
+                  unidadesSanIsidro.map((u, index) => (
+                    <div
+                      key={u.id}
+                      style={{
+                        fontSize: 16,
+                        marginBottom: -5,
+                        fontWeight: index === 0 ? "bold" : "normal",
+                        color: index === 0 ? "black" : "inherit", // color destacado para el primero
+                        textShadow:
+                          index === 0
+                            ? "1px 1px 2px white"
+                            : "0px 0px 0px white",
+                      }}
+                    >
+                      {u.numeroUnidad}
+                      {" / "}
+                      {formatHoraRegistro(add80Minutes(u.horaRegistro))}
+                    </div>
+                  ))}
+              </div>
+            </td>
           </tr>
 
           {/*FILA TACOPAN  FILA TACOPAN  FILA TACOPAN  FILA TACOPAN  FILA TACOPAN  FILA TACOPAN  */}
@@ -3201,6 +3724,7 @@ const UnidadesComponent = () => {
                 onClick={() => {
                   setRuta("tacopan");
                   setColor("#fffb00");
+                  setNuevoElemento("tacopan");
                   setFormVisible(true);
                 }}
               >
@@ -3238,7 +3762,35 @@ const UnidadesComponent = () => {
                     >
                       {penultimaUnidadTacopan.numeroUnidad}
                     </button>
+                    <input
+                      type="number"
+                      inputMode="numeric"
+                      pattern="[0-9]*"
+                      className="numeric-input"
+                    />
+                    <BotonEliminarUnidad ruta="tacopan" />
                     <br></br>
+                    {ultimaUnidadRojaTacopan && (
+                      <>
+                        <div className="rojo-texto">
+                          {formatoTiempo(tiempoTranscurridoRojaTacopan)}
+                        </div>
+                        <div className="rojo-rojo">
+                          {ultimaUnidadRojaTacopan.numeroUnidad}
+                        </div>
+                        {penultimaUnidadRojaTacopan && (
+                          <>
+                            <div className="rojo-texto">
+                              {formatoTiempo(diferenciaRojaTacopan)}
+                            </div>
+
+                            <div className="rojo-rojo">
+                              {penultimaUnidadRojaTacopan.numeroUnidad}
+                            </div>
+                          </>
+                        )}
+                      </>
+                    )}
                   </>
                 )}
               </td>
@@ -3288,17 +3840,40 @@ const UnidadesComponent = () => {
                     >
                       {penultimaUnidadTequimila.numeroUnidad}
                     </button>
-                    <br></br>
                   </>
                 )}
+                <BotonEliminarUnidad ruta="tequimila" />
               </td>
             )}
+            <td className="celda-tequimila">
+              <div>
+                {unidadesQuinta.length > 0 &&
+                  unidadesQuinta.map((u, index) => (
+                    <div
+                      key={u.id}
+                      style={{
+                        fontSize: 16,
+                        marginBottom: -5,
+                        fontWeight: index === 0 ? "bold" : "normal",
+                        color: index === 0 ? "#0051ff" : "inherit", // color destacado para el primero
+                        textShadow:
+                          index === 0
+                            ? "1px 1px 2px white"
+                            : "0px 0px 0px white",
+                      }}
+                    >
+                      {u.numeroUnidad}{" "}
+                      {formatHoraRegistro(add46Minutes(u.horaRegistro))}
+                    </div>
+                  ))}
+              </div>
+            </td>
           </tr>
 
           {/*FILA QUINTA  FILA QUINTA  FILA QUINTA  FILA QUINTA  FILA QUINTA  FILA QUINTA  */}
           <tr>
             <td></td>
-            <td className="celda-quinta">
+            <td className="celda-quinta-modificada">
               <button
                 className="boton-cronometro"
                 onClick={() => {
@@ -3336,11 +3911,39 @@ const UnidadesComponent = () => {
                     >
                       {penultimaUnidadQuinta.numeroUnidad}
                     </button>
-                    <br></br>
                   </>
                 )}
+                <BotonEliminarUnidad ruta="quinta" />
               </td>
             )}
+            <td className="celda-quinta">
+              <div>
+                {unidadesCalicapan.length > 0 ? (
+                  unidadesCalicapan.map((u, index) => (
+                    <div
+                      key={u.id}
+                      style={{
+                        fontSize: 16,
+                        marginBottom: -5,
+                        fontWeight: index === 0 ? "bold" : "normal",
+                        color: index === 0 ? "black" : "inherit", // color destacado para el primero
+                        textShadow:
+                          index === 0
+                            ? "1px 1px 2px white"
+                            : "0px 0px 0px white",
+                      }}
+                    >
+                      {u.numeroUnidad}{" "}
+                      {formatHoraRegistro(add80Minutes(u.horaRegistro))}
+                    </div>
+                  ))
+                ) : (
+                  <div style={{ color: "gray", fontStyle: "italic" }}>
+                    JoyBoy
+                  </div>
+                )}
+              </div>
+            </td>
           </tr>
 
           {/*FILA CALANORTE  FILA CALANORTE  FILA CALANORTE  FILA CALANORTE  FILA CALANORTE    */}
@@ -3386,9 +3989,9 @@ const UnidadesComponent = () => {
                     >
                       {penultimaUnidadCalanorte.numeroUnidad}
                     </button>
-                    <br></br>
                   </>
                 )}
+                <BotonEliminarUnidad ruta="calanorte" />
               </td>
             )}
           </tr>
@@ -3434,9 +4037,9 @@ const UnidadesComponent = () => {
                     >
                       {penultimaUnidadPajaco.numeroUnidad}
                     </button>
-                    <br></br>
                   </>
                 )}
+                <BotonEliminarUnidad ruta="pajaco" />
               </td>
             )}
           </tr>
@@ -3482,9 +4085,9 @@ const UnidadesComponent = () => {
                     >
                       {penultimaUnidadAnalco.numeroUnidad}
                     </button>
-                    <br></br>
                   </>
                 )}
+                <BotonEliminarUnidad ruta="analco" />
               </td>
             )}
           </tr>
@@ -3530,9 +4133,9 @@ const UnidadesComponent = () => {
                     >
                       {penultimaUnidadYopi.numeroUnidad}
                     </button>
-                    <br></br>
                   </>
                 )}
+                <BotonEliminarUnidad ruta="yopi" />
               </td>
             )}
           </tr>
@@ -3578,9 +4181,9 @@ const UnidadesComponent = () => {
                     >
                       {penultimaUnidadOtra.numeroUnidad}
                     </button>
-                    <br></br>
                   </>
                 )}
+                <BotonEliminarUnidad ruta="otra" />
               </td>
             )}
           </tr>
@@ -3941,9 +4544,9 @@ const UnidadesComponent = () => {
                     const numeroOrden = index + 1;
 
                     // Si el numeroOrden es 1, 2, 3, 8, 9, 10, no renderizar la fila
-                    if ([1, 2,3,4,5].includes(numeroOrden)) {
+                    /* if ([1, 2, 3, 4, 5].includes(numeroOrden)) {
                       return null; // No renderizar nada
-                    }
+                    } */
 
                     let buttonClass = "unidad-button-prediccion"; // Clase base
 
@@ -3952,8 +4555,7 @@ const UnidadesComponent = () => {
                       buttonClass += " color-ocho"; // Clase específica para el 8
                     } else if (numeroOrden === 9) {
                       buttonClass += " color-nueve"; // Clase específica para el 9
-                    } else if (numeroOrden === 10
-                    ) {
+                    } else if (numeroOrden === 10) {
                       buttonClass += " color-diez"; // Clase específica para el 10
                     }
 
@@ -3972,7 +4574,7 @@ const UnidadesComponent = () => {
                         </td>
                         <td className="celda-tezotepec-prediccion-tezo">
                           {formatHoraRegistro(
-                            add60Minutes(unidad.horaRegistro)
+                            add75Minutes(unidad.horaRegistro)
                           )}
                         </td>
                         <td className="celda-tezotepec-prediccion-tenex">
@@ -4007,7 +4609,9 @@ const UnidadesComponent = () => {
             <table className="lista-calicapan" ref={tablaCalicapanRef}>
               <thead>
                 <tr>
-                  <th colSpan={8} className="celda-calicapan">Informe: Calicapan</th>
+                  <th colSpan={8} className="celda-calicapan">
+                    Informe: Calicapan
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -4185,7 +4789,10 @@ const UnidadesComponent = () => {
                 )}
               </tbody>
             </table>
-            <button className="capturar-button-sosa" onClick={handleDownloadImageSosa}>
+            <button
+              className="capturar-button-sosa"
+              onClick={handleDownloadImageSosa}
+            >
               📸 Capturar
             </button>
           </div>
@@ -4388,9 +4995,7 @@ const UnidadesComponent = () => {
                     const numeroOrden = index + 1;
 
                     // Si el numeroOrden es 1, 2, 3, 5, 6, 7, no renderizar la fila
-                    if (
-                      [1, 2, 3, 14, 15].includes(numeroOrden)
-                    ) {
+                    if ([1, 2, 3, 14, 15].includes(numeroOrden)) {
                       return null; // No renderizar nada
                     }
 
@@ -4513,15 +5118,15 @@ const UnidadesComponent = () => {
               </thead>
               <tbody>
                 {numerosTequimila
-                  .slice()
+                  .slice(-6, -2)
                   .reverse()
                   .map((unidad, index) => {
                     const minutos = new Date(unidad.horaRegistro).getMinutes();
                     let backgroundColor = "";
 
-                    if (minutos >= 6 && minutos <= 14) {
+                    if (minutos >= 0 && minutos <= 8) {
                       backgroundColor = "#FF0000"; // Rojo en hexadecimal
-                    } else if (minutos >= 16 && minutos <= 24) {
+                    } else if (minutos >= 10 && minutos <= 18) {
                       backgroundColor = "#0051FF"; // Azul en hexadecimal
                     }
 
@@ -4880,6 +5485,7 @@ const UnidadesComponent = () => {
           </div>
         )}
       </div>
+      <Comision></Comision>
     </div>
   );
 };

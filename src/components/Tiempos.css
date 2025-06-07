@@ -259,6 +259,7 @@ table {
 .celda-loma {
   background-color: #adf7b3;
   padding: 0px;
+  font-size: 20px;
 }
 
 .button-se-lleva-loma {
@@ -500,6 +501,12 @@ table {
 
 .celda-quinta {
   background-color: #6ca700;
+  padding: 0px;
+  color: #ffffff;
+}
+
+.celda-quinta-modificada {
+  background-image: radial-gradient(ellipse at center, #0047ab, #00cfff, #6ca700);
   padding: 0px;
   color: #ffffff;
 }
@@ -891,7 +898,6 @@ table {
   background-color: #00c3ff;
   padding: 3px;
   font-size: 16px;
-  font-weight: bold;
 }
 
 .close-button-calicapan {
@@ -984,7 +990,6 @@ table {
   background-color: #ea00ff;
   padding: 3px;
   font-size: 16px;
-  font-weight: bold;
 }
 
 .close-button-sosa {
@@ -1094,7 +1099,6 @@ table {
   background-color: #9c9c9c;
   padding: 3px;
   font-size: 16px;
-  font-weight: bold;
 }
 
 .close-button-sanisidro {
@@ -1754,4 +1758,22 @@ table {
   cursor: pointer;
   font-size: 14px;
   font-weight: bold;
+}
+
+.numeric-input {
+  width: 40px;
+  padding: 5px 20px;
+  font-size: 30px;
+  font-weight: bold;
+  border: 2px solid #007bff;
+  border-radius: 8px;
+  outline: none;
+  color: #ff0000;
+  background-color: #f9f9f9;
+  transition: border-color 0.2s ease;
+}
+
+.numeric-input:focus {
+  border-color: #0056b3;
+  background-color: #fff;
 }
