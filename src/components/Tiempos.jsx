@@ -4,6 +4,9 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./Tiempos.css"; // Asegúrate de tener el archivo CSS para los estilos
 import db from "../db";
+import { dbpila } from "./dbpila"; // Asegúrate que exista y esté configurado
+import { dbnum } from "./dbnum";
+import { useLiveQuery } from "dexie-react-hooks";
 import ClockButton from "./Reloj";
 import BotonEliminarUnidad from "./BotonEliminarUnidad";
 import Comision from "./Comision";
@@ -23,23 +26,13 @@ import {
 import html2canvas from "html2canvas";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
-// ✅ Función que se ejecuta una sola vez al montar (React Router friendly)
-const obtenerPilaInicial = () => {
-  try {
-    const data = localStorage.getItem("pila");
-    return data ? JSON.parse(data) : [];
-  } catch {
-    return [];
-  }
-};
-
 const UnidadesComponent = () => {
   const [ruta, setRuta] = useState("");
   const [tipo, setTipo] = useState("");
   const [numeroUnidad, setNumeroUnidad] = useState("");
   const [isFormVisible, setFormVisible] = useState(false);
-  const [pila, setPila] = useState(obtenerPilaInicial); // 🔥 carga inicial directa
   const [nuevoElemento, setNuevoElemento] = useState("");
+  const [inputNumero, setInputNumero] = useState("");
 
   const [menuVisibleTalzintan, setMenuVisibleTalzintan] = useState(false);
   const [menuVisibleLoma, setMenuVisibleLoma] = useState(false);
@@ -233,92 +226,6 @@ const UnidadesComponent = () => {
   const [unidadesCalicapan, setUnidadesCalicapan] = useState([]);
   const [unidadesLoma, setUnidadesLoma] = useState([]);
   const [unidadesTalzintan, setUnidadesTalzintan] = useState([]);
-
-  /* // ✅ Guardar en localStorage cada vez que cambia la pila
-  useEffect(() => {
-    localStorage.setItem("pila", JSON.stringify(pila));
-  }, [pila]);
-
-  const agregarElemento = (elemento) => {
-    const nuevo = (elemento || nuevoElemento).trim().toLowerCase();
-    if (!nuevo) return;
-
-    setPila((prev) => {
-      let nuevaPila = [...prev];
-
-      if (nuevo === "talzintan") {
-        const indices = nuevaPila
-          .map((e, i) => (e === "talzintan" ? i : -1))
-          .filter((i) => i !== -1);
-
-        if (indices.length >= 2) {
-          const ultimoIndex = indices[indices.length - 1];
-          nuevaPila.splice(ultimoIndex, 1);
-        }
-
-        nuevaPila.unshift("talzintan");
-      } else {
-        nuevaPila = nuevaPila.filter((e) => e !== nuevo);
-        nuevaPila.unshift(nuevo);
-      }
-
-      return nuevaPila;
-    });
-
-    setNuevoElemento("");
-  }; */
-
-  const agregarElemento = (elemento) => {
-  const nuevo = (elemento || nuevoElemento).trim().toLowerCase();
-  if (!nuevo || nuevo === "tacopan") return; // ⛔️ Ignorar si es vacío o "tacopan"
-
-  setPila((prev) => {
-    let nuevaPila = [...prev];
-
-    if (nuevo === "talzintan") {
-      const indices = nuevaPila
-        .map((e, i) => (e === "talzintan" ? i : -1))
-        .filter((i) => i !== -1);
-
-      if (indices.length >= 2) {
-        const ultimoIndex = indices[indices.length - 1];
-        nuevaPila.splice(ultimoIndex, 1);
-      }
-
-      nuevaPila.unshift("talzintan");
-    } else {
-      nuevaPila = nuevaPila.filter((e) => e !== nuevo);
-      nuevaPila.unshift(nuevo);
-    }
-
-    return nuevaPila;
-  });
-
-  setNuevoElemento("");
-};
-
-
-  const obtenerColor = (nombre) => {
-    switch (nombre) {
-      case "talzintan":
-        return "#4caf50"; // verde
-      case "tezotepec":
-        return "#ff9800"; // naranja
-      case "calicapan":
-        return "#2196f3"; // azul
-      case "sosa":
-        return "#e14eff"; // rosa
-      case "sani":
-        return "#9e9e9e"; // gris
-      default:
-        return "#000"; // negro para otros
-    }
-  };
-
-  const limpiarPila = () => {
-    setPila([]);
-    localStorage.removeItem("pila");
-  };
 
   useEffect(() => {
     const obtenerDatos = async () => {
@@ -2488,6 +2395,96 @@ const UnidadesComponent = () => {
     });
   };
 
+  // ✅ Reactividad automática
+  const pila = useLiveQuery(async () => {
+    const registros = await dbpila.pila.toArray();
+    return registros.map((r) => r.valor).reverse(); // más reciente primero
+  }, []);
+
+  // ✅ Agregar elemento a la pila
+  const agregarElemento = async (entrada) => {
+    const valor = entrada.trim().toLowerCase();
+    if (!valor || valor === "tacopan") return;
+
+    const registros = await dbpila.pila.toArray();
+    const valores = registros.map((r) => r.valor);
+
+    if (valor === "talzintan") {
+      // Filtrar registros que son "talzintan"
+      const talzintanRegistros = registros.filter(
+        (r) => r.valor === "talzintan"
+      );
+
+      if (talzintanRegistros.length >= 2) {
+        // ✅ Ordenar por ID ascendente (más viejo primero)
+        const masAntiguo = talzintanRegistros.sort((a, b) => a.id - b.id)[0];
+        await dbpila.pila.delete(masAntiguo.id);
+      }
+    } else {
+      const indexExistente = valores.indexOf(valor);
+      if (indexExistente !== -1) {
+        const idEliminar = registros[indexExistente].id;
+        await dbpila.pila.delete(idEliminar);
+      }
+    }
+
+    await dbpila.pila.add({ valor });
+  };
+
+  const limpiarPila = async () => {
+    await dbpila.pila.clear();
+    // No necesitas llamar a setPila() porque useLiveQuery actualiza automáticamente
+  };
+
+  const obtenerColor = (nombre) => {
+    switch (nombre) {
+      case "talzintan":
+        return "#4caf50"; // verde
+      case "tezotepec":
+        return "#ff9800"; // naranja
+      case "calicapan":
+        return "#2196f3"; // azul
+      case "sosa":
+        return "#e14eff"; // rosa
+      case "sani":
+        return "#9e9e9e"; // gris
+      default:
+        return "#000"; // negro para otros
+    }
+  };
+
+  const numeros = useLiveQuery(() => dbnum.pilaNumeros.toArray(), []);
+
+  const agregarNumero = async (valor) => {
+    const numero = parseInt(valor ?? inputNumero); // usa argumento si existe
+    if (isNaN(numero)) return;
+
+    const registros = await dbnum.pilaNumeros.toArray();
+    const existente = registros.find((r) => r.numero === numero);
+
+    if (existente) {
+      await dbnum.pilaNumeros.delete(existente.id);
+    }
+
+    await dbnum.pilaNumeros.add({ numero });
+
+    setInputNumero("");
+  };
+
+  const limpiarPilaNum = async () => {
+    await dbnum.pilaNumeros.clear();
+  };
+
+  const botonEstilo = {
+    backgroundColor: "#1976d2",
+    color: "#fff",
+    padding: "6px 12px",
+    border: "none",
+    borderRadius: "6px",
+    cursor: "pointer",
+    fontWeight: "bold",
+  };
+
   return (
     <div>
       {/*FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO*/}
@@ -2522,10 +2519,11 @@ const UnidadesComponent = () => {
               <div className="form-buttons">
                 <button
                   className="save-button-rojo"
-                  type="button"
+                  type="submit"
                   onClick={() => {
                     handleAgregarTipo("rojo");
                     agregarElemento(nuevoElemento);
+                    agregarNumero(numeroUnidad);
                   }}
                   disabled={[
                     "loma",
@@ -2548,7 +2546,7 @@ const UnidadesComponent = () => {
                 </button>
                 <button
                   className="save-button-r3"
-                  type="button"
+                  type="submit"
                   onClick={() => handleAgregarTipo("blanco")}
                   // disabled={["tacopan"].includes(ruta)}
                 >
@@ -3008,49 +3006,119 @@ const UnidadesComponent = () => {
       <table>
         <tbody>
           <tr>
-            <td></td>
             <td>
               <CopyToClipboard text={textToCopyAmotac}>
                 <button className="amotac">Amotac</button>
               </CopyToClipboard>
             </td>
-            <td>
-              <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+            <td colSpan={3}>
+              <div
+                style={{
+                  display: "flex",
+                  gap: "2px",
+                  flexWrap: "wrap",
+                  alignItems: "center",
+                  margin: "5px",
+                }}
+              >
                 <button
                   onClick={limpiarPila}
                   style={{
-                    marginTop: 20,
+                    height: "36px", // o "2rem", o cualquier unidad válida
                     backgroundColor: "red",
                     color: "#fff",
-                    padding: "8px 12px",
                     border: "none",
                     borderRadius: 6,
                   }}
                 >
                   Limpiar
                 </button>
-                {pila.map((el, i) => (
+                {pila?.map((el, i) => (
                   <div
                     key={i}
                     style={{
+                      display: "flex", // 🔁 Flexbox
+                      alignItems: "center", // Centra verticalmente
+                      justifyContent: "center", // Centra horizontalmente
+                      height: "32px",
                       backgroundColor: obtenerColor(el),
                       color: "#fff",
-                      padding: "1px 4px",
-                      minWidth: "30px",
+                      padding: "1px 2px",
+                      minWidth: "72px",
                       textAlign: "center",
+                      fontSize: "0.75rem",
+                      borderRadius: "10px",
                     }}
                     title={el}
                   >
-                    {el.slice(0, 2)}
+                    {el.slice(0, 4)}
                   </div>
                 ))}
+              </div>
+
+              <div
+                style={{
+                  display: "flex",
+                  gap: "6px",
+                  flexWrap: "wrap",
+                  alignItems: "center",
+                  margin: "5px",
+                }}
+              >
+                <button
+                  onClick={limpiarPilaNum}
+                  style={{ ...botonEstilo, backgroundColor: "darkred" }}
+                >
+                  Limpiar
+                </button>
+                {numeros && (
+                  <>
+                    {numeros
+                      .slice(0, 10) // 🔁 Primeros 10 (más antiguos)
+                      .reverse()
+                      .map((n) => (
+                        <div
+                          key={n.id}
+                          style={{
+                            backgroundColor: "#1976d2",
+                            color: "#fff",
+                            padding: "3px 5px",
+                            borderRadius: "8px",
+                            minWidth: "30px",
+                            textAlign: "center",
+                            fontSize: "14px",
+                            fontWeight: "bold",
+                          }}
+                        >
+                          {n.numero}
+                        </div>
+                      ))}
+
+                    {/* Contador separado */}
+                    <div
+                      style={{
+                        backgroundColor: "#eee",
+                        color: "#333",
+                        padding: "1px 2px",
+                        borderRadius: "50%",
+                        minWidth: "20px",
+                        textAlign: "center",
+                        fontSize: "14px",
+                        fontWeight: "bold",
+                        border: "1px solid #ccc",
+                      }}
+                      title="Total de elementos en la pila"
+                    >
+                      {numeros.length}
+                    </div>
+                  </>
+                )}
               </div>
             </td>
           </tr>
 
           {/*FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  */}
           <tr>
-            <td></td>
             <td className="celda-talzintan">
               <button
                 className="boton-cronometro"
@@ -3157,7 +3225,6 @@ const UnidadesComponent = () => {
 
           {/*FILA LOMA  FILA LOMA  FILA LOMA  FILA LOMA  FILA LOMA  FILA LOMA  FILA LOMA  FILA LOMA   */}
           <tr>
-            <td></td>
             <td className="celda-loma">
               <button
                 className="boton-cronometro"
@@ -3235,7 +3302,6 @@ const UnidadesComponent = () => {
 
           {/*FILA TEZOTEPEC  FILA TEZOTEPEC  FILA TEZOTEPEC  FILA TEZOTEPEC  FILA TEZOTEPEC  FILA TEZOTEPEC  */}
           <tr>
-            <td></td>
             <td className="celda-tezotepec">
               <button
                 className="boton-cronometro"
@@ -3371,7 +3437,6 @@ const UnidadesComponent = () => {
 
           {/*FILA CALICAPAN FILA CALICAPAN FILA CALICAPAN FILA CALICAPAN FILA CALICAPAN FILA CALICAPAN FILA CALICAPAN*/}
           <tr>
-            <td></td>
             <td className="celda-calicapan">
               <button
                 className="boton-cronometro"
@@ -3494,7 +3559,6 @@ const UnidadesComponent = () => {
 
           {/*FILA SOSA ESCUELA  FILA SOSA ESCUELA  FILA SOSA ESCUELA  FILA SOSA ESCUELA  FILA SOSA ESCUELA  */}
           <tr>
-            <td></td>
             <td className="celda-sosa">
               <button
                 className="boton-cronometro"
@@ -3611,7 +3675,6 @@ const UnidadesComponent = () => {
 
           {/*FILA SAN ISIDRO  FILA SAN ISIDRO  FILA SAN ISIDRO  FILA SAN ISIDRO  FILA SAN ISIDRO    */}
           <tr>
-            <td></td>
             <td className="celda-sanisidro">
               <button
                 className="boton-cronometro"
@@ -3717,7 +3780,6 @@ const UnidadesComponent = () => {
 
           {/*FILA TACOPAN  FILA TACOPAN  FILA TACOPAN  FILA TACOPAN  FILA TACOPAN  FILA TACOPAN  */}
           <tr>
-            <td></td>
             <td className="celda-tacopan">
               <button
                 className="boton-cronometro"
@@ -3799,7 +3861,6 @@ const UnidadesComponent = () => {
 
           {/*FILA TEQUIMILA  FILA TEQUIMILA  FILA TEQUIMILA  FILA TEQUIMILA  FILA TEQUIMILA  */}
           <tr>
-            <td></td>
             <td className="celda-tequimila">
               <button
                 className="boton-cronometro"
@@ -3872,7 +3933,6 @@ const UnidadesComponent = () => {
 
           {/*FILA QUINTA  FILA QUINTA  FILA QUINTA  FILA QUINTA  FILA QUINTA  FILA QUINTA  */}
           <tr>
-            <td></td>
             <td className="celda-quinta-modificada">
               <button
                 className="boton-cronometro"
@@ -3948,7 +4008,6 @@ const UnidadesComponent = () => {
 
           {/*FILA CALANORTE  FILA CALANORTE  FILA CALANORTE  FILA CALANORTE  FILA CALANORTE    */}
           <tr>
-            <td></td>
             <td className="celda-calanorte">
               <button
                 className="boton-cronometro"
@@ -3998,7 +4057,6 @@ const UnidadesComponent = () => {
 
           {/*FILA PAJACO  FILA PAJACO  FILA PAJACO  FILA PAJACO  FILA PAJACO  FILA PAJACO  */}
           <tr>
-            <td></td>
             <td className="celda-pajaco">
               <button
                 className="boton-cronometro"
@@ -4046,7 +4104,6 @@ const UnidadesComponent = () => {
 
           {/*FILA ANALCO  FILA ANALCO  FILA ANALCO  FILA ANALCO  FILA ANALCO  FILA ANALCO  */}
           <tr>
-            <td></td>
             <td className="celda-analco">
               <button
                 className="boton-cronometro"
@@ -4094,7 +4151,6 @@ const UnidadesComponent = () => {
 
           {/*FILA YOPI  FILA YOPI  FILA YOPI  FILA YOPI  FILA YOPI  FILA YOPI  FILA YOPI  */}
           <tr>
-            <td></td>
             <td className="celda-yopi">
               <button
                 className="boton-cronometro"
@@ -4142,7 +4198,6 @@ const UnidadesComponent = () => {
 
           {/*FILA OTRA  FILA OTRA  FILA OTRA  FILA OTRA  FILA OTRA  FILA OTRA  FILA OTRA  */}
           <tr>
-            <td></td>
             <td className="celda-otra">
               <button
                 className="boton-cronometro"

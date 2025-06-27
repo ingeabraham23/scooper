@@ -1,4 +1,4 @@
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import db from "../db";
 import "./RespaldoYRestauracion.css";
