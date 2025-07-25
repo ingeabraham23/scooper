@@ -7,7 +7,7 @@ import './TablaUnidades.css';
 // eslint-disable-next-line react/prop-types
 const TablaUnidades = ({ onUnidadClick, pagos }) => {
   // Lista de unidades que deben estar deshabilitadas desde el principio
-  const unidadesDeshabilitadasInicialmente = [2, 3, 15, 17, 23, 26, 30, 32, 44, 45, 48, 49, 50]; // Ejemplo de unidades deshabilitadas
+  const unidadesDeshabilitadasInicialmente = [2, 3, 15, 17, 23, 26, 32, 44, 45, 48, 49, 50]; // Ejemplo de unidades deshabilitadas
 
   // eslint-disable-next-line react/prop-types
   const esUnidadDeshabilitada = (unidad) => 

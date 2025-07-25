@@ -27,6 +27,12 @@ import html2canvas from "html2canvas";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
 const UnidadesComponent = () => {
+
+  const inputTalzintanRef = useRef(null);
+  const [reproduciendo, setReproduciendo] = useState(false);
+  const utteranceRef = useRef(null);
+
+
   const [ruta, setRuta] = useState("");
   const [tipo, setTipo] = useState("");
   const [numeroUnidad, setNumeroUnidad] = useState("");
@@ -645,7 +651,7 @@ const UnidadesComponent = () => {
         const diferencia = Math.floor(
           (new Date(unidades[unidades.length - 1].horaRegistro) -
             new Date(unidades[unidades.length - 2].horaRegistro)) /
-            1000
+          1000
         );
         setDiferencia(diferencia);
       } else {
@@ -655,7 +661,7 @@ const UnidadesComponent = () => {
 
       const tiempoTranscurrido = Math.floor(
         (new Date() - new Date(unidades[unidades.length - 1].horaRegistro)) /
-          1000
+        1000
       );
       setTiempoTranscurrido(tiempoTranscurrido);
     } else {
@@ -722,9 +728,8 @@ const UnidadesComponent = () => {
   const formatoTiempo = (segundos) => {
     const minutos = Math.floor(segundos / 60);
     const segundosRestantes = segundos % 60;
-    return `${minutos < 10 ? "0" : ""}${minutos}:${
-      segundosRestantes < 10 ? "0" : ""
-    }${segundosRestantes}`;
+    return `${minutos < 10 ? "0" : ""}${minutos}:${segundosRestantes < 10 ? "0" : ""
+      }${segundosRestantes}`;
   };
 
   const formatoTiempoRedondeado = (segundos) => {
@@ -1957,67 +1962,48 @@ const UnidadesComponent = () => {
 
   const formattedTextTacopanAlMomento = `*Tacopan al momento:*\r\n\r\n- ${formatoTiempoRedondeado(
     tiempoTranscurridoTacopan
-  )} del *${ultimaUnidadTacopan ? ultimaUnidadTacopan.numeroUnidad : "N/A"}* *${
-    ultimaUnidadTacopan ? ultimaUnidadTacopan.tipo : "N/A"
-  }* _Tacopan_\r\n\r\n- ${formatoTiempoRedondeado(
-    tiempoTranscurridoTalzintan
-  )} del *${
-    ultimaUnidadTalzintan ? ultimaUnidadTalzintan.numeroUnidad : "N/A"
-  }* *${
-    ultimaUnidadTalzintan ? ultimaUnidadTalzintan.tipo : "N/A"
-  }* _Talzintan_\r\n- ${formatoTiempoRedondeado(tiempoTranscurridoLoma)} del *${
-    ultimaUnidadLoma ? ultimaUnidadLoma.numeroUnidad : "N/A"
-  }* *${
-    ultimaUnidadLoma ? ultimaUnidadLoma.tipo : "N/A"
-  }* _Loma_\r\n\r\n- ${formatoTiempoRedondeado(
-    tiempoTranscurridoCalanorte
-  )} del *${
-    ultimaUnidadCalanorte ? ultimaUnidadCalanorte.numeroUnidad : "N/A"
-  }* *${
-    ultimaUnidadCalanorte ? ultimaUnidadCalanorte.tipo : "N/A"
-  }* _Calanorte_\r\n- ${formatoTiempoRedondeado(
-    tiempoTranscurridoPajaco
-  )} del *${ultimaUnidadPajaco ? ultimaUnidadPajaco.numeroUnidad : "N/A"}* *${
-    ultimaUnidadPajaco ? ultimaUnidadPajaco.tipo : "N/A"
-  }* _Pajaco_\r\n© _JoyBoy._`;
+  )} del *${ultimaUnidadTacopan ? ultimaUnidadTacopan.numeroUnidad : "N/A"}* *${ultimaUnidadTacopan ? ultimaUnidadTacopan.tipo : "N/A"
+    }* _Tacopan_\r\n\r\n- ${formatoTiempoRedondeado(
+      tiempoTranscurridoTalzintan
+    )} del *${ultimaUnidadTalzintan ? ultimaUnidadTalzintan.numeroUnidad : "N/A"
+    }* *${ultimaUnidadTalzintan ? ultimaUnidadTalzintan.tipo : "N/A"
+    }* _Talzintan_\r\n- ${formatoTiempoRedondeado(tiempoTranscurridoLoma)} del *${ultimaUnidadLoma ? ultimaUnidadLoma.numeroUnidad : "N/A"
+    }* *${ultimaUnidadLoma ? ultimaUnidadLoma.tipo : "N/A"
+    }* _Loma_\r\n\r\n- ${formatoTiempoRedondeado(
+      tiempoTranscurridoCalanorte
+    )} del *${ultimaUnidadCalanorte ? ultimaUnidadCalanorte.numeroUnidad : "N/A"
+    }* *${ultimaUnidadCalanorte ? ultimaUnidadCalanorte.tipo : "N/A"
+    }* _Calanorte_\r\n- ${formatoTiempoRedondeado(
+      tiempoTranscurridoPajaco
+    )} del *${ultimaUnidadPajaco ? ultimaUnidadPajaco.numeroUnidad : "N/A"}* *${ultimaUnidadPajaco ? ultimaUnidadPajaco.tipo : "N/A"
+    }* _Pajaco_\r\n© _JoyBoy._`;
 
   const formattedTextTacopanTeLlevas = `*Tacopan te llevas:*\r\n\r\n- ${formatoTiempoRedondeado(
     diferenciaTacopan
-  )} del *${
-    penultimaUnidadTacopan ? penultimaUnidadTacopan.numeroUnidad : "N/A"
-  }* *${
-    penultimaUnidadTacopan ? penultimaUnidadTacopan.tipo : "N/A"
-  }* _Tacopan_\r\n\r\n- ${formatoTiempoRedondeado(
-    tiempoTranscurridoTalzintan
-  )} del *${
-    ultimaUnidadTalzintan ? ultimaUnidadTalzintan.numeroUnidad : "N/A"
-  }* *${
-    ultimaUnidadTalzintan ? ultimaUnidadTalzintan.tipo : "N/A"
-  }* _Talzintan_\r\n- ${formatoTiempoRedondeado(tiempoTranscurridoLoma)} del *${
-    ultimaUnidadLoma ? ultimaUnidadLoma.numeroUnidad : "N/A"
-  }* *${
-    ultimaUnidadLoma ? ultimaUnidadLoma.tipo : "N/A"
-  }* _Loma_\r\n\r\n- ${formatoTiempoRedondeado(
-    tiempoTranscurridoCalanorte
-  )} del *${
-    ultimaUnidadCalanorte ? ultimaUnidadCalanorte.numeroUnidad : "N/A"
-  }* *${
-    ultimaUnidadCalanorte ? ultimaUnidadCalanorte.tipo : "N/A"
-  }* _Calanorte_\r\n- ${formatoTiempoRedondeado(
-    tiempoTranscurridoPajaco
-  )} del *${ultimaUnidadPajaco ? ultimaUnidadPajaco.numeroUnidad : "N/A"}* *${
-    ultimaUnidadPajaco ? ultimaUnidadPajaco.tipo : "N/A"
-  }* _Pajaco_\r\n© _JoyBoy._`;
+  )} del *${penultimaUnidadTacopan ? penultimaUnidadTacopan.numeroUnidad : "N/A"
+    }* *${penultimaUnidadTacopan ? penultimaUnidadTacopan.tipo : "N/A"
+    }* _Tacopan_\r\n\r\n- ${formatoTiempoRedondeado(
+      tiempoTranscurridoTalzintan
+    )} del *${ultimaUnidadTalzintan ? ultimaUnidadTalzintan.numeroUnidad : "N/A"
+    }* *${ultimaUnidadTalzintan ? ultimaUnidadTalzintan.tipo : "N/A"
+    }* _Talzintan_\r\n- ${formatoTiempoRedondeado(tiempoTranscurridoLoma)} del *${ultimaUnidadLoma ? ultimaUnidadLoma.numeroUnidad : "N/A"
+    }* *${ultimaUnidadLoma ? ultimaUnidadLoma.tipo : "N/A"
+    }* _Loma_\r\n\r\n- ${formatoTiempoRedondeado(
+      tiempoTranscurridoCalanorte
+    )} del *${ultimaUnidadCalanorte ? ultimaUnidadCalanorte.numeroUnidad : "N/A"
+    }* *${ultimaUnidadCalanorte ? ultimaUnidadCalanorte.tipo : "N/A"
+    }* _Calanorte_\r\n- ${formatoTiempoRedondeado(
+      tiempoTranscurridoPajaco
+    )} del *${ultimaUnidadPajaco ? ultimaUnidadPajaco.numeroUnidad : "N/A"}* *${ultimaUnidadPajaco ? ultimaUnidadPajaco.tipo : "N/A"
+    }* _Pajaco_\r\n© _JoyBoy._`;
 
   // --- FUNCIONES AUXILIARES PARA EL COPY-PASTE
   const formatUnidadInfo = (tiempo, unidad, ubicacion) =>
-    `${formatoTiempoRedondeado(tiempo)} del *${
-      unidad?.numeroUnidad || "N/A"
+    `${formatoTiempoRedondeado(tiempo)} del *${unidad?.numeroUnidad || "N/A"
     }* *${unidad?.tipo || "N/A"}* ${ubicacion ? `_${ubicacion}_` : ""}`;
 
   const formatUnidadInfo2 = (unidad, ubicacion) =>
-    `*${unidad?.numeroUnidad || "N/A"}* *${unidad?.tipo || "N/A"}* ${
-      ubicacion ? `_${ubicacion}_` : ""
+    `*${unidad?.numeroUnidad || "N/A"}* *${unidad?.tipo || "N/A"}* ${ubicacion ? `_${ubicacion}_` : ""
     }`;
 
   // COPY-PASTE TALZINTAN --  COPY-PASTE TALZINTAN --  COPY-PASTE TALZINTAN --  COPY-PASTE TALZINTAN --
@@ -2485,6 +2471,40 @@ const UnidadesComponent = () => {
     fontWeight: "bold",
   };
 
+
+  const reproducir = (texto) => {
+    if (reproduciendo) {
+      window.speechSynthesis.cancel();
+      setReproduciendo(false);
+      return;
+    }
+
+    window.speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(texto);
+    utterance.lang = "es-MX";
+
+    utterance.onstart = () => setReproduciendo(true);
+    utterance.onend = () => setReproduciendo(false);
+    utterance.onerror = () => setReproduciendo(false);
+
+    utteranceRef.current = utterance;
+    window.speechSynthesis.speak(utterance);
+  };
+
+  const handlePlay = () => {
+    const unidad = inputTalzintanRef.current?.value.trim() || "sin número";
+    const texto = `Depredador 3000, ando por tacopan.`;
+    // const texto = `Atención. La unidad Roja número ${unidad} con destino a Coahuixco Talzintan está arribando a esta parada. Pasando por: Chedraui, Fresnillo, Chignautla. Por favor, prepárese para abordar. Gracias por su preferencia.`;
+    reproducir(texto);
+  };
+
+  const handleHospital = () => {
+    const unidad = inputTalzintanRef.current?.value.trim() || "sin número";
+    const texto = `Atención. La unidad Roja número ${unidad} con destino a Coahuixco Talzintan está arribando a esta parada. Pasando por: HOSPITAL CIS, Chedraui, Fresnillo, Chignautla. Por favor, prepárese para abordar. Gracias por su preferencia.`;
+    reproducir(texto);
+  };
+
   return (
     <div>
       {/*FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO*/}
@@ -2548,7 +2568,7 @@ const UnidadesComponent = () => {
                   className="save-button-r3"
                   type="submit"
                   onClick={() => handleAgregarTipo("blanco")}
-                  // disabled={["tacopan"].includes(ruta)}
+                // disabled={["tacopan"].includes(ruta)}
                 >
                   R-3
                 </button>
@@ -3137,11 +3157,10 @@ const UnidadesComponent = () => {
               <td className="celda-talzintan">
                 <button
                   onClick={() => setMenuVisibleTalzintan(!menuVisibleTalzintan)}
-                  className={`${
-                    ultimaUnidadTalzintan.tipo === "blanco"
-                      ? "white-bg"
-                      : "red-bg"
-                  }`}
+                  className={`${ultimaUnidadTalzintan.tipo === "blanco"
+                    ? "white-bg"
+                    : "red-bg"
+                    }`}
                 >
                   {ultimaUnidadTalzintan.numeroUnidad}
                 </button>
@@ -3152,22 +3171,15 @@ const UnidadesComponent = () => {
                       {formatoTiempo(diferenciaTalzintan)}
                     </button>
                     <button
-                      className={`${
-                        penultimaUnidadTalzintan.tipo === "blanco"
-                          ? "white-bg"
-                          : "red-bg"
-                      }`}
+                      className={`${penultimaUnidadTalzintan.tipo === "blanco"
+                        ? "white-bg"
+                        : "red-bg"
+                        }`}
                       onClick={handleObtenerUnidadesTalzintan}
                     >
                       {penultimaUnidadTalzintan.numeroUnidad}
                     </button>
-                    <input
-                      type="number"
-                      inputMode="numeric"
-                      pattern="[0-9]*"
-                      className="numeric-input"
-                    />
-                    <BotonEliminarUnidad ruta="talzintan" />
+
                     <br></br>
                     {ultimaUnidadRojaTalzintan && (
                       <>
@@ -3193,7 +3205,25 @@ const UnidadesComponent = () => {
                   </>
                 )}
               </td>
+
             )}
+            <td className="celda-talzintan">
+              <button className="boton-voz boton-play" onClick={handlePlay}>
+                {reproduciendo ? "⏸️" : "▶️"}
+              </button>
+
+              <button className="boton-voz boton-h" onClick={handleHospital}>
+                {reproduciendo ? "⏸️" : "H"}
+              </button>
+              <input
+                type="number"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                className="numeric-input"
+                ref={inputTalzintanRef}
+              />
+              <BotonEliminarUnidad ruta="talzintan" />
+            </td>
             <td className="celda-talzintan">
               <div>
                 {unidadesLoma.length > 0 ? (
@@ -3243,9 +3273,8 @@ const UnidadesComponent = () => {
                 {" "}
                 <button
                   onClick={() => setMenuVisibleLoma(!menuVisibleLoma)}
-                  className={`${
-                    ultimaUnidadLoma.tipo === "blanco" ? "white-bg" : "red-bg"
-                  }`}
+                  className={`${ultimaUnidadLoma.tipo === "blanco" ? "white-bg" : "red-bg"
+                    }`}
                 >
                   {ultimaUnidadLoma.numeroUnidad}
                 </button>{" "}
@@ -3255,20 +3284,22 @@ const UnidadesComponent = () => {
                       {formatoTiempo(diferenciaLoma)}
                     </button>
                     <button
-                      className={`${
-                        penultimaUnidadLoma.tipo === "blanco"
-                          ? "white-bg"
-                          : "red-bg"
-                      }`}
+                      className={`${penultimaUnidadLoma.tipo === "blanco"
+                        ? "white-bg"
+                        : "red-bg"
+                        }`}
                       onClick={handleObtenerUnidadesLoma}
                     >
                       {penultimaUnidadLoma.numeroUnidad}
                     </button>
                   </>
                 )}
-                <BotonEliminarUnidad ruta="loma" />
+
               </td>
             )}
+            <td className="celda-loma">
+              <BotonEliminarUnidad ruta="loma" />
+            </td>
             <td className="celda-loma">
               <div>
                 {unidadesTalzintan.length > 0 ? (
@@ -3320,11 +3351,10 @@ const UnidadesComponent = () => {
               <td className="celda-tezotepec">
                 <button
                   onClick={() => setMenuVisibleTezotepec(!menuVisibleLoma)}
-                  className={`${
-                    ultimaUnidadTezotepec.tipo === "blanco"
-                      ? "white-bg"
-                      : "red-bg"
-                  }`}
+                  className={`${ultimaUnidadTezotepec.tipo === "blanco"
+                    ? "white-bg"
+                    : "red-bg"
+                    }`}
                 >
                   {ultimaUnidadTezotepec.numeroUnidad}
                 </button>
@@ -3337,22 +3367,15 @@ const UnidadesComponent = () => {
                       {formatoTiempo(diferenciaTezotepec)}
                     </button>
                     <button
-                      className={`${
-                        penultimaUnidadTezotepec.tipo === "blanco"
-                          ? "white-bg"
-                          : "red-bg"
-                      }`}
+                      className={`${penultimaUnidadTezotepec.tipo === "blanco"
+                        ? "white-bg"
+                        : "red-bg"
+                        }`}
                       onClick={handleObtenerUnidadesTezotepec}
                     >
                       {penultimaUnidadTezotepec.numeroUnidad}
                     </button>
-                    <input
-                      type="number"
-                      inputMode="numeric"
-                      pattern="[0-9]*"
-                      className="numeric-input"
-                    />
-                    <BotonEliminarUnidad ruta="tezotepec" />
+
                     <br></br>
                     {ultimaUnidadRojaTezotepec && (
                       <>
@@ -3379,6 +3402,13 @@ const UnidadesComponent = () => {
                 )}
               </td>
             )}
+            <td className="celda-tezotepec"><input
+              type="number"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              className="numeric-input"
+            />
+              <BotonEliminarUnidad ruta="tezotepec" /></td>
             <td className="celda-tezotepec">
               <div>
                 {unidadesTezotepec.length > 0 ? (
@@ -3455,11 +3485,10 @@ const UnidadesComponent = () => {
               <td className="celda-calicapan">
                 <button
                   onClick={() => setMenuVisibleCalicapan(!menuVisibleCalicapan)}
-                  className={`${
-                    ultimaUnidadCalicapan.tipo === "blanco"
-                      ? "white-bg"
-                      : "red-bg"
-                  }`}
+                  className={`${ultimaUnidadCalicapan.tipo === "blanco"
+                    ? "white-bg"
+                    : "red-bg"
+                    }`}
                 >
                   {ultimaUnidadCalicapan.numeroUnidad}
                 </button>
@@ -3469,22 +3498,15 @@ const UnidadesComponent = () => {
                       {formatoTiempo(diferenciaCalicapan)}
                     </button>
                     <button
-                      className={`${
-                        penultimaUnidadCalicapan.tipo === "blanco"
-                          ? "white-bg"
-                          : "red-bg"
-                      }`}
+                      className={`${penultimaUnidadCalicapan.tipo === "blanco"
+                        ? "white-bg"
+                        : "red-bg"
+                        }`}
                       onClick={handleObtenerUnidadesCalicapan}
                     >
                       {penultimaUnidadCalicapan.numeroUnidad}
                     </button>
-                    <input
-                      type="number"
-                      inputMode="numeric"
-                      pattern="[0-9]*"
-                      className="numeric-input"
-                    />
-                    <BotonEliminarUnidad ruta="calicapan" />
+
                     <br></br>
                     {ultimaUnidadRojaCalicapan && (
                       <>
@@ -3511,6 +3533,13 @@ const UnidadesComponent = () => {
                 )}
               </td>
             )}
+            <td className="celda-calicapan"><input
+              type="number"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              className="numeric-input"
+            />
+              <BotonEliminarUnidad ruta="calicapan" /></td>
             <td className="celda-calicapan">
               <div>
                 {unidades.length > 0 &&
@@ -3579,11 +3608,10 @@ const UnidadesComponent = () => {
                   onClick={() =>
                     setMenuVisibleSosaEscuela(!menuVisibleSosaEscuela)
                   }
-                  className={`${
-                    ultimaUnidadSosaEscuela.tipo === "blanco"
-                      ? "white-bg"
-                      : "red-bg"
-                  }`}
+                  className={`${ultimaUnidadSosaEscuela.tipo === "blanco"
+                    ? "white-bg"
+                    : "red-bg"
+                    }`}
                 >
                   {ultimaUnidadSosaEscuela.numeroUnidad}
                 </button>
@@ -3596,22 +3624,15 @@ const UnidadesComponent = () => {
                       {formatoTiempo(diferenciaSosaEscuela)}
                     </button>
                     <button
-                      className={`${
-                        penultimaUnidadSosaEscuela.tipo === "blanco"
-                          ? "white-bg"
-                          : "red-bg"
-                      }`}
+                      className={`${penultimaUnidadSosaEscuela.tipo === "blanco"
+                        ? "white-bg"
+                        : "red-bg"
+                        }`}
                       onClick={handleObtenerUnidadesSosa}
                     >
                       {penultimaUnidadSosaEscuela.numeroUnidad}
                     </button>
-                    <input
-                      type="number"
-                      inputMode="numeric"
-                      pattern="[0-9]*"
-                      className="numeric-input"
-                    />
-                    <BotonEliminarUnidad ruta="sosa escuela" />
+
                     <br></br>
                     {ultimaUnidadRojaSosaEscuela && (
                       <>
@@ -3638,6 +3659,13 @@ const UnidadesComponent = () => {
                 )}
               </td>
             )}
+            <td className="celda-sosa"><input
+              type="number"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              className="numeric-input"
+            />
+              <BotonEliminarUnidad ruta="sosa escuela" /></td>
             <td className="celda-sosa">
               <div>
                 {unidadesSosa.length > 0 &&
@@ -3693,11 +3721,10 @@ const UnidadesComponent = () => {
               <td className="celda-sanisidro">
                 <button
                   onClick={() => setMenuVisibleSanIsidro(!menuVisibleSanIsidro)}
-                  className={`${
-                    ultimaUnidadSanIsidro.tipo === "blanco"
-                      ? "white-bg"
-                      : "red-bg"
-                  }`}
+                  className={`${ultimaUnidadSanIsidro.tipo === "blanco"
+                    ? "white-bg"
+                    : "red-bg"
+                    }`}
                 >
                   {ultimaUnidadSanIsidro.numeroUnidad}
                 </button>
@@ -3710,22 +3737,15 @@ const UnidadesComponent = () => {
                       {formatoTiempo(diferenciaSanIsidro)}
                     </button>
                     <button
-                      className={`${
-                        penultimaUnidadSanIsidro.tipo === "blanco"
-                          ? "white-bg"
-                          : "red-bg"
-                      }`}
+                      className={`${penultimaUnidadSanIsidro.tipo === "blanco"
+                        ? "white-bg"
+                        : "red-bg"
+                        }`}
                       onClick={handleObtenerUnidadesSanisidro}
                     >
                       {penultimaUnidadSanIsidro.numeroUnidad}
                     </button>
-                    <input
-                      type="number"
-                      inputMode="numeric"
-                      pattern="[0-9]*"
-                      className="numeric-input"
-                    />
-                    <BotonEliminarUnidad ruta="san isidro" />
+
                     <br></br>
                     {ultimaUnidadRojaSanIsidro && (
                       <>
@@ -3752,6 +3772,13 @@ const UnidadesComponent = () => {
                 )}
               </td>
             )}
+            <td className="celda-sanisidro"><input
+              type="number"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              className="numeric-input"
+            />
+              <BotonEliminarUnidad ruta="san isidro" /></td>
             <td className="celda-sanisidro">
               <div>
                 {unidadesSanIsidro.length > 0 &&
@@ -3798,11 +3825,10 @@ const UnidadesComponent = () => {
               <td className="celda-tacopan">
                 <CopyToClipboard text={formattedTextTacopanAlMomento}>
                   <button
-                    className={`${
-                      ultimaUnidadTacopan.tipo === "blanco"
-                        ? "white-bg"
-                        : "red-bg"
-                    }`}
+                    className={`${ultimaUnidadTacopan.tipo === "blanco"
+                      ? "white-bg"
+                      : "red-bg"
+                      }`}
                   >
                     {ultimaUnidadTacopan.numeroUnidad}
                   </button>
@@ -3815,22 +3841,15 @@ const UnidadesComponent = () => {
                       </button>
                     </CopyToClipboard>
                     <button
-                      className={`${
-                        penultimaUnidadTacopan.tipo === "blanco"
-                          ? "white-bg"
-                          : "red-bg"
-                      }`}
+                      className={`${penultimaUnidadTacopan.tipo === "blanco"
+                        ? "white-bg"
+                        : "red-bg"
+                        }`}
                       onClick={handleObtenerUnidadesTacopan}
                     >
                       {penultimaUnidadTacopan.numeroUnidad}
                     </button>
-                    <input
-                      type="number"
-                      inputMode="numeric"
-                      pattern="[0-9]*"
-                      className="numeric-input"
-                    />
-                    <BotonEliminarUnidad ruta="tacopan" />
+
                     <br></br>
                     {ultimaUnidadRojaTacopan && (
                       <>
@@ -3857,7 +3876,16 @@ const UnidadesComponent = () => {
                 )}
               </td>
             )}
+            <td className="celda-tacopan"><input
+              type="number"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              className="numeric-input"
+            />
+              <BotonEliminarUnidad ruta="tacopan" /></td>
           </tr>
+
+
 
           {/*FILA TEQUIMILA  FILA TEQUIMILA  FILA TEQUIMILA  FILA TEQUIMILA  FILA TEQUIMILA  */}
           <tr>
@@ -3878,11 +3906,10 @@ const UnidadesComponent = () => {
               <td className="celda-tequimila">
                 {" "}
                 <button
-                  className={`${
-                    ultimaUnidadTequimila.tipo === "blanco"
-                      ? "white-bg"
-                      : "red-bg"
-                  }`}
+                  className={`${ultimaUnidadTequimila.tipo === "blanco"
+                    ? "white-bg"
+                    : "red-bg"
+                    }`}
                 >
                   {ultimaUnidadTequimila.numeroUnidad}
                 </button>{" "}
@@ -3892,20 +3919,20 @@ const UnidadesComponent = () => {
                       {formatoTiempo(diferenciaTequimila)}
                     </button>
                     <button
-                      className={`${
-                        penultimaUnidadTequimila.tipo === "blanco"
-                          ? "white-bg"
-                          : "red-bg"
-                      }`}
+                      className={`${penultimaUnidadTequimila.tipo === "blanco"
+                        ? "white-bg"
+                        : "red-bg"
+                        }`}
                       onClick={handleObtenerUnidadesTequimila}
                     >
                       {penultimaUnidadTequimila.numeroUnidad}
                     </button>
                   </>
                 )}
-                <BotonEliminarUnidad ruta="tequimila" />
+
               </td>
             )}
+            <td className="celda-tequimila"><BotonEliminarUnidad ruta="tequimila" /></td>
             <td className="celda-tequimila">
               <div>
                 {unidadesQuinta.length > 0 &&
@@ -3950,9 +3977,8 @@ const UnidadesComponent = () => {
               <td className="celda-quinta">
                 {" "}
                 <button
-                  className={`${
-                    ultimaUnidadQuinta.tipo === "blanco" ? "white-bg" : "red-bg"
-                  }`}
+                  className={`${ultimaUnidadQuinta.tipo === "blanco" ? "white-bg" : "red-bg"
+                    }`}
                 >
                   {ultimaUnidadQuinta.numeroUnidad}
                 </button>{" "}
@@ -3962,20 +3988,20 @@ const UnidadesComponent = () => {
                       {formatoTiempo(diferenciaQuinta)}
                     </button>
                     <button
-                      className={`${
-                        penultimaUnidadQuinta.tipo === "blanco"
-                          ? "white-bg"
-                          : "red-bg"
-                      }`}
+                      className={`${penultimaUnidadQuinta.tipo === "blanco"
+                        ? "white-bg"
+                        : "red-bg"
+                        }`}
                       onClick={handleObtenerUnidadesQuinta}
                     >
                       {penultimaUnidadQuinta.numeroUnidad}
                     </button>
                   </>
                 )}
-                <BotonEliminarUnidad ruta="quinta" />
+
               </td>
             )}
+            <td className="celda-quinta"><BotonEliminarUnidad ruta="quinta" /></td>
             <td className="celda-quinta">
               <div>
                 {unidadesCalicapan.length > 0 ? (
@@ -4025,11 +4051,10 @@ const UnidadesComponent = () => {
               <td className="celda-calanorte">
                 {" "}
                 <button
-                  className={`${
-                    ultimaUnidadCalanorte.tipo === "blanco"
-                      ? "white-bg"
-                      : "red-bg"
-                  }`}
+                  className={`${ultimaUnidadCalanorte.tipo === "blanco"
+                    ? "white-bg"
+                    : "red-bg"
+                    }`}
                 >
                   {ultimaUnidadCalanorte.numeroUnidad}
                 </button>{" "}
@@ -4039,20 +4064,20 @@ const UnidadesComponent = () => {
                       {formatoTiempo(diferenciaCalanorte)}
                     </button>
                     <button
-                      className={`${
-                        penultimaUnidadCalanorte.tipo === "blanco"
-                          ? "white-bg"
-                          : "red-bg"
-                      }`}
+                      className={`${penultimaUnidadCalanorte.tipo === "blanco"
+                        ? "white-bg"
+                        : "red-bg"
+                        }`}
                       onClick={handleObtenerUnidadesCalanorte}
                     >
                       {penultimaUnidadCalanorte.numeroUnidad}
                     </button>
                   </>
                 )}
-                <BotonEliminarUnidad ruta="calanorte" />
+
               </td>
             )}
+            <td className="celda-calanorte"><BotonEliminarUnidad ruta="calanorte" /></td>
           </tr>
 
           {/*FILA PAJACO  FILA PAJACO  FILA PAJACO  FILA PAJACO  FILA PAJACO  FILA PAJACO  */}
@@ -4074,9 +4099,8 @@ const UnidadesComponent = () => {
               <td className="celda-pajaco">
                 {" "}
                 <button
-                  className={`${
-                    ultimaUnidadPajaco.tipo === "blanco" ? "white-bg" : "red-bg"
-                  }`}
+                  className={`${ultimaUnidadPajaco.tipo === "blanco" ? "white-bg" : "red-bg"
+                    }`}
                 >
                   {ultimaUnidadPajaco.numeroUnidad}
                 </button>{" "}
@@ -4086,20 +4110,20 @@ const UnidadesComponent = () => {
                       {formatoTiempo(diferenciaPajaco)}
                     </button>
                     <button
-                      className={`${
-                        penultimaUnidadPajaco.tipo === "blanco"
-                          ? "white-bg"
-                          : "red-bg"
-                      }`}
+                      className={`${penultimaUnidadPajaco.tipo === "blanco"
+                        ? "white-bg"
+                        : "red-bg"
+                        }`}
                       onClick={handleObtenerUnidadesPajaco}
                     >
                       {penultimaUnidadPajaco.numeroUnidad}
                     </button>
                   </>
                 )}
-                <BotonEliminarUnidad ruta="pajaco" />
+
               </td>
             )}
+            <td className="celda-pajaco"><BotonEliminarUnidad ruta="pajaco" /></td>
           </tr>
 
           {/*FILA ANALCO  FILA ANALCO  FILA ANALCO  FILA ANALCO  FILA ANALCO  FILA ANALCO  */}
@@ -4121,9 +4145,8 @@ const UnidadesComponent = () => {
               <td className="celda-analco">
                 {" "}
                 <button
-                  className={`${
-                    ultimaUnidadAnalco.tipo === "blanco" ? "white-bg" : "red-bg"
-                  }`}
+                  className={`${ultimaUnidadAnalco.tipo === "blanco" ? "white-bg" : "red-bg"
+                    }`}
                 >
                   {ultimaUnidadAnalco.numeroUnidad}
                 </button>{" "}
@@ -4133,20 +4156,20 @@ const UnidadesComponent = () => {
                       {formatoTiempo(diferenciaAnalco)}
                     </button>
                     <button
-                      className={`${
-                        penultimaUnidadAnalco.tipo === "blanco"
-                          ? "white-bg"
-                          : "red-bg"
-                      }`}
+                      className={`${penultimaUnidadAnalco.tipo === "blanco"
+                        ? "white-bg"
+                        : "red-bg"
+                        }`}
                       onClick={handleObtenerUnidadesAnalco}
                     >
                       {penultimaUnidadAnalco.numeroUnidad}
                     </button>
                   </>
                 )}
-                <BotonEliminarUnidad ruta="analco" />
+
               </td>
             )}
+            <td className="celda-analco"><BotonEliminarUnidad ruta="analco" /></td>
           </tr>
 
           {/*FILA YOPI  FILA YOPI  FILA YOPI  FILA YOPI  FILA YOPI  FILA YOPI  FILA YOPI  */}
@@ -4168,9 +4191,8 @@ const UnidadesComponent = () => {
               <td className="celda-yopi">
                 {" "}
                 <button
-                  className={`${
-                    ultimaUnidadYopi.tipo === "blanco" ? "white-bg" : "red-bg"
-                  }`}
+                  className={`${ultimaUnidadYopi.tipo === "blanco" ? "white-bg" : "red-bg"
+                    }`}
                 >
                   {ultimaUnidadYopi.numeroUnidad}
                 </button>{" "}
@@ -4180,20 +4202,20 @@ const UnidadesComponent = () => {
                       {formatoTiempo(diferenciaYopi)}
                     </button>
                     <button
-                      className={`${
-                        penultimaUnidadYopi.tipo === "blanco"
-                          ? "white-bg"
-                          : "red-bg"
-                      }`}
+                      className={`${penultimaUnidadYopi.tipo === "blanco"
+                        ? "white-bg"
+                        : "red-bg"
+                        }`}
                       onClick={handleObtenerUnidadesYopi}
                     >
                       {penultimaUnidadYopi.numeroUnidad}
                     </button>
                   </>
                 )}
-                <BotonEliminarUnidad ruta="yopi" />
+                
               </td>
             )}
+            <td className="celda-yopi"><BotonEliminarUnidad ruta="yopi" /></td>
           </tr>
 
           {/*FILA OTRA  FILA OTRA  FILA OTRA  FILA OTRA  FILA OTRA  FILA OTRA  FILA OTRA  */}
@@ -4215,9 +4237,8 @@ const UnidadesComponent = () => {
               <td className="celda-otra">
                 {" "}
                 <button
-                  className={`${
-                    ultimaUnidadOtra.tipo === "blanco" ? "white-bg" : "red-bg"
-                  }`}
+                  className={`${ultimaUnidadOtra.tipo === "blanco" ? "white-bg" : "red-bg"
+                    }`}
                 >
                   {ultimaUnidadOtra.numeroUnidad}
                 </button>{" "}
@@ -4227,20 +4248,19 @@ const UnidadesComponent = () => {
                       {formatoTiempo(diferenciaOtra)}
                     </button>
                     <button
-                      className={`${
-                        penultimaUnidadOtra.tipo === "blanco"
-                          ? "white-bg"
-                          : "red-bg"
-                      }`}
+                      className={`${penultimaUnidadOtra.tipo === "blanco"
+                        ? "white-bg"
+                        : "red-bg"
+                        }`}
                       onClick={handleObtenerUnidadesOtra}
                     >
                       {penultimaUnidadOtra.numeroUnidad}
                     </button>
                   </>
                 )}
-                <BotonEliminarUnidad ruta="otra" />
               </td>
             )}
+            <td className="celda-otra"><BotonEliminarUnidad ruta="otra" /></td>
           </tr>
         </tbody>
       </table>
@@ -4274,7 +4294,7 @@ const UnidadesComponent = () => {
                   const leftItem = numerosTalzintan[index]; // Primera mitad
                   const rightItem =
                     numerosTalzintan[
-                      index + Math.ceil(numerosTalzintan.length / 2)
+                    index + Math.ceil(numerosTalzintan.length / 2)
                     ]; // Segunda mitad
 
                   return (
@@ -4285,9 +4305,8 @@ const UnidadesComponent = () => {
                           <td className="celda-lista">{index + 1}</td>
                           <td className="celda-lista">
                             <button
-                              className={`unidad-button ${
-                                leftItem.tipo === "rojo" ? "rojo" : ""
-                              }`}
+                              className={`unidad-button ${leftItem.tipo === "rojo" ? "rojo" : ""
+                                }`}
                             >
                               {leftItem.numeroUnidad}
                             </button>
@@ -4312,9 +4331,8 @@ const UnidadesComponent = () => {
                           </td>
                           <td className="celda-lista">
                             <button
-                              className={`unidad-button ${
-                                rightItem.tipo === "rojo" ? "rojo" : ""
-                              }`}
+                              className={`unidad-button ${rightItem.tipo === "rojo" ? "rojo" : ""
+                                }`}
                             >
                               {rightItem.numeroUnidad}
                             </button>
@@ -4396,9 +4414,8 @@ const UnidadesComponent = () => {
                           </td>
                           <td className="celda-loma">
                             <button
-                              className={`unidad-button ${
-                                leftItem.tipo === "rojo" ? "rojo" : ""
-                              }`}
+                              className={`unidad-button ${leftItem.tipo === "rojo" ? "rojo" : ""
+                                }`}
                             >
                               {leftItem.numeroUnidad}
                             </button>
@@ -4429,9 +4446,8 @@ const UnidadesComponent = () => {
                           </td>
                           <td className="celda-loma">
                             <button
-                              className={`unidad-button ${
-                                rightItem.tipo === "rojo" ? "rojo" : ""
-                              }`}
+                              className={`unidad-button ${rightItem.tipo === "rojo" ? "rojo" : ""
+                                }`}
                             >
                               {rightItem.numeroUnidad}
                             </button>
@@ -4493,7 +4509,7 @@ const UnidadesComponent = () => {
                   const leftItem = numerosTezotepec[index]; // Primera mitad
                   const rightItem =
                     numerosTezotepec[
-                      index + Math.ceil(numerosTezotepec.length / 2)
+                    index + Math.ceil(numerosTezotepec.length / 2)
                     ]; // Segunda mitad
 
                   return (
@@ -4504,9 +4520,8 @@ const UnidadesComponent = () => {
                           <td className="celda-tezotepec">{index + 1}</td>
                           <td className="celda-tezotepec">
                             <button
-                              className={`unidad-button ${
-                                leftItem.tipo === "rojo" ? "rojo" : ""
-                              }`}
+                              className={`unidad-button ${leftItem.tipo === "rojo" ? "rojo" : ""
+                                }`}
                             >
                               {leftItem.numeroUnidad}
                             </button>
@@ -4531,9 +4546,8 @@ const UnidadesComponent = () => {
                           </td>
                           <td className="celda-tezotepec">
                             <button
-                              className={`unidad-button ${
-                                rightItem.tipo === "rojo" ? "rojo" : ""
-                              }`}
+                              className={`unidad-button ${rightItem.tipo === "rojo" ? "rojo" : ""
+                                }`}
                             >
                               {rightItem.numeroUnidad}
                             </button>
@@ -4684,7 +4698,7 @@ const UnidadesComponent = () => {
                   const leftItem = numerosCalicapan[index]; // Primera mitad
                   const rightItem =
                     numerosCalicapan[
-                      index + Math.ceil(numerosCalicapan.length / 2)
+                    index + Math.ceil(numerosCalicapan.length / 2)
                     ]; // Segunda mitad
 
                   return (
@@ -4695,9 +4709,8 @@ const UnidadesComponent = () => {
                           <td className="celda-calicapan">{index + 1}</td>
                           <td className="celda-calicapan">
                             <button
-                              className={`unidad-button ${
-                                leftItem.tipo === "rojo" ? "rojo" : ""
-                              }`}
+                              className={`unidad-button ${leftItem.tipo === "rojo" ? "rojo" : ""
+                                }`}
                             >
                               {leftItem.numeroUnidad}
                             </button>
@@ -4722,9 +4735,8 @@ const UnidadesComponent = () => {
                           </td>
                           <td className="celda-calicapan">
                             <button
-                              className={`unidad-button ${
-                                rightItem.tipo === "rojo" ? "rojo" : ""
-                              }`}
+                              className={`unidad-button ${rightItem.tipo === "rojo" ? "rojo" : ""
+                                }`}
                             >
                               {rightItem.numeroUnidad}
                             </button>
@@ -4793,9 +4805,8 @@ const UnidadesComponent = () => {
                             <td className="celda-sosa">{index + 1}</td>
                             <td className="celda-sosa">
                               <button
-                                className={`unidad-button ${
-                                  leftItem.tipo === "rojo" ? "rojo" : ""
-                                }`}
+                                className={`unidad-button ${leftItem.tipo === "rojo" ? "rojo" : ""
+                                  }`}
                               >
                                 {leftItem.numeroUnidad}
                               </button>
@@ -4820,9 +4831,8 @@ const UnidadesComponent = () => {
                             </td>
                             <td className="celda-sosa">
                               <button
-                                className={`unidad-button ${
-                                  rightItem.tipo === "rojo" ? "rojo" : ""
-                                }`}
+                                className={`unidad-button ${rightItem.tipo === "rojo" ? "rojo" : ""
+                                  }`}
                               >
                                 {rightItem.numeroUnidad}
                               </button>
@@ -4953,7 +4963,7 @@ const UnidadesComponent = () => {
                   const leftItem = numerosSanisidro[index]; // Primera mitad
                   const rightItem =
                     numerosSanisidro[
-                      index + Math.ceil(numerosSanisidro.length / 2)
+                    index + Math.ceil(numerosSanisidro.length / 2)
                     ]; // Segunda mitad
 
                   return (
@@ -4964,9 +4974,8 @@ const UnidadesComponent = () => {
                           <td className="celda-sanisidro">{index + 1}</td>
                           <td className="celda-sanisidro">
                             <button
-                              className={`unidad-button ${
-                                leftItem.tipo === "rojo" ? "rojo" : ""
-                              }`}
+                              className={`unidad-button ${leftItem.tipo === "rojo" ? "rojo" : ""
+                                }`}
                             >
                               {leftItem.numeroUnidad}
                             </button>
@@ -4991,9 +5000,8 @@ const UnidadesComponent = () => {
                           </td>
                           <td className="celda-sanisidro">
                             <button
-                              className={`unidad-button ${
-                                rightItem.tipo === "rojo" ? "rojo" : ""
-                              }`}
+                              className={`unidad-button ${rightItem.tipo === "rojo" ? "rojo" : ""
+                                }`}
                             >
                               {rightItem.numeroUnidad}
                             </button>
@@ -5127,9 +5135,8 @@ const UnidadesComponent = () => {
                       <td className="celda-tacopan">{index + 1}</td>
                       <td className="celda-tacopan">
                         <button
-                          className={`unidad-button ${
-                            unidad.tipo === "rojo" ? "rojo" : ""
-                          }`}
+                          className={`unidad-button ${unidad.tipo === "rojo" ? "rojo" : ""
+                            }`}
                         >
                           {unidad.numeroUnidad}
                         </button>
@@ -5190,9 +5197,8 @@ const UnidadesComponent = () => {
                         <td className="celda-tequimila">{index + 1}</td>
                         <td className="celda-tequimila">
                           <button
-                            className={`unidad-button ${
-                              unidad.tipo === "rojo" ? "rojo" : ""
-                            }`}
+                            className={`unidad-button ${unidad.tipo === "rojo" ? "rojo" : ""
+                              }`}
                           >
                             {unidad.numeroUnidad}
                           </button>
@@ -5253,9 +5259,8 @@ const UnidadesComponent = () => {
                         <td className="celda-quinta">{index + 1}</td>
                         <td className="celda-quinta">
                           <button
-                            className={`unidad-button ${
-                              unidad.tipo === "rojo" ? "rojo" : ""
-                            }`}
+                            className={`unidad-button ${unidad.tipo === "rojo" ? "rojo" : ""
+                              }`}
                           >
                             {unidad.numeroUnidad}
                           </button>
@@ -5307,9 +5312,8 @@ const UnidadesComponent = () => {
                       <td className="celda-calanorte">{index + 1}</td>
                       <td className="celda-calanorte">
                         <button
-                          className={`unidad-button ${
-                            unidad.tipo === "rojo" ? "rojo" : ""
-                          }`}
+                          className={`unidad-button ${unidad.tipo === "rojo" ? "rojo" : ""
+                            }`}
                         >
                           {unidad.numeroUnidad}
                         </button>
@@ -5361,9 +5365,8 @@ const UnidadesComponent = () => {
                         <td className="celda-pajaco">{index + 1}</td>
                         <td className="celda-pajaco">
                           <button
-                            className={`unidad-button ${
-                              unidad.tipo === "rojo" ? "rojo" : ""
-                            }`}
+                            className={`unidad-button ${unidad.tipo === "rojo" ? "rojo" : ""
+                              }`}
                           >
                             {unidad.numeroUnidad}
                           </button>
@@ -5421,9 +5424,8 @@ const UnidadesComponent = () => {
                         <td className="celda-analco">{index + 1}</td>
                         <td className="celda-analco">
                           <button
-                            className={`unidad-button ${
-                              unidad.tipo === "rojo" ? "rojo" : ""
-                            }`}
+                            className={`unidad-button ${unidad.tipo === "rojo" ? "rojo" : ""
+                              }`}
                           >
                             {unidad.numeroUnidad}
                           </button>
@@ -5475,9 +5477,8 @@ const UnidadesComponent = () => {
                       <td className="celda-yopi">{index + 1}</td>
                       <td className="celda-yopi">
                         <button
-                          className={`unidad-button ${
-                            unidad.tipo === "rojo" ? "rojo" : ""
-                          }`}
+                          className={`unidad-button ${unidad.tipo === "rojo" ? "rojo" : ""
+                            }`}
                         >
                           {unidad.numeroUnidad}
                         </button>
@@ -5520,9 +5521,8 @@ const UnidadesComponent = () => {
                       <td className="celda-otra">{index + 1}</td>
                       <td className="celda-otra">
                         <button
-                          className={`unidad-button ${
-                            unidad.tipo === "rojo" ? "rojo" : ""
-                          }`}
+                          className={`unidad-button ${unidad.tipo === "rojo" ? "rojo" : ""
+                            }`}
                         >
                           {unidad.numeroUnidad}
                         </button>

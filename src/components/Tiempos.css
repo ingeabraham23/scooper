@@ -1777,3 +1777,29 @@ table {
   border-color: #0056b3;
   background-color: #fff;
 }
+
+.boton-voz {
+  font-size: 20px;
+  padding: 5px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+.boton-play {
+  background-color: #007bff;
+}
+
+.boton-play:hover {
+  background-color: #0056b3;
+}
+
+.boton-h {
+  background-color: #28a745;
+}
+
+.boton-h:hover {
+  background-color: #1e7e34;
+}

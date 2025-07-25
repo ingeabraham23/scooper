@@ -10,7 +10,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <App />
     <ToastContainer
       position="top-right" //top-left, top-center, bottom-left, bottom-right, bottom-center
-      autoClose={5000} // milisegundos
+      autoClose={false} // milisegundos
       hideProgressBar={false} // Ocultar barra de progreso
       newestOnTop={false}
       closeOnClick //Cerrar al hacer click
