@@ -518,28 +518,104 @@ const UnidadesComponent = () => {
         tiempoTranscurridoTalzintan == 360 &&
         ultimaUnidadTalzintan.tipo == "rojo"
       ) {
-        toast.success(`¡6 Minutos libres del rojo Talzintan!`);
+        toast(`¡6 Minutos libres del rojo Talzintan!`, {
+          position: "top-right",
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          style: {
+            fontSize: "20px",          // 🔹 tamaño de letra
+            padding: "18px 24px",      // 🔹 espacio interno
+            minHeight: "90px",         // 🔹 altura mínima
+            width: "500px",            // 🔹 ancho
+            borderRadius: "14px",      // 🔹 esquinas redondeadas
+            border: "1px solid #000000ff", // 🔹 borde rojo
+            backgroundColor: "#66ff00ff",  // 🔹 fondo
+            color: "#000000ff",            // 🔹 color texto
+            fontWeight: "bold",          // 🔹 negritas
+          },
+        });
       }
 
       if (
         tiempoTranscurridoTezotepec == 360 &&
         ultimaUnidadTezotepec.tipo == "rojo"
       ) {
-        toast.warn(`¡6 Minutos libres del rojo Tezotepec!`);
+        toast(`¡6 Minutos libres del rojo Tezotepec!`, {
+          position: "top-right",
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          style: {
+            fontSize: "20px",          // 🔹 tamaño de letra
+            padding: "18px 24px",      // 🔹 espacio interno
+            minHeight: "90px",         // 🔹 altura mínima
+            width: "500px",            // 🔹 ancho
+            borderRadius: "14px",      // 🔹 esquinas redondeadas
+            border: "1px solid #000000ff", // 🔹 borde rojo
+            backgroundColor: "#ffbb00ff",  // 🔹 fondo
+            color: "#ffffffff",            // 🔹 color texto
+            fontWeight: "bold",          // 🔹 negritas
+          },
+        });
       }
 
       if (
         tiempoTranscurridoCalicapan == 360 &&
         ultimaUnidadCalicapan.tipo == "rojo"
       ) {
-        toast.info(`¡6 Minutos libres del rojo Calicapan!`);
+        toast(`¡6 Minutos libres del rojo Calicapan!`, {
+          position: "top-right",
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          style: {
+            fontSize: "20px",          // 🔹 tamaño de letra
+            padding: "18px 24px",      // 🔹 espacio interno
+            minHeight: "90px",         // 🔹 altura mínima
+            width: "500px",            // 🔹 ancho
+            borderRadius: "14px",      // 🔹 esquinas redondeadas
+            border: "1px solid #000000ff", // 🔹 borde rojo
+            backgroundColor: "#247becff",  // 🔹 fondo
+            color: "#000000ff",            // 🔹 color texto
+            fontWeight: "bold",          // 🔹 negritas
+          },
+        });
       }
 
       if (
         tiempoTranscurridoSosaEscuela == 360 &&
         ultimaUnidadSosaEscuela.tipo == "rojo"
       ) {
-        toast.error(`¡6 Minutos libres del rojo Sosa Escuela!`);
+        toast(`¡6 Minutos libres del rojo Sosa Escuela!`, {
+          position: "top-right",
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          style: {
+            fontSize: "20px",          // 🔹 tamaño de letra
+            padding: "18px 24px",      // 🔹 espacio interno
+            minHeight: "90px",         // 🔹 altura mínima
+            width: "500px",            // 🔹 ancho
+            borderRadius: "14px",      // 🔹 esquinas redondeadas
+            border: "1px solid #000000ff", // 🔹 borde rojo
+            backgroundColor: "#c300ffff",  // 🔹 fondo
+            color: "#000000ff",            // 🔹 color texto
+            fontWeight: "bold",          // 🔹 negritas
+          },
+        });
       }
 
       if (
@@ -548,13 +624,23 @@ const UnidadesComponent = () => {
       ) {
         toast(`¡6 Minutos libres del rojo San Isidro!`, {
           position: "top-right",
-          autoClose: 5000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
           theme: "light",
+          style: {
+            fontSize: "20px",          // 🔹 tamaño de letra
+            padding: "18px 24px",      // 🔹 espacio interno
+            minHeight: "90px",         // 🔹 altura mínima
+            width: "500px",            // 🔹 ancho
+            borderRadius: "14px",      // 🔹 esquinas redondeadas
+            border: "1px solid #000000ff", // 🔹 borde rojo
+            backgroundColor: "#505050ff",  // 🔹 fondo
+            color: "#ffffffff",            // 🔹 color texto
+            fontWeight: "bold",          // 🔹 negritas
+          },
         });
       }
     };
@@ -3031,7 +3117,7 @@ const UnidadesComponent = () => {
                 <button className="amotac">Amotac</button>
               </CopyToClipboard>
             </td>
-            <td colSpan={3}>
+            <td colSpan={4}>
               <div
                 style={{
                   display: "flex",
@@ -3416,7 +3502,7 @@ const UnidadesComponent = () => {
                     <div
                       key={u.id}
                       style={{
-                        fontSize: 16,
+                        fontSize: 14,
                         marginBottom: -5,
                         fontWeight: index === 0 ? "bold" : "normal",
                         color: index === 0 ? "#0070f3" : "inherit", // color destacado para el primero
@@ -3440,7 +3526,7 @@ const UnidadesComponent = () => {
                     <div
                       key={u.id}
                       style={{
-                        fontSize: 16,
+                        fontSize: 14,
                         marginBottom: -5,
                         fontWeight:
                           index === unidadesTezotepecReverse.length - 1
@@ -3566,7 +3652,7 @@ const UnidadesComponent = () => {
             <td className="celda-calicapan">
               <div
                 style={{
-                  fontSize: "0.75rem",
+                  fontSize: 14,
                   lineHeight: "1.2",
                   display: "flex",
                   flexDirection: "column",
@@ -3575,7 +3661,7 @@ const UnidadesComponent = () => {
               >
                 {numerosTequimila
                   .slice(-6, -2) // 🔹 Excluye los dos últimos, muestra los 4 anteriores
-                  .reverse()
+                  // .reverse()
                   .map((unidad, index) => (
                     <div key={index}>
                       {unidad.numeroUnidad} -{" "}
@@ -3688,6 +3774,7 @@ const UnidadesComponent = () => {
                     key={u.id}
                     style={{
                       marginTop: 0,
+                      fontSize: 14,
                       fontWeight: "bold",
                       color: "yellow",
                       textShadow: "1px 1px 2px black",
@@ -4212,7 +4299,7 @@ const UnidadesComponent = () => {
                     </button>
                   </>
                 )}
-                
+
               </td>
             )}
             <td className="celda-yopi"><BotonEliminarUnidad ruta="yopi" /></td>
@@ -5180,7 +5267,7 @@ const UnidadesComponent = () => {
               </thead>
               <tbody>
                 {numerosTequimila
-                  .slice(-6, -2)
+                  .slice(-8, -1)
                   .reverse()
                   .map((unidad, index) => {
                     const minutos = new Date(unidad.horaRegistro).getMinutes();
