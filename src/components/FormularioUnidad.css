@@ -9,13 +9,13 @@
     background-color: #ffffff;
     border-radius: 8px;
     z-index: 1000;
-    width: 200px;
+    width: 400px;
     max-width: 90%;
   }
   
-  .form-container-comision h3 {
+  .form-container-comision h1 {
     margin-bottom: 20px;
-    font-size: 30px;
+    font-size: 80px;
     color: #333;
     text-align: center;
   }
@@ -37,6 +37,8 @@
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 4em;
+    width: 200px;
+    max-width: 90%;
   }
   
   .form-container-comision button {

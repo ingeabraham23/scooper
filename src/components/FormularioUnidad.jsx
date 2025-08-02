@@ -18,7 +18,7 @@ const FormularioUnidad = ({ unidad, onGuardar, onCancelar }) => {
 
   return (
     <div className="form-container-comision">
-      <h3>Unidad {unidad}</h3>
+      <h1>Unidad {unidad}</h1>
       <form>
         <label>
           Monto:

@@ -40,6 +40,7 @@ body {
   transition: background-color 0.3s ease; /* Agrega una transición */
   margin-right: 5px;
   font-weight: bold;
+  width: 100px;
 }
 
 /* Estilo para el botón deshabilitado */
@@ -60,6 +61,7 @@ body {
   transition: background-color 0.3s ease; /* Agrega una transición */
   margin-right: 5px;
   font-weight: bold;
+  width: 100px;
 }
 
 .amotac {
@@ -158,6 +160,8 @@ body {
   transition: background-color 0.3s ease; /* Agrega una transición */
   margin-right: 30px;
   margin-left: 30px;
+  width: 100px;
+  height: 100px;
 }
 
 button:hover {
@@ -559,13 +563,6 @@ table {
   font-size: 24px;
   font-weight: bold;
 }
-
-
-
-
-
-
-
 
 
 
@@ -1708,6 +1705,8 @@ table {
   border-radius: 5px; /* Agrega bordes redondeados */
   cursor: pointer; /* Cambia el cursor al pasar por encima */
   transition: background-color 0.3s ease; /* Agrega una transición */
+  width: 100px;
+  height: 50px;
 }
 
 .hora-registro-container{
