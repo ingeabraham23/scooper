@@ -185,6 +185,15 @@ export const obtenerUltimasUnidadesTacopan = async () => {
   return lista.slice(-2).reverse(); // reverse para que salgan de más nueva a menos
 };
 
+export const obtenerUltimasUnidadesCalanorte = async () => {
+  const lista = await db.unidades
+    .where({ ruta: "calanorte", tipo: "blanco" })
+    .sortBy("id");
+
+  // Tomamos las últimas 2 por ID más alto
+  return lista.slice(-2).reverse(); // reverse para que salgan de más nueva a menos
+};
+
 export const obtenerUltimasUnidadesPajaco = async () => {
   const lista = await db.unidades
     .where({ ruta: "pajaco", tipo: "blanco" })

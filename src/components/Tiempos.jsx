@@ -16,6 +16,7 @@ import {
   buscarSosaParaPrediccion,
   buscarQuintaParaPrediccion,
   obtenerUltimasUnidadesTacopan,
+  obtenerUltimasUnidadesCalanorte,
   buscarTezotepecParaPrediccion,
   buscarTezotepecParaPrediccionReverse,
   buscarCalicapanParaPrediccion,
@@ -226,6 +227,7 @@ const UnidadesComponent = () => {
   const [unidadesSanIsidro, setUnidadesSanIsidro] = useState([]);
   const [unidadesQuinta, setUnidadesQuinta] = useState([]);
   const [ultimasTacopan, setUltimasTacopan] = useState([]);
+  const [ultimasCalanorte, setUltimasCalanorte] = useState([]);
   const [unidadesTezotepec, setUnidadesTezotepec] = useState([]);
   const [unidadesTezotepecReverse, setUnidadesTezotepecReverse] = useState([]);
 
@@ -319,6 +321,15 @@ const UnidadesComponent = () => {
     const cargarUltimasUnidades = async () => {
       const unidades = await obtenerUltimasUnidadesTacopan();
       setUltimasTacopan(unidades);
+    };
+
+    cargarUltimasUnidades();
+  }, [isFormVisible]);
+
+  useEffect(() => {
+    const cargarUltimasUnidades = async () => {
+      const unidades = await obtenerUltimasUnidadesCalanorte();
+      setUltimasCalanorte(unidades);
     };
 
     cargarUltimasUnidades();
@@ -946,6 +957,11 @@ const UnidadesComponent = () => {
     const numerosTequimila = await obtenerUnidades("tequimila");
     setnumerosTequimila(numerosTequimila);
     setMostrarListaTequimila(true);
+  };
+
+  const handleObtenerUnidadesTequimilaParaFila = async () => {
+    const numerosTequimila = await obtenerUnidades("tequimila");
+    setnumerosTequimila(numerosTequimila);
   };
 
   const handleCloseListaTequimila = () => {
@@ -2025,11 +2041,17 @@ const UnidadesComponent = () => {
     return date;
   };
 
-  /* const add60Minutes = (horaRegistro) => {
+  const add90Minutes = (horaRegistro) => {
     const date = new Date(horaRegistro);
-    date.setMinutes(date.getMinutes() + 60);
+    date.setMinutes(date.getMinutes() + 90);
     return date;
-  }; */
+  };
+
+  const add180Minutes = (horaRegistro) => {
+    const date = new Date(horaRegistro);
+    date.setMinutes(date.getMinutes() + 180);
+    return date;
+  };
 
   const add75Minutes = (horaRegistro) => {
     const date = new Date(horaRegistro);
@@ -2579,6 +2601,7 @@ const UnidadesComponent = () => {
   };
 
   const handlePlay = () => {
+    // eslint-disable-next-line no-unused-vars
     const unidad = inputTalzintanRef.current?.value.trim() || "sin número";
     const texto = `Depredador 3000, ando por tacopan.`;
     // const texto = `Atención. La unidad Roja número ${unidad} con destino a Coahuixco Talzintan está arribando a esta parada. Pasando por: Chedraui, Fresnillo, Chignautla. Por favor, prepárese para abordar. Gracias por su preferencia.`;
@@ -3337,6 +3360,50 @@ const UnidadesComponent = () => {
                 )}
               </div>
             </td>
+
+
+
+
+            <td className="celda-loma">
+              <div>
+                {unidadesTalzintan.length > 0 ? (
+                  unidadesTalzintan
+                    .filter(
+                      (u) =>
+                        u.numeroUnidad.startsWith(".") || u.numeroUnidad.endsWith(".")
+                    )
+                    .map((u) => {
+                      let horaFormateada;
+
+                      if (u.numeroUnidad.startsWith(".")) {
+                        horaFormateada = formatHoraRegistro(add90Minutes(u.horaRegistro));
+                      } else if (u.numeroUnidad.endsWith(".")) {
+                        horaFormateada = formatHoraRegistro(add180Minutes(u.horaRegistro));
+                      }
+
+                      return (
+                        <div
+                          key={u.id}
+                          style={{
+                            fontSize: 14,
+                            fontWeight: "bold",
+                            color: "blue",
+                          }}
+                        >
+                          <span style={{ fontWeight: "bold", marginRight: 8 }}>
+                            {u.numeroUnidad}
+                          </span>
+                          <span>{horaFormateada}</span>
+                        </div>
+                      );
+                    })
+                ) : (
+                  <div style={{ color: "gray", fontStyle: "italic" }}>JoyBoy</div>
+                )}
+              </div>
+            </td>
+
+
           </tr>
 
           {/*FILA LOMA  FILA LOMA  FILA LOMA  FILA LOMA  FILA LOMA  FILA LOMA  FILA LOMA  FILA LOMA   */}
@@ -3389,31 +3456,50 @@ const UnidadesComponent = () => {
             <td className="celda-loma">
               <div>
                 {unidadesTalzintan.length > 0 ? (
-                  unidadesTalzintan.map((u) => (
-                    <div
-                      key={u.id}
-                      style={{
-                        marginBottom: -5, // separación entre elementos
-                        color: "#333", // color del texto
-                        fontSize: 16, // tamaño de fuente en px
-                      }}
-                    >
-                      <span style={{ fontWeight: "bold", marginRight: 8 }}>
-                        {u.numeroUnidad}
-                      </span>
-                      <span>
-                        {formatHoraRegistro(add70Minutes(u.horaRegistro))}
-                      </span>
-                    </div>
-                  ))
+                  unidadesTalzintan
+                    .filter(
+                      (u) =>
+                        !u.numeroUnidad.startsWith(".") && !u.numeroUnidad.endsWith(".")
+                    )
+                    .map((u) => (
+                      <div
+                        key={u.id}
+                        style={{
+                          marginBottom: -5,
+                          color: "#333",
+                          fontSize: 16,
+                        }}
+                      >
+                        <span style={{ fontWeight: "bold", marginRight: 8 }}>
+                          {u.numeroUnidad}
+                        </span>
+                        <span>{formatHoraRegistro(add70Minutes(u.horaRegistro))}</span>
+                      </div>
+                    ))
                 ) : (
-                  <div
-                    style={{ color: "gray", fontStyle: "italic", fontSize: 16 }}
-                  >
-                    JoyBoy
-                  </div>
+                  <div style={{ color: "gray", fontStyle: "italic" }}>JoyBoy</div>
                 )}
               </div>
+            </td>
+
+            <td className="celda-loma">
+              {ultimasCalanorte.length > 0 &&
+                ultimasCalanorte.map((u) => (
+                  <div
+                    key={u.id}
+                    style={{
+                      marginTop: 0,
+                      fontSize: 14,
+                      fontWeight: "bold",
+                      color: "green",
+                      textShadow: "1px 1px 1px white",
+                    }}
+                  >
+                    {u.numeroUnidad}
+                    {" / "}
+                    {formatHoraRegistro(add90Minutes(u.horaRegistro))}
+                  </div>
+                ))}
             </td>
           </tr>
 
@@ -3980,6 +4066,7 @@ const UnidadesComponent = () => {
               <button
                 className="boton-cronometro"
                 onClick={() => {
+                  handleObtenerUnidadesTequimilaParaFila();
                   setRuta("tequimila");
                   setColor("#a6ff00");
                   setFormVisible(true);
