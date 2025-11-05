@@ -1037,7 +1037,7 @@ const UnidadesComponent = () => {
     hours = hours ? hours : 12; // the hour '0' should be '12'
     return `${hours}:${minutes} ${ampm}`;
   };
-
+{/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */}
   const handleDownloadImageTalzintan = () => {
     const input = tablaTalzintanRef.current;
     const currentDate = new Date(); // Obtener la fecha y hora actual
@@ -1093,7 +1093,7 @@ const UnidadesComponent = () => {
       link.click();
     });
   };
-
+  {/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */ }
   const handleDownloadImageLoma = () => {
     const input = tablaLomaRef.current;
 
@@ -1154,7 +1154,7 @@ const UnidadesComponent = () => {
       link.click();
     });
   };
-
+  {/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */ }
   const handleDownloadImageTezotepec = () => {
     const input = tablaTezotepecRef.current;
 
@@ -1215,7 +1215,7 @@ const UnidadesComponent = () => {
       link.click();
     });
   };
-
+  {/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */ }
   /* const handleDownloadImageTezotepecBlancas = () => {
     const input = tablaTezotepecBlancasRef.current;
 
@@ -1276,7 +1276,7 @@ const UnidadesComponent = () => {
       link.click();
     });
   }; */
-
+{/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */}
   const handleDownloadImageCalicapan = () => {
     const input = tablaCalicapanRef.current;
     const currentDate = new Date(); // Obtener la fecha y hora actual
@@ -1332,7 +1332,7 @@ const UnidadesComponent = () => {
       link.click();
     });
   };
-
+  {/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */ }
   const handleDownloadImageSosa = () => {
     const input = tablaSosaRef.current;
     const currentDate = new Date(); // Obtener la fecha y hora actual
@@ -1388,7 +1388,7 @@ const UnidadesComponent = () => {
       link.click();
     });
   };
-
+  {/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */ }
   /* const handleDownloadImageSosaBlancas = () => {
     const input = tablaSosaBlancasRef.current;
     const currentDate = new Date(); // Obtener la fecha y hora actual
@@ -1444,7 +1444,7 @@ const UnidadesComponent = () => {
       link.click();
     });
   }; */
-
+  {/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */ }
   const handleDownloadImageSanisidro = () => {
     const input = tablaSanisidroRef.current;
     const currentDate = new Date(); // Obtener la fecha y hora actual
@@ -1500,7 +1500,7 @@ const UnidadesComponent = () => {
       link.click();
     });
   };
-
+  {/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */ }
   /* const handleDownloadImageSanisidroBlancas = () => {
     const input = tablaSanisidroBlancasRef.current;
     const currentDate = new Date(); // Obtener la fecha y hora actual
@@ -1556,7 +1556,7 @@ const UnidadesComponent = () => {
       link.click();
     });
   }; */
-
+{/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */}
   const handleDownloadImageTacopan = () => {
     const input = tablaTacopanRef.current;
     const currentDate = new Date(); // Obtener la fecha y hora actual
@@ -1612,7 +1612,7 @@ const UnidadesComponent = () => {
       link.click();
     });
   };
-
+  {/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */ }
   const handleDownloadImageTequimila = () => {
     const input = tablaTequimilaRef.current;
     const currentDate = new Date(); // Obtener la fecha y hora actual
@@ -1668,7 +1668,7 @@ const UnidadesComponent = () => {
       link.click();
     });
   };
-
+  {/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */ }
   const handleDownloadImageQuinta = () => {
     const input = tablaQuintaRef.current;
     const currentDate = new Date(); // Obtener la fecha y hora actual
@@ -1724,7 +1724,7 @@ const UnidadesComponent = () => {
       link.click();
     });
   };
-
+  {/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */ }
   const handleDownloadImageCalanorte = () => {
     const input = tablaCalanorteRef.current;
     const currentDate = new Date(); // Obtener la fecha y hora actual
@@ -1780,7 +1780,7 @@ const UnidadesComponent = () => {
       link.click();
     });
   };
-
+  {/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */ }
   const handleDownloadImagePajaco = () => {
     const input = tablaPajacoRef.current;
     const currentDate = new Date(); // Obtener la fecha y hora actual
@@ -1836,7 +1836,7 @@ const UnidadesComponent = () => {
       link.click();
     });
   };
-
+  {/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */ }
   const handleDownloadImageAnalco = () => {
     const input = tablaAnalcoRef.current;
     const currentDate = new Date(); // Obtener la fecha y hora actual
@@ -1892,7 +1892,7 @@ const UnidadesComponent = () => {
       link.click();
     });
   };
-
+  {/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */ }
   const handleDownloadImageYopi = () => {
     const input = tablaYopiRef.current;
     const currentDate = new Date(); // Obtener la fecha y hora actual
@@ -1948,7 +1948,7 @@ const UnidadesComponent = () => {
       link.click();
     });
   };
-
+  {/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */ }
   const handleDownloadImageOtra = () => {
     const input = tablaOtraRef.current;
     const currentDate = new Date(); // Obtener la fecha y hora actual
@@ -2005,12 +2005,14 @@ const UnidadesComponent = () => {
     });
   };
 
+
+{/* AGREGA MINUTOS A LA GORA ORIGINAL ⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚ ➕➕➕*/}
   const add46Minutes = (horaRegistro) => {
     const date = new Date(horaRegistro);
     date.setMinutes(date.getMinutes() + 46);
     return date;
   };
-
+  {/* AGREGA MINUTOS A LA GORA ORIGINAL ⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚ ➕➕➕*/ }
   const add80Minutes = (horaRegistro) => {
     const date = new Date(horaRegistro);
     if (isNaN(date.getTime())) {
@@ -2019,7 +2021,7 @@ const UnidadesComponent = () => {
     date.setMinutes(date.getMinutes() + 80);
     return date;
   };
-
+  {/* AGREGA MINUTOS A LA GORA ORIGINAL ⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚ ➕➕➕*/ }
   const add65Minutes = (horaRegistro) => {
     const date = new Date(horaRegistro);
     if (isNaN(date.getTime())) {
@@ -2028,31 +2030,31 @@ const UnidadesComponent = () => {
     date.setMinutes(date.getMinutes() + 65);
     return date;
   };
-
+  {/* AGREGA MINUTOS A LA GORA ORIGINAL ⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚ ➕➕➕*/ }
   const add50Minutes = (horaRegistro) => {
     const date = new Date(horaRegistro);
     date.setMinutes(date.getMinutes() + 50);
     return date;
   };
-
+  {/* AGREGA MINUTOS A LA GORA ORIGINAL ⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚ ➕➕➕*/ }
   const add70Minutes = (horaRegistro) => {
     const date = new Date(horaRegistro);
     date.setMinutes(date.getMinutes() + 70);
     return date;
   };
-
+  {/* AGREGA MINUTOS A LA GORA ORIGINAL ⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚ ➕➕➕*/ }
   const add90Minutes = (horaRegistro) => {
     const date = new Date(horaRegistro);
     date.setMinutes(date.getMinutes() + 90);
     return date;
   };
-
+  {/* AGREGA MINUTOS A LA GORA ORIGINAL ⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚ ➕➕➕*/ }
   const add180Minutes = (horaRegistro) => {
     const date = new Date(horaRegistro);
     date.setMinutes(date.getMinutes() + 180);
     return date;
   };
-
+  {/* AGREGA MINUTOS A LA GORA ORIGINAL ⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚ ➕➕➕*/ }
   const add75Minutes = (horaRegistro) => {
     const date = new Date(horaRegistro);
     date.setMinutes(date.getMinutes() + 75);
@@ -2068,6 +2070,8 @@ const UnidadesComponent = () => {
     return localISOTime;
   };
 
+
+{/* COPY PASTE - 📋📋📋📋📋📋📋📋📋📋📋📋📋📋 - COPY PASTE*/}
   const formattedTextTacopanAlMomento = `*Tacopan al momento:*\r\n\r\n- ${formatoTiempoRedondeado(
     tiempoTranscurridoTacopan
   )} del *${ultimaUnidadTacopan ? ultimaUnidadTacopan.numeroUnidad : "N/A"}* *${ultimaUnidadTacopan ? ultimaUnidadTacopan.tipo : "N/A"
@@ -2085,7 +2089,7 @@ const UnidadesComponent = () => {
       tiempoTranscurridoPajaco
     )} del *${ultimaUnidadPajaco ? ultimaUnidadPajaco.numeroUnidad : "N/A"}* *${ultimaUnidadPajaco ? ultimaUnidadPajaco.tipo : "N/A"
     }* _Pajaco_\r\n© _JoyBoy._`;
-
+  {/* COPY PASTE - 📋📋📋📋📋📋📋📋📋📋📋📋📋📋 - COPY PASTE*/ }
   const formattedTextTacopanTeLlevas = `*Tacopan te llevas:*\r\n\r\n- ${formatoTiempoRedondeado(
     diferenciaTacopan
   )} del *${penultimaUnidadTacopan ? penultimaUnidadTacopan.numeroUnidad : "N/A"
@@ -2469,6 +2473,10 @@ const UnidadesComponent = () => {
     tiempoTranscurridoSanIsidro
   )} ${graficoPorcentajeSanIsidro}\r\n\r\n© _JoyBoy._`;
 
+
+
+
+{/*FORMATEAR FECHA ACTUAL - FORMATEAR FECHA ACTUAL - FORMATEAR FECHA ACTUAL*/}
   const formatFechaActual = () => {
     const fecha = new Date().toLocaleDateString("es-ES", {
       weekday: "long",
@@ -2479,7 +2487,7 @@ const UnidadesComponent = () => {
 
     return fecha.charAt(0).toUpperCase() + fecha.slice(1); // Primera letra en mayúscula
   };
-
+  {/*FORMATEAR HORA ACTUAL - FORMATEAR HORA ACTUAL - FORMATEAR HORA ACTUAL*/ }
   const formatHoraActual = () => {
     return new Date().toLocaleTimeString("es-ES", {
       hour: "2-digit",
@@ -2488,6 +2496,8 @@ const UnidadesComponent = () => {
       hour12: false, // Formato 24 horas
     });
   };
+
+
 
   // ✅ Reactividad automática
   const pila = useLiveQuery(async () => {
@@ -2617,6 +2627,9 @@ const UnidadesComponent = () => {
   return (
     <div>
       {/*FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO*/}
+      {/*FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO*/}
+      {/*FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO*/}
+      {/*FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO FORMULARIO*/}
       {isFormVisible && (
         <div>
           <div className="form-container">
@@ -2707,8 +2720,11 @@ const UnidadesComponent = () => {
         </div>
       )}
       {/* FIN DE FORMULARIO PRINCIPAL  FIN DE FORMULARIO PRINCIPAL  FIN DE FORMULARIO PRINCIPAL */}
+      {/* FIN DE FORMULARIO PRINCIPAL  FIN DE FORMULARIO PRINCIPAL  FIN DE FORMULARIO PRINCIPAL */}
+      {/* FIN DE FORMULARIO PRINCIPAL  FIN DE FORMULARIO PRINCIPAL  FIN DE FORMULARIO PRINCIPAL */}
+      {/* FIN DE FORMULARIO PRINCIPAL  FIN DE FORMULARIO PRINCIPAL  FIN DE FORMULARIO PRINCIPAL */}
 
-      {/* MENU COPY PASTE AL MOMENTO, ESTA PASANDO, TE LLENAS, ATRAS DE TI */}
+      {/* TALZINTAN - TALZINTAN - TALZINTAN MENU COPY PASTE AL MOMENTO, ESTA PASANDO, TE LLEVAS, ATRAS DE TI */}
       {menuVisibleTalzintan && (
         <div
           style={{
@@ -2782,7 +2798,7 @@ const UnidadesComponent = () => {
           </button>
         </div>
       )}
-
+      {/* LOMA - LOMA - LOMA MENU COPY PASTE AL MOMENTO, ESTA PASANDO, TE LLEVAS, ATRAS DE TI */}
       {menuVisibleLoma && (
         <div
           style={{
@@ -2834,7 +2850,7 @@ const UnidadesComponent = () => {
           </button>
         </div>
       )}
-
+      {/* TEZOTEPEC - TEZOTEPEC - TEZOTEPEC MENU COPY PASTE AL MOMENTO, ESTA PASANDO, TE LLEVAS, ATRAS DE TI */}
       {menuVisibleTezotepec && (
         <div
           style={{
@@ -2908,7 +2924,7 @@ const UnidadesComponent = () => {
           </button>
         </div>
       )}
-
+      {/* CALICAPAN - CALICAPAN - CALICAPAN MENU COPY PASTE AL MOMENTO, ESTA PASANDO, TE LLEVAS, ATRAS DE TI */}
       {menuVisibleCalicapan && (
         <div
           style={{
@@ -2982,7 +2998,7 @@ const UnidadesComponent = () => {
           </button>
         </div>
       )}
-
+{/* SOSA - SOSA - SOSA MENU COPY PASTE AL MOMENTO, ESTA PASANDO, TE LLEVAS, ATRAS DE TI */}
       {menuVisibleSosaEscuela && (
         <div
           style={{
@@ -3056,7 +3072,7 @@ const UnidadesComponent = () => {
           </button>
         </div>
       )}
-
+      {/* SAN ISIDRO - SAN ISIDRO - SAN ISIDRO MENU COPY PASTE AL MOMENTO, ESTA PASANDO, TE LLEVAS, ATRAS DE TI */}
       {menuVisibleSanIsidro && (
         <div
           style={{
@@ -3131,7 +3147,11 @@ const UnidadesComponent = () => {
         </div>
       )}
 
-      {/* tabla rutas tabla rutas tabla rutas tabla rutas tabla rutas tabla rutas tabla rutas tabla rutas tabla rutas */}
+
+      {/* INICIA TABLA PRINCIPAL: TIEMPOS - TABLA PRINCIPAL: TIEMPOS - TABLA PRINCIPAL: TIEMPOS*/}
+      {/* INICIA TABLA PRINCIPAL: TIEMPOS - TABLA PRINCIPAL: TIEMPOS - TABLA PRINCIPAL: TIEMPOS*/}
+      {/* INICIA TABLA PRINCIPAL: TIEMPOS - TABLA PRINCIPAL: TIEMPOS - TABLA PRINCIPAL: TIEMPOS*/}
+      {/* INICIA TABLA PRINCIPAL: TIEMPOS - TABLA PRINCIPAL: TIEMPOS - TABLA PRINCIPAL: TIEMPOS*/}
       <table>
         <tbody>
           <tr>
@@ -3246,6 +3266,12 @@ const UnidadesComponent = () => {
             </td>
           </tr>
 
+          {/*FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  */}
+          {/*FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  */}
+          {/*FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  */}
+          {/*FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  */}
+          {/*FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  */}
+          {/*FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  */}
           {/*FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  FILA TALZINTAN  */}
           <tr>
             <td className="celda-talzintan">
