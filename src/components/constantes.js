@@ -403,3 +403,71 @@ export const buscarTalzintanParaPrediccion = async () => {
 };
 
 
+export const buscarYaonahuacParaPrediccion = async () => {
+  // Paso 1: Obtener la última unidad en "sosa escuela" tipo blanco
+  const unidadesYaonahuacPrediccion = await db.unidades
+    .where({ ruta: "yaonahuac", tipo: "verde" })
+    .sortBy("id");
+
+  if (!unidadesYaonahuacPrediccion.length) return null;
+
+  const ultimaUnidad = unidadesYaonahuacPrediccion.at(-1); // la de mayor id
+  const { numeroUnidad } = ultimaUnidad;
+
+  // Paso 2: Buscar todas las unidades con ese numeroUnidad
+  const coincidencias = unidadesYaonahuacPrediccion.filter(
+    (u) => u.numeroUnidad === numeroUnidad
+  );
+
+  if (coincidencias.length < 2) return null; // No hay penúltima
+
+  // Paso 3: Obtener la penúltima (por orden de id)
+  const penultima = coincidencias[coincidencias.length - 2];
+
+  // Paso 4: Buscar su índice en el arreglo general
+  const indice = unidadesYaonahuacPrediccion.findIndex((u) => u.id === penultima.id);
+
+  if (indice === -1) return null;
+
+  // Paso 5: Obtener esa unidad y las 2 siguientes
+  const resultado = unidadesYaonahuacPrediccion.slice(indice, indice + 3);
+
+  return resultado;
+};
+
+export const buscarHueyapanParaPrediccion = async () => {
+  const normalizar = (n) => String(n).replace("-", "");
+
+  // Paso 1: Obtener la última unidad en hueyapan tipo verde
+  const unidadesHueyapanPrediccion = await db.unidades
+    .where({ ruta: "hueyapan", tipo: "verde" })
+    .sortBy("id");
+
+  if (!unidadesHueyapanPrediccion.length) return null;
+
+  const ultimaUnidad = unidadesHueyapanPrediccion.at(-1);
+  const numeroBase = normalizar(ultimaUnidad.numeroUnidad);
+
+  // Paso 2: Buscar todas las unidades con ese numeroUnidad ignorando guiones
+  const coincidencias = unidadesHueyapanPrediccion.filter(
+    (u) => normalizar(u.numeroUnidad) === numeroBase
+  );
+
+  if (coincidencias.length < 2) return null;
+
+  // Paso 3: Obtener la penúltima
+  const penultima = coincidencias[coincidencias.length - 2];
+
+  // Paso 4: Buscar su índice en el arreglo general
+  const indice = unidadesHueyapanPrediccion.findIndex(
+    (u) => u.id === penultima.id
+  );
+
+  if (indice === -1) return null;
+
+  // Paso 5: Obtener esa unidad y las siguientes 2
+  return unidadesHueyapanPrediccion.slice(indice, indice + 3);
+};
+
+
+
