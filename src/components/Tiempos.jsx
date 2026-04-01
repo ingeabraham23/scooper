@@ -13,9 +13,11 @@ import {
   buscarUnidadYRelacionadas,
   buscarSanIsidroParaPrediccion,
   buscarSosaParaPrediccion,
+  buscarLomaSosaParaPrediccion,
+  buscarSosaLomaParaPrediccion,
   buscarQuintaParaPrediccion,
-  obtenerUltimasUnidadesTacopan,
-  obtenerUltimasUnidadesCalanorte,
+  //obtenerUltimasUnidadesTacopan,
+  //obtenerUltimasUnidadesCalanorte,
   buscarTezotepecParaPrediccion,
   buscarTezotepecParaPrediccionReverse,
   buscarCalicapanParaPrediccion,
@@ -272,10 +274,12 @@ const UnidadesComponent = () => {
 
   const [unidades, setUnidades] = useState([]);
   const [unidadesSosa, setUnidadesSosa] = useState([]);
+  const [unidadesLomaSosa, setUnidadesLomaSosa] = useState([]);
+  const [unidadesSosaLoma, setUnidadesSosaLoma] = useState([]);
   const [unidadesSanIsidro, setUnidadesSanIsidro] = useState([]);
   const [unidadesQuinta, setUnidadesQuinta] = useState([]);
-  const [ultimasTacopan, setUltimasTacopan] = useState([]);
-  const [ultimasCalanorte, setUltimasCalanorte] = useState([]);
+  //const [ultimasTacopan, setUltimasTacopan] = useState([]);
+  //const [ultimasCalanorte, setUltimasCalanorte] = useState([]);
   const [unidadesTezotepec, setUnidadesTezotepec] = useState([]);
   const [unidadesTezotepecReverse, setUnidadesTezotepecReverse] = useState([]);
 
@@ -310,6 +314,24 @@ const UnidadesComponent = () => {
     const obtenerDatos = async () => {
       const resultado = await buscarSosaParaPrediccion();
       if (resultado) setUnidadesSosa(resultado);
+    };
+
+    obtenerDatos();
+  }, [isFormVisible]);
+
+  useEffect(() => {
+    const obtenerDatos = async () => {
+      const resultado = await buscarLomaSosaParaPrediccion();
+      if (resultado) setUnidadesLomaSosa(resultado);
+    };
+
+    obtenerDatos();
+  }, [isFormVisible]);
+
+  useEffect(() => {
+    const obtenerDatos = async () => {
+      const resultado = await buscarSosaLomaParaPrediccion();
+      if (resultado) setUnidadesSosaLoma(resultado);
     };
 
     obtenerDatos();
@@ -370,23 +392,23 @@ const UnidadesComponent = () => {
     obtenerDatos();
   }, [isFormVisible]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     const cargarUltimasUnidades = async () => {
       const unidades = await obtenerUltimasUnidadesTacopan();
       setUltimasTacopan(unidades);
     };
 
     cargarUltimasUnidades();
-  }, [isFormVisible]);
+  }, [isFormVisible]);*/
 
-  useEffect(() => {
+  /*useEffect(() => {
     const cargarUltimasUnidades = async () => {
       const unidades = await obtenerUltimasUnidadesCalanorte();
       setUltimasCalanorte(unidades);
     };
 
     cargarUltimasUnidades();
-  }, [isFormVisible]);
+  }, [isFormVisible]);*/
 
   const tablaTalzintanRef = useRef(null);
   const tablaLomaRef = useRef(null);
@@ -2252,6 +2274,15 @@ const UnidadesComponent = () => {
     date.setMinutes(date.getMinutes() + 80);
     return date;
   };
+
+  const add60Minutes = (horaRegistro) => {
+    const date = new Date(horaRegistro);
+    if (isNaN(date.getTime())) {
+      throw new Error("Fecha inválida");
+    }
+    date.setMinutes(date.getMinutes() + 60);
+    return date;
+  };
   {/* AGREGA MINUTOS A LA GORA ORIGINAL ⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚ ➕➕➕*/ }
   const add65Minutes = (horaRegistro) => {
     const date = new Date(horaRegistro);
@@ -2902,6 +2933,13 @@ const UnidadesComponent = () => {
       setFase(0); // cerrar menú
     }
   };
+
+  const numeros = [
+    [3, 13, 20, 22, 30, 36],
+    [41, 47, 52, 55, 79, 99],
+    [103, 105, 122, 123, 131, 139],
+    [144, 163, 177, 205],
+  ];
 
 
   return (
@@ -3920,24 +3958,31 @@ const UnidadesComponent = () => {
               </div>
             </td>
 
-            <td className="celda-loma">
-              {ultimasCalanorte.length > 0 &&
-                ultimasCalanorte.map((u) => (
-                  <div
-                    key={u.id}
-                    style={{
-                      marginTop: 0,
-                      fontSize: 14,
-                      fontWeight: "bold",
-                      color: "green",
-                      textShadow: "1px 1px 1px white",
-                    }}
-                  >
-                    {u.numeroUnidad}
-                    {" / "}
-                    {formatHoraRegistro(add90Minutes(u.horaRegistro))}
-                  </div>
-                ))}
+            <td className="celda-sosa">
+              <div>
+                {unidadesSosaLoma.length > 0 &&
+                  unidadesSosaLoma.map((u, index) => {
+                    const esPar = index % 2 === 0;
+
+                    return (
+                      <div
+                        key={u.id}
+                        style={{
+                          fontSize: 16,
+                          marginBottom: -5,
+                          backgroundColor: esPar ? "#ff00ff" : "#363636",
+                        }}
+                      >
+                        <span style={{ fontWeight: "bold", marginRight: 8 }}>
+                          {u.numeroUnidad}
+                        </span>
+                        <span>
+                          {formatHoraRegistro(add80Minutes(u.horaRegistro))}
+                        </span>
+                      </div>
+                    );
+                  })}
+              </div>
             </td>
           </tr>
 
@@ -4279,36 +4324,43 @@ const UnidadesComponent = () => {
             <td className="celda-sosa">
               <div>
                 {unidadesSosa.length > 0 &&
-                  unidadesSosa.map((u) => (
+                  unidadesSosa.map((u, index) => {
+                    const esPar = index % 2 === 0;
+
+                    return (
+                      <div
+                        key={u.id}
+                        style={{
+                          fontSize: 16,
+                          marginBottom: -5,
+                          backgroundColor: esPar ? "#ea00ff" : "#333333",
+                        }}
+                      >
+                        <span style={{ fontWeight: "bold", marginRight: 8 }}>
+                          {u.numeroUnidad}
+                        </span>
+                        <span>
+                          {formatHoraRegistro(add80Minutes(u.horaRegistro))}
+                        </span>
+                      </div>
+                    );
+                  })}
+              </div>
+            </td>
+            <td className="celda-sosa">
+              <div>
+                {unidadesLomaSosa.length > 0 &&
+                  unidadesLomaSosa.map((u) => (
                     <div key={u.id} style={{ fontSize: 16, marginBottom: -5 }}>
                       <span style={{ fontWeight: "bold", marginRight: 8 }}>
                         {u.numeroUnidad}
                       </span>
                       <span>
-                        {formatHoraRegistro(add80Minutes(u.horaRegistro))}
+                        {formatHoraRegistro(add60Minutes(u.horaRegistro))}
                       </span>
                     </div>
                   ))}
               </div>
-            </td>
-            <td className="celda-sosa">
-              {ultimasTacopan.length > 0 &&
-                ultimasTacopan.map((u) => (
-                  <div
-                    key={u.id}
-                    style={{
-                      marginTop: 0,
-                      fontSize: 14,
-                      fontWeight: "bold",
-                      color: "yellow",
-                      textShadow: "1px 1px 2px black",
-                    }}
-                  >
-                    {u.numeroUnidad}
-                    {" / "}
-                    {formatHoraRegistro(add70Minutes(u.horaRegistro))}
-                  </div>
-                ))}
             </td>
           </tr>
 
@@ -4922,6 +4974,11 @@ const UnidadesComponent = () => {
                   ))}
               </div>
               </td>
+            <td><div className="grid-numeros">
+              {numeros.flat().map((num, i) => (
+                <span key={i}>{num}</span>
+              ))}
+            </div></td>
           </tr>
 
           {/*FILA OTRA  FILA OTRA  FILA OTRA  FILA OTRA  FILA OTRA  FILA OTRA  FILA OTRA  */}

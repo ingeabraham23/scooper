@@ -1992,3 +1992,17 @@ table {
   font-size: 24px;
   font-weight: bold;
 }
+
+.grid-numeros {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  font-size: 12px;
+  text-align: center;
+  color: #000;
+  background-color: #ccc;
+}
+
+.grid-numeros span {
+  padding: 0px;
+}
+

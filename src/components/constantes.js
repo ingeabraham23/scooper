@@ -125,6 +125,86 @@ export const buscarSosaParaPrediccion = async () => {
   return resultado;
 };
 
+export const buscarLomaSosaParaPrediccion = async () => {
+  // Paso 1: Obtener la última unidad en sosa tipo blanco
+  const ultimaSosa = await db.unidades
+    .where({ ruta: "sosa escuela", tipo: "blanco" })
+    .sortBy("id")
+    .then((lista) => lista.at(-1));
+
+  if (!ultimaSosa) return null;
+
+  const { numeroUnidad } = ultimaSosa;
+
+  // Paso 2: Buscar todas las unidades en tequimila tipo blanco
+  const lomaBlanco = await db.unidades
+    .where({ ruta: "loma", tipo: "blanco" })
+    .sortBy("id");
+
+  if (!lomaBlanco.length) return null;
+
+  // Paso 3: Encontrar la unidad con mismo numeroUnidad y mayor id
+  const coincidencias = lomaBlanco.filter(
+    (u) => u.numeroUnidad === numeroUnidad
+  );
+
+  if (!coincidencias.length) return null;
+
+  const unidadCoincidenteMasReciente = coincidencias.at(-1); // la de mayor id
+
+  // Paso 4: Obtener su índice en el array completo de tequimila
+  const indice = lomaBlanco.findIndex(
+    (u) => u.id === unidadCoincidenteMasReciente.id
+  );
+
+  if (indice === -1) return null;
+
+  // Paso 5: Devolver esa unidad y las 2 siguientes (por orden de id)
+  const resultado = lomaBlanco.slice(indice, indice + 3);
+
+  return resultado;
+};
+
+export const buscarSosaLomaParaPrediccion = async () => {
+  // Paso 1: Obtener la última unidad en loma tipo blanco
+  const ultimaLoma = await db.unidades
+    .where({ ruta: "loma", tipo: "blanco" })
+    .sortBy("id")
+    .then((lista) => lista.at(-1));
+
+  if (!ultimaLoma) return null;
+
+  const { numeroUnidad } = ultimaLoma;
+
+  // Paso 2: Buscar todas las unidades en sosa tipo blanco
+  const sosaBlanco = await db.unidades
+    .where({ ruta: "sosa escuela", tipo: "blanco" })
+    .sortBy("id");
+
+  if (!sosaBlanco.length) return null;
+
+  // Paso 3: Encontrar la unidad con mismo numeroUnidad y mayor id
+  const coincidencias = sosaBlanco.filter(
+    (u) => u.numeroUnidad === numeroUnidad
+  );
+
+  if (!coincidencias.length) return null;
+
+  const unidadCoincidenteMasReciente = coincidencias.at(-1); // la de mayor id
+
+  // Paso 4: Obtener su índice en el array completo de sosa
+  const indice = sosaBlanco.findIndex(
+    (u) => u.id === unidadCoincidenteMasReciente.id
+  );
+
+  if (indice === -1) return null;
+
+  // Paso 5: Devolver esa unidad y las 2 siguientes (por orden de id)
+  const resultado = sosaBlanco.slice(indice, indice + 3);
+
+  return resultado;
+};
+
 
 export const buscarQuintaParaPrediccion = async () => {
   // Paso 1: Obtener la última unidad en "tequimila" tipo blanco
