@@ -441,43 +441,33 @@ export const buscarLomaParaPrediccion = async () => {
 };
 
 export const buscarTalzintanParaPrediccion = async () => {
-  const unidadesExcluidas = [11, 25, 35, 42, 44, 55, 63, 77, 88, 131];
-
-  // Paso 1: Obtener la última unidad en "loma" tipo blanco que NO esté en la lista de exclusión
-  const ultimaLoma = await db.unidades
-    .where({ ruta: "loma", tipo: "blanco" })
-    .sortBy("id")
-    .then((lista) =>
-      lista.filter((u) => !unidadesExcluidas.includes(u.numeroUnidad)).at(-1)
-    );
-
-  if (!ultimaLoma) return null;
-
-  const { numeroUnidad } = ultimaLoma;
-
-  // Paso 2: Obtener todas las unidades de "talzintan" tipo blanco que NO estén en la lista de exclusión
-  const unidadesTalzintan = await db.unidades
+  // Paso 1: Obtener la última unidad en "sosa escuela" tipo blanco
+  const unidadesTalzintanBlanco = await db.unidades
     .where({ ruta: "talzintan", tipo: "blanco" })
-    .sortBy("id")
-    .then((lista) => lista.filter((u) => !unidadesExcluidas.includes(u.numeroUnidad)));
+    .sortBy("id");
 
-  if (!unidadesTalzintan.length) return null;
+  if (!unidadesTalzintanBlanco.length) return null;
 
-  // Paso 3: Filtrar coincidencias por numeroUnidad
-  const coincidencias = unidadesTalzintan.filter((u) => u.numeroUnidad === numeroUnidad);
+  const ultimaUnidad = unidadesTalzintanBlanco.at(-1); // la de mayor id
+  const { numeroUnidad } = ultimaUnidad;
 
-  if (!coincidencias.length) return null;
+  // Paso 2: Buscar todas las unidades con ese numeroUnidad
+  const coincidencias = unidadesTalzintanBlanco.filter(
+    (u) => u.numeroUnidad === numeroUnidad
+  );
 
-  // Paso 4: Tomar la unidad más reciente (id más alto)
-  const unidadCoincidenteMasReciente = coincidencias.at(-1);
+  if (coincidencias.length < 2) return null; // No hay penúltima
 
-  // Paso 5: Buscar su índice en el array general
-  const indice = unidadesTalzintan.findIndex((u) => u.id === unidadCoincidenteMasReciente.id);
+  // Paso 3: Obtener la penúltima (por orden de id)
+  const penultima = coincidencias[coincidencias.length - 2];
+
+  // Paso 4: Buscar su índice en el arreglo general
+  const indice = unidadesTalzintanBlanco.findIndex((u) => u.id === penultima.id);
 
   if (indice === -1) return null;
 
-  // Paso 6: Devolver esa unidad y las 2 siguientes (si existen)
-  const resultado = unidadesTalzintan.slice(indice, indice + 3);
+  // Paso 5: Obtener esa unidad y las 2 siguientes
+  const resultado = unidadesTalzintanBlanco.slice(indice, indice + 3);
 
   return resultado;
 };

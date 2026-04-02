@@ -12,7 +12,7 @@ import Comision from "./Comision";
 import {
   buscarUnidadYRelacionadas,
   buscarSanIsidroParaPrediccion,
-  buscarSosaParaPrediccion,
+  //buscarSosaParaPrediccion,
   buscarLomaSosaParaPrediccion,
   buscarSosaLomaParaPrediccion,
   buscarQuintaParaPrediccion,
@@ -21,7 +21,7 @@ import {
   buscarTezotepecParaPrediccion,
   buscarTezotepecParaPrediccionReverse,
   buscarCalicapanParaPrediccion,
-  buscarLomaParaPrediccion,
+  //buscarLomaParaPrediccion,
   buscarTalzintanParaPrediccion,
   buscarYaonahuacParaPrediccion,
   buscarHueyapanParaPrediccion,
@@ -273,7 +273,7 @@ const UnidadesComponent = () => {
   const [color, setColor] = useState("#FFFFFF");
 
   const [unidades, setUnidades] = useState([]);
-  const [unidadesSosa, setUnidadesSosa] = useState([]);
+  //const [unidadesSosa, setUnidadesSosa] = useState([]);
   const [unidadesLomaSosa, setUnidadesLomaSosa] = useState([]);
   const [unidadesSosaLoma, setUnidadesSosaLoma] = useState([]);
   const [unidadesSanIsidro, setUnidadesSanIsidro] = useState([]);
@@ -284,7 +284,7 @@ const UnidadesComponent = () => {
   const [unidadesTezotepecReverse, setUnidadesTezotepecReverse] = useState([]);
 
   const [unidadesCalicapan, setUnidadesCalicapan] = useState([]);
-  const [unidadesLoma, setUnidadesLoma] = useState([]);
+  //const [unidadesLoma, setUnidadesLoma] = useState([]);
   const [unidadesTalzintan, setUnidadesTalzintan] = useState([]);
 
   const [unidadesYaonahuac, setUnidadesYaonahuac] = useState([]);
@@ -310,14 +310,14 @@ const UnidadesComponent = () => {
     obtenerDatos();
   }, [isFormVisible]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     const obtenerDatos = async () => {
       const resultado = await buscarSosaParaPrediccion();
       if (resultado) setUnidadesSosa(resultado);
     };
 
     obtenerDatos();
-  }, [isFormVisible]);
+  }, [isFormVisible]);*/
 
   useEffect(() => {
     const obtenerDatos = async () => {
@@ -374,14 +374,14 @@ const UnidadesComponent = () => {
     obtenerDatos();
   }, [isFormVisible]);
 
-  useEffect(() => {
+  /*useEffect(() => {
     const obtenerDatos = async () => {
       const resultado = await buscarLomaParaPrediccion();
       if (resultado) setUnidadesLoma(resultado);
     };
 
     obtenerDatos();
-  }, [isFormVisible]);
+  }, [isFormVisible]);*/
 
   useEffect(() => {
     const obtenerDatos = async () => {
@@ -3811,24 +3811,29 @@ const UnidadesComponent = () => {
             </td>
             <td className="celda-talzintan">
               <div>
-                {unidadesLoma.length > 0 ? (
-                  unidadesLoma.map((u) => (
-                    <div
-                      key={u.id}
-                      style={{
-                        marginBottom: -5, // separación entre elementos
-                        color: "#333", // color del texto
-                        fontSize: 16, // tamaño de fuente en px
-                      }}
-                    >
-                      <span style={{ fontWeight: "bold", marginRight: 8 }}>
-                        {u.numeroUnidad}
-                      </span>
-                      <span>
-                        {formatHoraRegistro(add70Minutes(u.horaRegistro))}
-                      </span>
-                    </div>
-                  ))
+                {unidadesTalzintan.length > 0 ? (
+                  unidadesTalzintan.map((u) => {
+                    // quitar TODOS los puntos
+                    const numeroLimpio = u.numeroUnidad.replace(/\./g, "");
+
+                    const horaFormateada = formatHoraRegistro(add70Minutes(u.horaRegistro));
+
+                    return (
+                      <div
+                        key={u.id}
+                        style={{
+                          fontSize: 14,
+                          fontWeight: "bold",
+                          color: "blue",
+                        }}
+                      >
+                        <span style={{ marginRight: 8 }}>
+                          {numeroLimpio}
+                        </span>
+                        <span>{horaFormateada}</span>
+                      </div>
+                    );
+                  })
                 ) : (
                   <div style={{ color: "gray", fontStyle: "italic" }}>
                     JoyBoy
@@ -3840,7 +3845,7 @@ const UnidadesComponent = () => {
 
 
 
-            <td className="celda-loma">
+            <td className="celda-talzintan">
               <div>
                 {unidadesTalzintan.length > 0 ? (
                   unidadesTalzintan
@@ -3931,30 +3936,7 @@ const UnidadesComponent = () => {
             </td>
             <td className="celda-loma">
               <div>
-                {unidadesTalzintan.length > 0 ? (
-                  unidadesTalzintan
-                    .filter(
-                      (u) =>
-                        !u.numeroUnidad.startsWith(".") && !u.numeroUnidad.endsWith(".")
-                    )
-                    .map((u) => (
-                      <div
-                        key={u.id}
-                        style={{
-                          marginBottom: -5,
-                          color: "#333",
-                          fontSize: 16,
-                        }}
-                      >
-                        <span style={{ fontWeight: "bold", marginRight: 8 }}>
-                          {u.numeroUnidad}
-                        </span>
-                        <span>{formatHoraRegistro(add70Minutes(u.horaRegistro))}</span>
-                      </div>
-                    ))
-                ) : (
-                  <div style={{ color: "gray", fontStyle: "italic" }}>JoyBoy</div>
-                )}
+                <p>Joyboy</p>
               </div>
             </td>
 
@@ -4323,8 +4305,8 @@ const UnidadesComponent = () => {
               <BotonEliminarUnidad ruta="sosa escuela" /></td>
             <td className="celda-sosa">
               <div>
-                {unidadesSosa.length > 0 &&
-                  unidadesSosa.map((u, index) => {
+                {unidadesSosaLoma.length > 0 &&
+                  unidadesSosaLoma.map((u, index) => {
                     const esPar = index % 2 === 0;
 
                     return (
@@ -4333,7 +4315,7 @@ const UnidadesComponent = () => {
                         style={{
                           fontSize: 16,
                           marginBottom: -5,
-                          backgroundColor: esPar ? "#ea00ff" : "#333333",
+                          backgroundColor: esPar ? "#2e2e2e" : "#ff00ea",
                         }}
                       >
                         <span style={{ fontWeight: "bold", marginRight: 8 }}>
@@ -4347,11 +4329,11 @@ const UnidadesComponent = () => {
                   })}
               </div>
             </td>
-            <td className="celda-sosa">
+            <td className="celda-loma">
               <div>
                 {unidadesLomaSosa.length > 0 &&
                   unidadesLomaSosa.map((u) => (
-                    <div key={u.id} style={{ fontSize: 16, marginBottom: -5 }}>
+                    <div key={u.id} style={{ fontSize: 16, marginBottom: -5, color:  "#000000" }}>
                       <span style={{ fontWeight: "bold", marginRight: 8 }}>
                         {u.numeroUnidad}
                       </span>
