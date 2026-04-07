@@ -13,7 +13,7 @@ import {
   buscarUnidadYRelacionadas,
   buscarSanIsidroParaPrediccion,
   //buscarSosaParaPrediccion,
-  buscarLomaSosaParaPrediccion,
+  //buscarLomaSosaParaPrediccion,
   buscarSosaLomaParaPrediccion,
   buscarQuintaParaPrediccion,
   //obtenerUltimasUnidadesTacopan,
@@ -274,7 +274,7 @@ const UnidadesComponent = () => {
 
   const [unidades, setUnidades] = useState([]);
   //const [unidadesSosa, setUnidadesSosa] = useState([]);
-  const [unidadesLomaSosa, setUnidadesLomaSosa] = useState([]);
+  //const [unidadesLomaSosa, setUnidadesLomaSosa] = useState([]);
   const [unidadesSosaLoma, setUnidadesSosaLoma] = useState([]);
   const [unidadesSanIsidro, setUnidadesSanIsidro] = useState([]);
   const [unidadesQuinta, setUnidadesQuinta] = useState([]);
@@ -319,14 +319,14 @@ const UnidadesComponent = () => {
     obtenerDatos();
   }, [isFormVisible]);*/
 
-  useEffect(() => {
+  /*useEffect(() => {
     const obtenerDatos = async () => {
       const resultado = await buscarLomaSosaParaPrediccion();
       if (resultado) setUnidadesLomaSosa(resultado);
     };
 
     obtenerDatos();
-  }, [isFormVisible]);
+  }, [isFormVisible]);*/
 
   useEffect(() => {
     const obtenerDatos = async () => {
@@ -447,6 +447,7 @@ const UnidadesComponent = () => {
 
     obtenerDatos();
   }, [isFormVerdeVisible]);
+
 
   useEffect(() => {
     const actualizarCronometros = async () => {
@@ -2275,14 +2276,14 @@ const UnidadesComponent = () => {
     return date;
   };
 
-  const add60Minutes = (horaRegistro) => {
+  /*const add60Minutes = (horaRegistro) => {
     const date = new Date(horaRegistro);
     if (isNaN(date.getTime())) {
       throw new Error("Fecha inválida");
     }
     date.setMinutes(date.getMinutes() + 60);
     return date;
-  };
+  };*/
   {/* AGREGA MINUTOS A LA GORA ORIGINAL ⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚ ➕➕➕*/ }
   const add65Minutes = (horaRegistro) => {
     const date = new Date(horaRegistro);
@@ -3936,7 +3937,47 @@ const UnidadesComponent = () => {
             </td>
             <td className="celda-loma">
               <div>
-                <p>Joyboy</p>
+                {(() => {
+                  const lista = [...numerosLoma]
+                    .filter(item => item && item.numeroUnidad)
+                    .sort((a, b) => {
+                      const fechaA = new Date(a.horaRegistro || 0);
+                      const fechaB = new Date(b.horaRegistro || 0);
+                      return fechaB - fechaA;
+                    })
+                    .slice(2, 6);
+
+                  if (lista.length === 0) {
+                    return (
+                      <div
+                        style={{
+                          fontSize: "10px",
+                          color: "#999",
+                          fontStyle: "italic",
+                        }}
+                      >
+                        Registros vacíos
+                      </div>
+                    );
+                  }
+
+                  return lista.map((item, index) => (
+                    <div
+                      key={index}
+                      style={{
+                        fontSize: "10px",
+                        color: "#333",
+                        backgroundColor: "#f0f0f0",
+                        marginBottom: "2px",
+                        padding: "2px 4px",
+                        borderRadius: "4px",
+                      }}
+                    >
+                      {index + 3}. {item.numeroUnidad} -{" "}
+                      {formatHoraRegistro(add46Minutes(item.horaRegistro))}
+                    </div>
+                  ));
+                })()}
               </div>
             </td>
 
@@ -4329,19 +4370,49 @@ const UnidadesComponent = () => {
                   })}
               </div>
             </td>
-            <td className="celda-loma">
+            <td className="celda-sosa">
               <div>
-                {unidadesLomaSosa.length > 0 &&
-                  unidadesLomaSosa.map((u) => (
-                    <div key={u.id} style={{ fontSize: 16, marginBottom: -5, color:  "#000000" }}>
-                      <span style={{ fontWeight: "bold", marginRight: 8 }}>
-                        {u.numeroUnidad}
-                      </span>
-                      <span>
-                        {formatHoraRegistro(add60Minutes(u.horaRegistro))}
-                      </span>
+                {(() => {
+                  const lista = [...numerosSosa]
+                    .filter(item => item && item.numeroUnidad)
+                    .sort((a, b) => {
+                      const fechaA = new Date(a.horaRegistro || 0);
+                      const fechaB = new Date(b.horaRegistro || 0);
+                      return fechaB - fechaA;
+                    })
+                    .slice(7, 13);
+
+                  if (lista.length === 0) {
+                    return (
+                      <div
+                        style={{
+                          fontSize: "10px",
+                          color: "#999",
+                          fontStyle: "italic",
+                        }}
+                      >
+                        Registros vacíos
+                      </div>
+                    );
+                  }
+
+                  return lista.map((item, index) => (
+                    <div
+                      key={index}
+                      style={{
+                        fontSize: "10px",
+                        color: "#333",
+                        backgroundColor: "#f0f0f0",
+                        marginBottom: "2px",
+                        padding: "2px 4px",
+                        borderRadius: "4px",
+                      }}
+                    >
+                      {index + 8}. {item.numeroUnidad} -{" "}
+                      {formatHoraRegistro(add80Minutes(item.horaRegistro))}
                     </div>
-                  ))}
+                  ));
+                })()}
               </div>
             </td>
           </tr>
@@ -5094,92 +5165,37 @@ const UnidadesComponent = () => {
               <tbody>
                 {/* Fila con fecha y hora */}
                 <tr>
-                  <td colSpan={8} className="celda-fecha-informe">
+                  <td colSpan={4} className="celda-fecha-informe">
                     {formatFechaActual()} - {formatHoraActual()}
                   </td>
                 </tr>
 
-                {/* Unimos las listas, ordenamos y seleccionamos los primeros 10 elementos */}
-                {Array.from({ length: Math.ceil(10 / 2) }).map((_, index) => {
-                  // Ordenamos por hora de registro y seleccionamos los últimos 10
-                  const listaUnidades = [...numerosTalzintan, ...numerosLoma]
-                    .sort(
-                      (a, b) =>
-                        new Date(b.horaRegistro) - new Date(a.horaRegistro)
-                    )
-                    .slice(0, 10)
-                    .reverse();
-
-                  const leftItem = listaUnidades[index]; // Primera mitad
-                  const rightItem =
-                    listaUnidades[index + Math.ceil(listaUnidades.length / 2)]; // Segunda mitad
-
-                  return (
+                {[...numerosLoma]
+                  .sort(
+                    (a, b) =>
+                      new Date(b.horaRegistro) - new Date(a.horaRegistro)
+                  )
+                  .slice(0, 10)
+                  .map((item, index) => (
                     <tr key={index}>
-                      {/* Primera columna */}
-                      {leftItem ? (
-                        <>
-                          <td className="celda-loma">{index + 1}</td>
-                          <td className="celda-loma">
-                            {leftItem.ruta === "talzintan"
-                              ? "Talzintan"
-                              : "Loma"}
-                          </td>
-                          <td className="celda-loma">
-                            <button
-                              className={`unidad-button ${leftItem.tipo === "rojo" ? "rojo" : ""
-                                }`}
-                            >
-                              {leftItem.numeroUnidad}
-                            </button>
-                          </td>
-                          <td className="celda-loma">
-                            {formatHoraRegistro(leftItem.horaRegistro)}
-                          </td>
-                        </>
-                      ) : (
-                        <>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                        </>
-                      )}
+                      <td className="celda-loma">{index + 1}</td>
 
-                      {/* Segunda columna */}
-                      {rightItem ? (
-                        <>
-                          <td className="celda-loma">
-                            {index + Math.ceil(listaUnidades.length / 2) + 1}
-                          </td>
-                          <td className="celda-loma">
-                            {rightItem.ruta === "talzintan"
-                              ? "Talzintan"
-                              : "Loma"}
-                          </td>
-                          <td className="celda-loma">
-                            <button
-                              className={`unidad-button ${rightItem.tipo === "rojo" ? "rojo" : ""
-                                }`}
-                            >
-                              {rightItem.numeroUnidad}
-                            </button>
-                          </td>
-                          <td className="celda-loma">
-                            {formatHoraRegistro(rightItem.horaRegistro)}
-                          </td>
-                        </>
-                      ) : (
-                        <>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                          <td></td>
-                        </>
-                      )}
+                      <td className="celda-loma">Loma</td>
+
+                      <td className="celda-loma">
+                        <button
+                          className={`unidad-button ${item.tipo === "rojo" ? "rojo" : ""
+                            }`}
+                        >
+                          {item.numeroUnidad}
+                        </button>
+                      </td>
+
+                      <td className="celda-loma">
+                        {formatHoraRegistro(item.horaRegistro)}
+                      </td>
                     </tr>
-                  );
-                })}
+                  ))}
               </tbody>
             </table>
             <button
