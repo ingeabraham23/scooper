@@ -56,10 +56,6 @@ export const buscarUnidadYRelacionadas = async () => {
   return resultado;
 };
 
-
-
-
-
 export const buscarSanIsidroParaPrediccion = async () => {
   // Paso 1: Obtener la última unidad en "sosa escuela" tipo blanco
   const unidadesSanIsidroBlanco = await db.unidades
@@ -92,7 +88,6 @@ export const buscarSanIsidroParaPrediccion = async () => {
   return resultado;
 };
 
-
 export const buscarSosaParaPrediccion = async () => {
   // Paso 1: Obtener la última unidad en "sosa escuela" tipo blanco
   const unidadesSosaBlanco = await db.unidades
@@ -121,6 +116,48 @@ export const buscarSosaParaPrediccion = async () => {
 
   // Paso 5: Obtener esa unidad y las 2 siguientes
   const resultado = unidadesSosaBlanco.slice(indice, indice + 3);
+
+  return resultado;
+};
+
+export const obtenerSosaDel9Al12 = async () => {
+  const unidades = await db.unidades
+    .where({ ruta: "sosa escuela", tipo: "blanco" })
+    .sortBy("id");
+
+  if (unidades.length < 12) return [];
+
+  // Última posición
+  const ultimoIndice = unidades.length - 1;
+
+  // Aproximadamente 80 minutos atrás
+  const indiceBase = ultimoIndice - 11;
+
+  if (indiceBase < 0) return [];
+
+  // Tomar 4 registros desde ahí
+  const resultado = unidades.slice(indiceBase, indiceBase + 4);
+
+  return resultado;
+};
+
+export const obtenerLomaDel4Al7 = async () => {
+  const unidades = await db.unidades
+    .where({ ruta: "loma", tipo: "blanco" })
+    .sortBy("id");
+
+  if (unidades.length < 7) return [];
+
+  // Última posición
+  const ultimoIndice = unidades.length - 1;
+
+  // Aproximadamente 60 minutos atrás
+  const indiceBase = ultimoIndice - 6;
+
+  if (indiceBase < 0) return [];
+
+  // Tomar 4 registros desde ahí
+  const resultado = unidades.slice(indiceBase, indiceBase + 4);
 
   return resultado;
 };

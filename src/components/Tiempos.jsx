@@ -10,6 +10,8 @@ import ClockButton from "./Reloj";
 import BotonEliminarUnidad from "./BotonEliminarUnidad";
 import Comision from "./Comision";
 import {
+  obtenerSosaDel9Al12,
+  obtenerLomaDel4Al7,
   buscarUnidadYRelacionadas,
   buscarSanIsidroParaPrediccion,
   //buscarSosaParaPrediccion,
@@ -274,6 +276,8 @@ const UnidadesComponent = () => {
 
   const [unidades, setUnidades] = useState([]);
   //const [unidadesSosa, setUnidadesSosa] = useState([]);
+  const [unidadesSosa912, setUnidadesSosa912] = useState([]);
+  const [unidadesLoma47, setUnidadesLoma47] = useState([]);
   //const [unidadesLomaSosa, setUnidadesLomaSosa] = useState([]);
   const [unidadesSosaLoma, setUnidadesSosaLoma] = useState([]);
   const [unidadesSanIsidro, setUnidadesSanIsidro] = useState([]);
@@ -291,6 +295,23 @@ const UnidadesComponent = () => {
 
   const [unidadesHueyapan, setUnidadesHueyapan] = useState([]);
 
+useEffect(() => {
+    const obtenerDatos = async () => {
+      const resultado = await obtenerSosaDel9Al12();
+      if (resultado) setUnidadesSosa912(resultado);
+    };
+
+    obtenerDatos();
+  }, [isFormVisible]);
+
+  useEffect(() => {
+    const obtenerDatos = async () => {
+      const resultado = await obtenerLomaDel4Al7();
+      if (resultado) setUnidadesLoma47(resultado);
+    };
+
+    obtenerDatos();
+  }, [isFormVisible]);
 
   useEffect(() => {
     const obtenerDatos = async () => {
@@ -2276,14 +2297,14 @@ const UnidadesComponent = () => {
     return date;
   };
 
-  /*const add60Minutes = (horaRegistro) => {
+  const add60Minutes = (horaRegistro) => {
     const date = new Date(horaRegistro);
     if (isNaN(date.getTime())) {
       throw new Error("Fecha inválida");
     }
     date.setMinutes(date.getMinutes() + 60);
     return date;
-  };*/
+  };
   {/* AGREGA MINUTOS A LA GORA ORIGINAL ⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚ ➕➕➕*/ }
   const add65Minutes = (horaRegistro) => {
     const date = new Date(horaRegistro);
@@ -3937,47 +3958,7 @@ const UnidadesComponent = () => {
             </td>
             <td className="celda-loma">
               <div>
-                {(() => {
-                  const lista = [...numerosLoma]
-                    .filter(item => item && item.numeroUnidad)
-                    .sort((a, b) => {
-                      const fechaA = new Date(a.horaRegistro || 0);
-                      const fechaB = new Date(b.horaRegistro || 0);
-                      return fechaB - fechaA;
-                    })
-                    .slice(2, 6);
-
-                  if (lista.length === 0) {
-                    return (
-                      <div
-                        style={{
-                          fontSize: "10px",
-                          color: "#999",
-                          fontStyle: "italic",
-                        }}
-                      >
-                        Registros vacíos
-                      </div>
-                    );
-                  }
-
-                  return lista.map((item, index) => (
-                    <div
-                      key={index}
-                      style={{
-                        fontSize: "10px",
-                        color: "#333",
-                        backgroundColor: "#f0f0f0",
-                        marginBottom: "2px",
-                        padding: "2px 4px",
-                        borderRadius: "4px",
-                      }}
-                    >
-                      {index + 3}. {item.numeroUnidad} -{" "}
-                      {formatHoraRegistro(add46Minutes(item.horaRegistro))}
-                    </div>
-                  ));
-                })()}
+                <span>JoyBoy</span>
               </div>
             </td>
 
@@ -4346,8 +4327,8 @@ const UnidadesComponent = () => {
               <BotonEliminarUnidad ruta="sosa escuela" /></td>
             <td className="celda-sosa">
               <div>
-                {unidadesSosaLoma.length > 0 &&
-                  unidadesSosaLoma.map((u, index) => {
+                {unidadesSosa912.length > 0 &&
+                  unidadesSosa912.map((u, index) => {
                     const esPar = index % 2 === 0;
 
                     return (
@@ -4356,7 +4337,9 @@ const UnidadesComponent = () => {
                         style={{
                           fontSize: 16,
                           marginBottom: -5,
-                          backgroundColor: esPar ? "#2e2e2e" : "#ff00ea",
+                          backgroundColor: esPar ? "#c42fff" : "#334155", // colores alternados
+                          color: "#fff",
+                          borderRadius: 4,
                         }}
                       >
                         <span style={{ fontWeight: "bold", marginRight: 8 }}>
@@ -4370,49 +4353,19 @@ const UnidadesComponent = () => {
                   })}
               </div>
             </td>
-            <td className="celda-sosa">
+            <td className="celda-loma">
               <div>
-                {(() => {
-                  const lista = [...numerosSosa]
-                    .filter(item => item && item.numeroUnidad)
-                    .sort((a, b) => {
-                      const fechaA = new Date(a.horaRegistro || 0);
-                      const fechaB = new Date(b.horaRegistro || 0);
-                      return fechaB - fechaA;
-                    })
-                    .slice(7, 13);
-
-                  if (lista.length === 0) {
-                    return (
-                      <div
-                        style={{
-                          fontSize: "10px",
-                          color: "#999",
-                          fontStyle: "italic",
-                        }}
-                      >
-                        Registros vacíos
-                      </div>
-                    );
-                  }
-
-                  return lista.map((item, index) => (
-                    <div
-                      key={index}
-                      style={{
-                        fontSize: "10px",
-                        color: "#333",
-                        backgroundColor: "#f0f0f0",
-                        marginBottom: "2px",
-                        padding: "2px 4px",
-                        borderRadius: "4px",
-                      }}
-                    >
-                      {index + 8}. {item.numeroUnidad} -{" "}
-                      {formatHoraRegistro(add80Minutes(item.horaRegistro))}
+                {unidadesLoma47.length > 0 &&
+                  unidadesLoma47.map((u) => (
+                    <div key={u.id} style={{ fontSize: 16, marginBottom: -5 , color: "black"}}>
+                      <span style={{ fontWeight: "bold", marginRight: 8 }}>
+                        {u.numeroUnidad}
+                      </span>
+                      <span>
+                        {formatHoraRegistro(add60Minutes(u.horaRegistro))}
+                      </span>
                     </div>
-                  ));
-                })()}
+                  ))}
               </div>
             </td>
           </tr>
