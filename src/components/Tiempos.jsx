@@ -10,34 +10,38 @@ import ClockButton from "./Reloj";
 import BotonEliminarUnidad from "./BotonEliminarUnidad";
 import Comision from "./Comision";
 import {
-  obtenerSosaDel9Al12,
-  obtenerLomaDel4Al7,
+  //obtenerSosaDel9Al12,
+  //obtenerLomaDel4Al7,
   buscarUnidadYRelacionadas,
   buscarSanIsidroParaPrediccion,
   //buscarSosaParaPrediccion,
   //buscarLomaSosaParaPrediccion,
-  buscarSosaLomaParaPrediccion,
+  //buscarSosaLomaParaPrediccion,
   buscarQuintaParaPrediccion,
   //obtenerUltimasUnidadesTacopan,
   //obtenerUltimasUnidadesCalanorte,
   buscarTezotepecParaPrediccion,
-  buscarTezotepecParaPrediccionReverse,
+  //buscarTezotepecParaPrediccionReverse,
   buscarCalicapanParaPrediccion,
   //buscarLomaParaPrediccion,
   buscarTalzintanParaPrediccion,
   buscarYaonahuacParaPrediccion,
   buscarHueyapanParaPrediccion,
+  //FUNCIONES PARA PILAS A PARTIR DE LA LINEA SIGUIENTE
+  obtenerPilaRuta,
 } from "./constantes";
 
 import html2canvas from "html2canvas";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
 const UnidadesComponent = () => {
+  const [pilaLoma, setPilaLoma] = useState([]); //ESTADO PARA LA PILA LOMA
+  const [pilaSosa, setPilaSosa] = useState([]); //ESTADO PARA LA PILA LOMA
+  const [pilaTezo, setPilaTezo] = useState([]); //ESTADO PARA LA PILA LOMA
 
   const inputTalzintanRef = useRef(null);
   const [reproduciendo, setReproduciendo] = useState(false);
   const utteranceRef = useRef(null);
-
 
   const [ruta, setRuta] = useState("");
   const [tipo, setTipo] = useState("");
@@ -96,8 +100,6 @@ const UnidadesComponent = () => {
   const [numerosHueyapan, setnumerosHueyapan] = useState([]);
   const [mostrarListaHueyapan, setMostrarListaHueyapan] = useState(false);
 
-
-
   // Estados para todas las unidades
   // Estados para todas las unidades
   // Estados para todas las unidades
@@ -144,9 +146,7 @@ const UnidadesComponent = () => {
     useState(null);
 
   const [ultimaUnidadHueyapan, setUltimaUnidadHueyapan] = useState(null);
-  const [penultimaUnidadHueyapan, setPenultimaUnidadHueyapan] =
-    useState(null);
-
+  const [penultimaUnidadHueyapan, setPenultimaUnidadHueyapan] = useState(null);
 
   // Estados para unidades de tipo rojo ROJO ROJO ROJO
   // Estados para unidades de tipo rojo ROJO ROJO ROJO
@@ -276,16 +276,16 @@ const UnidadesComponent = () => {
 
   const [unidades, setUnidades] = useState([]);
   //const [unidadesSosa, setUnidadesSosa] = useState([]);
-  const [unidadesSosa912, setUnidadesSosa912] = useState([]);
-  const [unidadesLoma47, setUnidadesLoma47] = useState([]);
+  //const [unidadesSosa912, setUnidadesSosa912] = useState([]);
+  //const [unidadesLoma47, setUnidadesLoma47] = useState([]);
   //const [unidadesLomaSosa, setUnidadesLomaSosa] = useState([]);
-  const [unidadesSosaLoma, setUnidadesSosaLoma] = useState([]);
+  //const [unidadesSosaLoma, setUnidadesSosaLoma] = useState([]);
   const [unidadesSanIsidro, setUnidadesSanIsidro] = useState([]);
   const [unidadesQuinta, setUnidadesQuinta] = useState([]);
   //const [ultimasTacopan, setUltimasTacopan] = useState([]);
   //const [ultimasCalanorte, setUltimasCalanorte] = useState([]);
   const [unidadesTezotepec, setUnidadesTezotepec] = useState([]);
-  const [unidadesTezotepecReverse, setUnidadesTezotepecReverse] = useState([]);
+  //const [unidadesTezotepecReverse, setUnidadesTezotepecReverse] = useState([]);
 
   const [unidadesCalicapan, setUnidadesCalicapan] = useState([]);
   //const [unidadesLoma, setUnidadesLoma] = useState([]);
@@ -295,23 +295,23 @@ const UnidadesComponent = () => {
 
   const [unidadesHueyapan, setUnidadesHueyapan] = useState([]);
 
-useEffect(() => {
+  /* useEffect(() => {
     const obtenerDatos = async () => {
       const resultado = await obtenerSosaDel9Al12();
       if (resultado) setUnidadesSosa912(resultado);
     };
 
     obtenerDatos();
-  }, [isFormVisible]);
+  }, [isFormVisible]); */
 
-  useEffect(() => {
+  /* useEffect(() => {
     const obtenerDatos = async () => {
       const resultado = await obtenerLomaDel4Al7();
       if (resultado) setUnidadesLoma47(resultado);
     };
 
     obtenerDatos();
-  }, [isFormVisible]);
+  }, [isFormVisible]); */
 
   useEffect(() => {
     const obtenerDatos = async () => {
@@ -349,14 +349,14 @@ useEffect(() => {
     obtenerDatos();
   }, [isFormVisible]);*/
 
-  useEffect(() => {
+  /* useEffect(() => {
     const obtenerDatos = async () => {
       const resultado = await buscarSosaLomaParaPrediccion();
       if (resultado) setUnidadesSosaLoma(resultado);
     };
 
     obtenerDatos();
-  }, [isFormVisible]);
+  }, [isFormVisible]); */
 
   useEffect(() => {
     const obtenerDatos = async () => {
@@ -376,7 +376,7 @@ useEffect(() => {
     obtenerDatos();
   }, [isFormVisible]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     const obtenerDatos = async () => {
       const resultado = await buscarTezotepecParaPrediccionReverse();
       if (resultado && resultado.length) {
@@ -384,7 +384,7 @@ useEffect(() => {
       }
     };
     obtenerDatos();
-  }, [isFormVisible]);
+  }, [isFormVisible]); */
 
   useEffect(() => {
     const obtenerDatos = async () => {
@@ -413,23 +413,34 @@ useEffect(() => {
     obtenerDatos();
   }, [isFormVisible]);
 
-  /*useEffect(() => {
-    const cargarUltimasUnidades = async () => {
-      const unidades = await obtenerUltimasUnidadesTacopan();
-      setUltimasTacopan(unidades);
+  //OBTENER PILAS - OBTENER PILAS - OBTENER PILAS - OBTENER PILAS
+
+  useEffect(() => {
+    const cargar = async () => {
+      const resultado = await obtenerPilaRuta("loma");
+      setPilaLoma(resultado);
     };
 
-    cargarUltimasUnidades();
-  }, [isFormVisible]);*/
+    cargar();
+  }, [isFormVisible]);
 
-  /*useEffect(() => {
-    const cargarUltimasUnidades = async () => {
-      const unidades = await obtenerUltimasUnidadesCalanorte();
-      setUltimasCalanorte(unidades);
+  useEffect(() => {
+    const cargar = async () => {
+      const resultado = await obtenerPilaRuta("sosa escuela");
+      setPilaSosa(resultado);
     };
 
-    cargarUltimasUnidades();
-  }, [isFormVisible]);*/
+    cargar();
+  }, [isFormVisible]);
+
+  useEffect(() => {
+    const cargar = async () => {
+      const resultado = await obtenerPilaRuta("tezotepec");
+      setPilaTezo(resultado);
+    };
+
+    cargar();
+  }, [isFormVisible]);
 
   const tablaTalzintanRef = useRef(null);
   const tablaLomaRef = useRef(null);
@@ -469,7 +480,6 @@ useEffect(() => {
     obtenerDatos();
   }, [isFormVerdeVisible]);
 
-
   useEffect(() => {
     const actualizarCronometros = async () => {
       const unidadesTalzintan = await obtenerUnidades("talzintan");
@@ -494,7 +504,7 @@ useEffect(() => {
       const unidadesRojaCalicapan = await obtenerUnidades("calicapan", "rojo");
       const unidadesRojaSosaEscuela = await obtenerUnidades(
         "sosa escuela",
-        "rojo"
+        "rojo",
       );
       const unidadesRojaSanIsidro = await obtenerUnidades("san isidro", "rojo");
       const unidadesRojaTacopan = await obtenerUnidades("tacopan", "rojo");
@@ -505,70 +515,70 @@ useEffect(() => {
         setUltimaUnidadTalzintan,
         setPenultimaUnidadTalzintan,
         setTiempoTranscurridoTalzintan,
-        setDiferenciaTalzintan
+        setDiferenciaTalzintan,
       );
       actualizarEstadoUnidades(
         unidadesLoma,
         setUltimaUnidadLoma,
         setPenultimaUnidadLoma,
         setTiempoTranscurridoLoma,
-        setDiferenciaLoma
+        setDiferenciaLoma,
       );
       actualizarEstadoUnidades(
         unidadesTezotepec,
         setUltimaUnidadTezotepec,
         setPenultimaUnidadTezotepec,
         setTiempoTranscurridoTezotepec,
-        setDiferenciaTezotepec
+        setDiferenciaTezotepec,
       );
       actualizarEstadoUnidades(
         unidadesCalicapan,
         setUltimaUnidadCalicapan,
         setPenultimaUnidadCalicapan,
         setTiempoTranscurridoCalicapan,
-        setDiferenciaCalicapan
+        setDiferenciaCalicapan,
       );
       actualizarEstadoUnidades(
         unidadesSosaEscuela,
         setUltimaUnidadSosaEscuela,
         setPenultimaUnidadSosaEscuela,
         setTiempoTranscurridoSosaEscuela,
-        setDiferenciaSosaEscuela
+        setDiferenciaSosaEscuela,
       );
       actualizarEstadoUnidades(
         unidadesSanIsidro,
         setUltimaUnidadSanIsidro,
         setPenultimaUnidadSanIsidro,
         setTiempoTranscurridoSanIsidro,
-        setDiferenciaSanIsidro
+        setDiferenciaSanIsidro,
       );
       actualizarEstadoUnidades(
         unidadesTacopan,
         setUltimaUnidadTacopan,
         setPenultimaUnidadTacopan,
         setTiempoTranscurridoTacopan,
-        setDiferenciaTacopan
+        setDiferenciaTacopan,
       );
       actualizarEstadoUnidades(
         unidadesCalanorte,
         setUltimaUnidadCalanorte,
         setPenultimaUnidadCalanorte,
         setTiempoTranscurridoCalanorte,
-        setDiferenciaCalanorte
+        setDiferenciaCalanorte,
       );
       actualizarEstadoUnidades(
         unidadesPajaco,
         setUltimaUnidadPajaco,
         setPenultimaUnidadPajaco,
         setTiempoTranscurridoPajaco,
-        setDiferenciaPajaco
+        setDiferenciaPajaco,
       );
       actualizarEstadoUnidades(
         unidadesAnalco,
         setUltimaUnidadAnalco,
         setPenultimaUnidadAnalco,
         setTiempoTranscurridoAnalco,
-        setDiferenciaAnalco
+        setDiferenciaAnalco,
       );
 
       actualizarEstadoUnidades(
@@ -576,21 +586,21 @@ useEffect(() => {
         setUltimaUnidadTequimila,
         setPenultimaUnidadTequimila,
         setTiempoTranscurridoTequimila,
-        setDiferenciaTequimila
+        setDiferenciaTequimila,
       );
       actualizarEstadoUnidades(
         unidadesQuinta,
         setUltimaUnidadQuinta,
         setPenultimaUnidadQuinta,
         setTiempoTranscurridoQuinta,
-        setDiferenciaQuinta
+        setDiferenciaQuinta,
       );
       actualizarEstadoUnidades(
         unidadesOtra,
         setUltimaUnidadOtra,
         setPenultimaUnidadOtra,
         setTiempoTranscurridoOtra,
-        setDiferenciaOtra
+        setDiferenciaOtra,
       );
 
       actualizarEstadoUnidades(
@@ -598,7 +608,7 @@ useEffect(() => {
         setUltimaUnidadYaonahuac,
         setPenultimaUnidadYaonahuac,
         setTiempoTranscurridoYaonahuac,
-        setDiferenciaYaonahuac
+        setDiferenciaYaonahuac,
       );
 
       actualizarEstadoUnidades(
@@ -606,7 +616,7 @@ useEffect(() => {
         setUltimaUnidadHueyapan,
         setPenultimaUnidadHueyapan,
         setTiempoTranscurridoHueyapan,
-        setDiferenciaHueyapan
+        setDiferenciaHueyapan,
       );
 
       // Unidades de tipo rojo
@@ -619,42 +629,42 @@ useEffect(() => {
         setUltimaUnidadRojaTalzintan,
         setPenultimaUnidadRojaTalzintan,
         setTiempoTranscurridoRojaTalzintan,
-        setDiferenciaRojaTalzintan
+        setDiferenciaRojaTalzintan,
       );
       actualizarEstadoUnidades(
         unidadesRojaTezotepec,
         setUltimaUnidadRojaTezotepec,
         setPenultimaUnidadRojaTezotepec,
         setTiempoTranscurridoRojaTezotepec,
-        setDiferenciaRojaTezotepec
+        setDiferenciaRojaTezotepec,
       );
       actualizarEstadoUnidades(
         unidadesRojaCalicapan,
         setUltimaUnidadRojaCalicapan,
         setPenultimaUnidadRojaCalicapan,
         setTiempoTranscurridoRojaCalicapan,
-        setDiferenciaRojaCalicapan
+        setDiferenciaRojaCalicapan,
       );
       actualizarEstadoUnidades(
         unidadesRojaSosaEscuela,
         setUltimaUnidadRojaSosaEscuela,
         setPenultimaUnidadRojaSosaEscuela,
         setTiempoTranscurridoRojaSosaEscuela,
-        setDiferenciaRojaSosaEscuela
+        setDiferenciaRojaSosaEscuela,
       );
       actualizarEstadoUnidades(
         unidadesRojaSanIsidro,
         setUltimaUnidadRojaSanIsidro,
         setPenultimaUnidadRojaSanIsidro,
         setTiempoTranscurridoRojaSanIsidro,
-        setDiferenciaRojaSanIsidro
+        setDiferenciaRojaSanIsidro,
       );
       actualizarEstadoUnidades(
         unidadesRojaTacopan,
         setUltimaUnidadRojaTacopan,
         setPenultimaUnidadRojaTacopan,
         setTiempoTranscurridoRojaTacopan,
-        setDiferenciaRojaTacopan
+        setDiferenciaRojaTacopan,
       );
 
       // Verificar si el tiempo transcurrido es de 6 minutos (360 segundos)
@@ -671,15 +681,15 @@ useEffect(() => {
           progress: undefined,
           theme: "light",
           style: {
-            fontSize: "20px",          // 🔹 tamaño de letra
-            padding: "18px 24px",      // 🔹 espacio interno
-            minHeight: "90px",         // 🔹 altura mínima
-            width: "500px",            // 🔹 ancho
-            borderRadius: "14px",      // 🔹 esquinas redondeadas
+            fontSize: "20px", // 🔹 tamaño de letra
+            padding: "18px 24px", // 🔹 espacio interno
+            minHeight: "90px", // 🔹 altura mínima
+            width: "500px", // 🔹 ancho
+            borderRadius: "14px", // 🔹 esquinas redondeadas
             border: "1px solid #000000ff", // 🔹 borde rojo
-            backgroundColor: "#66ff00ff",  // 🔹 fondo
-            color: "#000000ff",            // 🔹 color texto
-            fontWeight: "bold",          // 🔹 negritas
+            backgroundColor: "#66ff00ff", // 🔹 fondo
+            color: "#000000ff", // 🔹 color texto
+            fontWeight: "bold", // 🔹 negritas
           },
         });
       }
@@ -697,15 +707,15 @@ useEffect(() => {
           progress: undefined,
           theme: "light",
           style: {
-            fontSize: "20px",          // 🔹 tamaño de letra
-            padding: "18px 24px",      // 🔹 espacio interno
-            minHeight: "90px",         // 🔹 altura mínima
-            width: "500px",            // 🔹 ancho
-            borderRadius: "14px",      // 🔹 esquinas redondeadas
+            fontSize: "20px", // 🔹 tamaño de letra
+            padding: "18px 24px", // 🔹 espacio interno
+            minHeight: "90px", // 🔹 altura mínima
+            width: "500px", // 🔹 ancho
+            borderRadius: "14px", // 🔹 esquinas redondeadas
             border: "1px solid #000000ff", // 🔹 borde rojo
-            backgroundColor: "#ffbb00ff",  // 🔹 fondo
-            color: "#ffffffff",            // 🔹 color texto
-            fontWeight: "bold",          // 🔹 negritas
+            backgroundColor: "#ffbb00ff", // 🔹 fondo
+            color: "#ffffffff", // 🔹 color texto
+            fontWeight: "bold", // 🔹 negritas
           },
         });
       }
@@ -723,15 +733,15 @@ useEffect(() => {
           progress: undefined,
           theme: "light",
           style: {
-            fontSize: "20px",          // 🔹 tamaño de letra
-            padding: "18px 24px",      // 🔹 espacio interno
-            minHeight: "90px",         // 🔹 altura mínima
-            width: "500px",            // 🔹 ancho
-            borderRadius: "14px",      // 🔹 esquinas redondeadas
+            fontSize: "20px", // 🔹 tamaño de letra
+            padding: "18px 24px", // 🔹 espacio interno
+            minHeight: "90px", // 🔹 altura mínima
+            width: "500px", // 🔹 ancho
+            borderRadius: "14px", // 🔹 esquinas redondeadas
             border: "1px solid #000000ff", // 🔹 borde rojo
-            backgroundColor: "#247becff",  // 🔹 fondo
-            color: "#000000ff",            // 🔹 color texto
-            fontWeight: "bold",          // 🔹 negritas
+            backgroundColor: "#247becff", // 🔹 fondo
+            color: "#000000ff", // 🔹 color texto
+            fontWeight: "bold", // 🔹 negritas
           },
         });
       }
@@ -749,15 +759,15 @@ useEffect(() => {
           progress: undefined,
           theme: "light",
           style: {
-            fontSize: "20px",          // 🔹 tamaño de letra
-            padding: "18px 24px",      // 🔹 espacio interno
-            minHeight: "90px",         // 🔹 altura mínima
-            width: "500px",            // 🔹 ancho
-            borderRadius: "14px",      // 🔹 esquinas redondeadas
+            fontSize: "20px", // 🔹 tamaño de letra
+            padding: "18px 24px", // 🔹 espacio interno
+            minHeight: "90px", // 🔹 altura mínima
+            width: "500px", // 🔹 ancho
+            borderRadius: "14px", // 🔹 esquinas redondeadas
             border: "1px solid #000000ff", // 🔹 borde rojo
-            backgroundColor: "#c300ffff",  // 🔹 fondo
-            color: "#000000ff",            // 🔹 color texto
-            fontWeight: "bold",          // 🔹 negritas
+            backgroundColor: "#c300ffff", // 🔹 fondo
+            color: "#000000ff", // 🔹 color texto
+            fontWeight: "bold", // 🔹 negritas
           },
         });
       }
@@ -775,15 +785,15 @@ useEffect(() => {
           progress: undefined,
           theme: "light",
           style: {
-            fontSize: "20px",          // 🔹 tamaño de letra
-            padding: "18px 24px",      // 🔹 espacio interno
-            minHeight: "90px",         // 🔹 altura mínima
-            width: "500px",            // 🔹 ancho
-            borderRadius: "14px",      // 🔹 esquinas redondeadas
+            fontSize: "20px", // 🔹 tamaño de letra
+            padding: "18px 24px", // 🔹 espacio interno
+            minHeight: "90px", // 🔹 altura mínima
+            width: "500px", // 🔹 ancho
+            borderRadius: "14px", // 🔹 esquinas redondeadas
             border: "1px solid #000000ff", // 🔹 borde rojo
-            backgroundColor: "#505050ff",  // 🔹 fondo
-            color: "#ffffffff",            // 🔹 color texto
-            fontWeight: "bold",          // 🔹 negritas
+            backgroundColor: "#505050ff", // 🔹 fondo
+            color: "#ffffffff", // 🔹 color texto
+            fontWeight: "bold", // 🔹 negritas
           },
         });
       }
@@ -871,7 +881,7 @@ useEffect(() => {
     setUltimaUnidad,
     setPenultimaUnidad,
     setTiempoTranscurrido,
-    setDiferencia
+    setDiferencia,
   ) => {
     if (unidades.length > 0) {
       setUltimaUnidad(unidades[unidades.length - 1]);
@@ -881,7 +891,7 @@ useEffect(() => {
         const diferencia = Math.floor(
           (new Date(unidades[unidades.length - 1].horaRegistro) -
             new Date(unidades[unidades.length - 2].horaRegistro)) /
-          1000
+            1000,
         );
         setDiferencia(diferencia);
       } else {
@@ -891,7 +901,7 @@ useEffect(() => {
 
       const tiempoTranscurrido = Math.floor(
         (new Date() - new Date(unidades[unidades.length - 1].horaRegistro)) /
-        1000
+          1000,
       );
       setTiempoTranscurrido(tiempoTranscurrido);
     } else {
@@ -908,7 +918,7 @@ useEffect(() => {
   //AGREGAR UNIDAD
   //AGREGAR UNIDAD
 
-  const agregarUnidad = async () => {
+  /* const agregarUnidad = async () => {
     if (ruta && tipo && numeroUnidad.trim() !== "") {
       const unidadValida = /^[0-9.\-+]+$/.test(numeroUnidad);
       if (!unidadValida) {
@@ -931,6 +941,46 @@ useEffect(() => {
       setNumeroUnidad("");
       setHoraRegistro(new Date().toISOString());
       setFormVisible(false); // Ocultar el formulario después de agregar la unidad
+    }
+  }; */
+
+  const agregarUnidad = async () => {
+    if (ruta && tipo && numeroUnidad.trim() !== "") {
+      const unidadValida = /^[0-9.\-+]+$/.test(numeroUnidad);
+
+      if (!unidadValida) {
+        alert(
+          "La unidad solo puede contener números, puntos, guiones o signos de más.",
+        );
+        return;
+      }
+
+      const nuevaUnidad = {
+        ruta,
+        tipo,
+        numeroUnidad: numeroUnidad.trim(),
+        horaRegistro,
+        color,
+      };
+
+      // Historial completo
+      await db.unidades.add(nuevaUnidad);
+
+      // Solo blancos actualizan las pilas
+      if (tipo === "blanco") {
+        await db.pilas
+          .where("numeroUnidad")
+          .equals(numeroUnidad.trim())
+          .delete();
+
+        await db.pilas.add(nuevaUnidad);
+      }
+
+      setRuta("");
+      setTipo("");
+      setNumeroUnidad("");
+      setHoraRegistro(new Date().toISOString());
+      setFormVisible(false);
     }
   };
 
@@ -960,7 +1010,7 @@ useEffect(() => {
       inputRef.current.focus();
     }
   }, [isFormVisible]);
-//----------------------------------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------------------------------------
   //AGREGAR UNIDAD VERDE
   //AGREGAR UNIDAD VERDE
   //AGREGAR UNIDAD VERDE
@@ -971,7 +1021,7 @@ useEffect(() => {
       const unidadValida = /^[0-9.\-+]+$/.test(numeroUnidad);
       if (!unidadValida) {
         alert(
-          "La unidad solo puede contener números, puntos, guiones o signos de más."
+          "La unidad solo puede contener números, puntos, guiones o signos de más.",
         );
         return;
       }
@@ -1017,8 +1067,9 @@ useEffect(() => {
   const formatoTiempo = (segundos) => {
     const minutos = Math.floor(segundos / 60);
     const segundosRestantes = segundos % 60;
-    return `${minutos < 10 ? "0" : ""}${minutos}:${segundosRestantes < 10 ? "0" : ""
-      }${segundosRestantes}`;
+    return `${minutos < 10 ? "0" : ""}${minutos}:${
+      segundosRestantes < 10 ? "0" : ""
+    }${segundosRestantes}`;
   };
 
   const formatoTiempoRedondeado = (segundos) => {
@@ -1065,7 +1116,7 @@ useEffect(() => {
   const handleObtenerUnidadesTezotepecBlancas = async () => {
     const numerosTezotepecBlancas = await obtenerUnidades(
       "tezotepec",
-      "blanco"
+      "blanco",
     );
     setnumerosTezotepecBlancas(numerosTezotepecBlancas);
     setMostrarListaTezotepecBlancas(true);
@@ -1102,7 +1153,7 @@ useEffect(() => {
   const handleObtenerUnidadesSosaBlancas = async () => {
     const numerosSosaBlancas = await obtenerUnidadesSosa(
       "sosa escuela",
-      "blanco"
+      "blanco",
     );
     setnumerosSosaBlancas(numerosSosaBlancas);
     setMostrarListaSosaBlancas(true);
@@ -1125,7 +1176,7 @@ useEffect(() => {
   const handleObtenerUnidadesSanisidroBlancas = async () => {
     const numerosSanisidroBlancas = await obtenerUnidadesSosa(
       "san isidro",
-      "blanco"
+      "blanco",
     );
     setnumerosSanisidroBlancas(numerosSanisidroBlancas);
     setMostrarListaSanisidroBlancas(true);
@@ -1200,10 +1251,6 @@ useEffect(() => {
     setMostrarListaAnalco(false);
   };
 
-
-
-
-
   // eslint-disable-next-line no-unused-vars
   const handleObtenerUnidadesOtra = async () => {
     const numerosOtra = await obtenerUnidades("otra");
@@ -1253,7 +1300,9 @@ useEffect(() => {
     hours = hours ? hours : 12; // the hour '0' should be '12'
     return `${hours}:${minutes}`;
   };
-  {/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */ }
+  {
+    /* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */
+  }
   const handleDownloadImageTalzintan = () => {
     const input = tablaTalzintanRef.current;
     const currentDate = new Date(); // Obtener la fecha y hora actual
@@ -1309,7 +1358,9 @@ useEffect(() => {
       link.click();
     });
   };
-  {/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */ }
+  {
+    /* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */
+  }
   const handleDownloadImageLoma = () => {
     const input = tablaLomaRef.current;
 
@@ -1370,7 +1421,9 @@ useEffect(() => {
       link.click();
     });
   };
-  {/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */ }
+  {
+    /* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */
+  }
   const handleDownloadImageTezotepec = () => {
     const input = tablaTezotepecRef.current;
 
@@ -1431,7 +1484,9 @@ useEffect(() => {
       link.click();
     });
   };
-  {/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */ }
+  {
+    /* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */
+  }
   /* const handleDownloadImageTezotepecBlancas = () => {
     const input = tablaTezotepecBlancasRef.current;
 
@@ -1492,7 +1547,9 @@ useEffect(() => {
       link.click();
     });
   }; */
-  {/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */ }
+  {
+    /* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */
+  }
   const handleDownloadImageCalicapan = () => {
     const input = tablaCalicapanRef.current;
     const currentDate = new Date(); // Obtener la fecha y hora actual
@@ -1548,7 +1605,9 @@ useEffect(() => {
       link.click();
     });
   };
-  {/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */ }
+  {
+    /* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */
+  }
   const handleDownloadImageSosa = () => {
     const input = tablaSosaRef.current;
     const currentDate = new Date(); // Obtener la fecha y hora actual
@@ -1604,7 +1663,9 @@ useEffect(() => {
       link.click();
     });
   };
-  {/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */ }
+  {
+    /* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */
+  }
   /* const handleDownloadImageSosaBlancas = () => {
     const input = tablaSosaBlancasRef.current;
     const currentDate = new Date(); // Obtener la fecha y hora actual
@@ -1660,7 +1721,9 @@ useEffect(() => {
       link.click();
     });
   }; */
-  {/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */ }
+  {
+    /* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */
+  }
   const handleDownloadImageSanisidro = () => {
     const input = tablaSanisidroRef.current;
     const currentDate = new Date(); // Obtener la fecha y hora actual
@@ -1716,7 +1779,9 @@ useEffect(() => {
       link.click();
     });
   };
-  {/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */ }
+  {
+    /* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */
+  }
   /* const handleDownloadImageSanisidroBlancas = () => {
     const input = tablaSanisidroBlancasRef.current;
     const currentDate = new Date(); // Obtener la fecha y hora actual
@@ -1772,7 +1837,9 @@ useEffect(() => {
       link.click();
     });
   }; */
-  {/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */ }
+  {
+    /* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */
+  }
   const handleDownloadImageTacopan = () => {
     const input = tablaTacopanRef.current;
     const currentDate = new Date(); // Obtener la fecha y hora actual
@@ -1828,7 +1895,9 @@ useEffect(() => {
       link.click();
     });
   };
-  {/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */ }
+  {
+    /* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */
+  }
   const handleDownloadImageTequimila = () => {
     const input = tablaTequimilaRef.current;
     const currentDate = new Date(); // Obtener la fecha y hora actual
@@ -1884,7 +1953,9 @@ useEffect(() => {
       link.click();
     });
   };
-  {/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */ }
+  {
+    /* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */
+  }
   const handleDownloadImageQuinta = () => {
     const input = tablaQuintaRef.current;
     const currentDate = new Date(); // Obtener la fecha y hora actual
@@ -1940,7 +2011,9 @@ useEffect(() => {
       link.click();
     });
   };
-  {/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */ }
+  {
+    /* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */
+  }
   const handleDownloadImageCalanorte = () => {
     const input = tablaCalanorteRef.current;
     const currentDate = new Date(); // Obtener la fecha y hora actual
@@ -1996,7 +2069,9 @@ useEffect(() => {
       link.click();
     });
   };
-  {/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */ }
+  {
+    /* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */
+  }
   const handleDownloadImagePajaco = () => {
     const input = tablaPajacoRef.current;
     const currentDate = new Date(); // Obtener la fecha y hora actual
@@ -2052,7 +2127,9 @@ useEffect(() => {
       link.click();
     });
   };
-  {/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */ }
+  {
+    /* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */
+  }
   const handleDownloadImageAnalco = () => {
     const input = tablaAnalcoRef.current;
     const currentDate = new Date(); // Obtener la fecha y hora actual
@@ -2109,7 +2186,9 @@ useEffect(() => {
     });
   };
 
-  {/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */ }
+  {
+    /* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */
+  }
   const handleDownloadImageOtra = () => {
     const input = tablaOtraRef.current;
     const currentDate = new Date(); // Obtener la fecha y hora actual
@@ -2166,7 +2245,9 @@ useEffect(() => {
     });
   };
 
-  {/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */ }
+  {
+    /* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */
+  }
   const handleDownloadImageYaonahuac = () => {
     const input = tablaOtraRef.current;
     const currentDate = new Date(); // Obtener la fecha y hora actual
@@ -2223,7 +2304,9 @@ useEffect(() => {
     });
   };
 
-  {/* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */ }
+  {
+    /* CAPTURA DE IMAGEN - 📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸📸 - CAPTURA DE IMAGEN */
+  }
   const handleDownloadImageHueyapan = () => {
     const input = tablaOtraRef.current;
     const currentDate = new Date(); // Obtener la fecha y hora actual
@@ -2280,14 +2363,17 @@ useEffect(() => {
     });
   };
 
-
-  {/* AGREGA MINUTOS A LA HORA ORIGINAL ⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚ ➕➕➕*/ }
+  {
+    /* AGREGA MINUTOS A LA HORA ORIGINAL ⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚ ➕➕➕*/
+  }
   const add46Minutes = (horaRegistro) => {
     const date = new Date(horaRegistro);
     date.setMinutes(date.getMinutes() + 46);
     return date;
   };
-  {/* AGREGA MINUTOS A LA GORA ORIGINAL ⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚ ➕➕➕*/ }
+  {
+    /* AGREGA MINUTOS A LA GORA ORIGINAL ⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚ ➕➕➕*/
+  }
   const add80Minutes = (horaRegistro) => {
     const date = new Date(horaRegistro);
     if (isNaN(date.getTime())) {
@@ -2305,7 +2391,9 @@ useEffect(() => {
     date.setMinutes(date.getMinutes() + 60);
     return date;
   };
-  {/* AGREGA MINUTOS A LA GORA ORIGINAL ⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚ ➕➕➕*/ }
+  {
+    /* AGREGA MINUTOS A LA GORA ORIGINAL ⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚ ➕➕➕*/
+  }
   const add65Minutes = (horaRegistro) => {
     const date = new Date(horaRegistro);
     if (isNaN(date.getTime())) {
@@ -2314,31 +2402,41 @@ useEffect(() => {
     date.setMinutes(date.getMinutes() + 65);
     return date;
   };
-  {/* AGREGA MINUTOS A LA GORA ORIGINAL ⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚ ➕➕➕*/ }
+  {
+    /* AGREGA MINUTOS A LA GORA ORIGINAL ⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚ ➕➕➕*/
+  }
   const add50Minutes = (horaRegistro) => {
     const date = new Date(horaRegistro);
     date.setMinutes(date.getMinutes() + 50);
     return date;
   };
-  {/* AGREGA MINUTOS A LA GORA ORIGINAL ⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚ ➕➕➕*/ }
+  {
+    /* AGREGA MINUTOS A LA GORA ORIGINAL ⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚ ➕➕➕*/
+  }
   const add70Minutes = (horaRegistro) => {
     const date = new Date(horaRegistro);
     date.setMinutes(date.getMinutes() + 70);
     return date;
   };
-  {/* AGREGA MINUTOS A LA GORA ORIGINAL ⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚ ➕➕➕*/ }
+  {
+    /* AGREGA MINUTOS A LA GORA ORIGINAL ⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚ ➕➕➕*/
+  }
   const add90Minutes = (horaRegistro) => {
     const date = new Date(horaRegistro);
     date.setMinutes(date.getMinutes() + 90);
     return date;
   };
-  {/* AGREGA MINUTOS A LA GORA ORIGINAL ⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚ ➕➕➕*/ }
+  {
+    /* AGREGA MINUTOS A LA GORA ORIGINAL ⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚ ➕➕➕*/
+  }
   const add180Minutes = (horaRegistro) => {
     const date = new Date(horaRegistro);
     date.setMinutes(date.getMinutes() + 180);
     return date;
   };
-  {/* AGREGA MINUTOS A LA GORA ORIGINAL ⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚ ➕➕➕*/ }
+  {
+    /* AGREGA MINUTOS A LA GORA ORIGINAL ⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚⌚ ➕➕➕*/
+  }
   const add75Minutes = (horaRegistro) => {
     const date = new Date(horaRegistro);
     date.setMinutes(date.getMinutes() + 75);
@@ -2354,52 +2452,74 @@ useEffect(() => {
     return localISOTime;
   };
 
-
-  {/* COPY PASTE - 📋📋📋📋📋📋📋📋📋📋📋📋📋📋 - COPY PASTE*/ }
+  {
+    /* COPY PASTE - 📋📋📋📋📋📋📋📋📋📋📋📋📋📋 - COPY PASTE*/
+  }
   const formattedTextTacopanAlMomento = `*Tacopan al momento:*\r\n\r\n- ${formatoTiempoRedondeado(
-    tiempoTranscurridoTacopan
-  )} del *${ultimaUnidadTacopan ? ultimaUnidadTacopan.numeroUnidad : "N/A"}* *${ultimaUnidadTacopan ? ultimaUnidadTacopan.tipo : "N/A"
-    }* _Tacopan_\r\n\r\n- ${formatoTiempoRedondeado(
-      tiempoTranscurridoTalzintan
-    )} del *${ultimaUnidadTalzintan ? ultimaUnidadTalzintan.numeroUnidad : "N/A"
-    }* *${ultimaUnidadTalzintan ? ultimaUnidadTalzintan.tipo : "N/A"
-    }* _Talzintan_\r\n- ${formatoTiempoRedondeado(tiempoTranscurridoLoma)} del *${ultimaUnidadLoma ? ultimaUnidadLoma.numeroUnidad : "N/A"
-    }* *${ultimaUnidadLoma ? ultimaUnidadLoma.tipo : "N/A"
-    }* _Loma_\r\n\r\n- ${formatoTiempoRedondeado(
-      tiempoTranscurridoCalanorte
-    )} del *${ultimaUnidadCalanorte ? ultimaUnidadCalanorte.numeroUnidad : "N/A"
-    }* *${ultimaUnidadCalanorte ? ultimaUnidadCalanorte.tipo : "N/A"
-    }* _Calanorte_\r\n- ${formatoTiempoRedondeado(
-      tiempoTranscurridoPajaco
-    )} del *${ultimaUnidadPajaco ? ultimaUnidadPajaco.numeroUnidad : "N/A"}* *${ultimaUnidadPajaco ? ultimaUnidadPajaco.tipo : "N/A"
-    }* _Pajaco_\r\n© _JoyBoy._`;
-  {/* COPY PASTE - 📋📋📋📋📋📋📋📋📋📋📋📋📋📋 - COPY PASTE*/ }
+    tiempoTranscurridoTacopan,
+  )} del *${ultimaUnidadTacopan ? ultimaUnidadTacopan.numeroUnidad : "N/A"}* *${
+    ultimaUnidadTacopan ? ultimaUnidadTacopan.tipo : "N/A"
+  }* _Tacopan_\r\n\r\n- ${formatoTiempoRedondeado(
+    tiempoTranscurridoTalzintan,
+  )} del *${
+    ultimaUnidadTalzintan ? ultimaUnidadTalzintan.numeroUnidad : "N/A"
+  }* *${
+    ultimaUnidadTalzintan ? ultimaUnidadTalzintan.tipo : "N/A"
+  }* _Talzintan_\r\n- ${formatoTiempoRedondeado(tiempoTranscurridoLoma)} del *${
+    ultimaUnidadLoma ? ultimaUnidadLoma.numeroUnidad : "N/A"
+  }* *${
+    ultimaUnidadLoma ? ultimaUnidadLoma.tipo : "N/A"
+  }* _Loma_\r\n\r\n- ${formatoTiempoRedondeado(
+    tiempoTranscurridoCalanorte,
+  )} del *${
+    ultimaUnidadCalanorte ? ultimaUnidadCalanorte.numeroUnidad : "N/A"
+  }* *${
+    ultimaUnidadCalanorte ? ultimaUnidadCalanorte.tipo : "N/A"
+  }* _Calanorte_\r\n- ${formatoTiempoRedondeado(
+    tiempoTranscurridoPajaco,
+  )} del *${ultimaUnidadPajaco ? ultimaUnidadPajaco.numeroUnidad : "N/A"}* *${
+    ultimaUnidadPajaco ? ultimaUnidadPajaco.tipo : "N/A"
+  }* _Pajaco_\r\n© _JoyBoy._`;
+  {
+    /* COPY PASTE - 📋📋📋📋📋📋📋📋📋📋📋📋📋📋 - COPY PASTE*/
+  }
   const formattedTextTacopanTeLlevas = `*Tacopan te llevas:*\r\n\r\n- ${formatoTiempoRedondeado(
-    diferenciaTacopan
-  )} del *${penultimaUnidadTacopan ? penultimaUnidadTacopan.numeroUnidad : "N/A"
-    }* *${penultimaUnidadTacopan ? penultimaUnidadTacopan.tipo : "N/A"
-    }* _Tacopan_\r\n\r\n- ${formatoTiempoRedondeado(
-      tiempoTranscurridoTalzintan
-    )} del *${ultimaUnidadTalzintan ? ultimaUnidadTalzintan.numeroUnidad : "N/A"
-    }* *${ultimaUnidadTalzintan ? ultimaUnidadTalzintan.tipo : "N/A"
-    }* _Talzintan_\r\n- ${formatoTiempoRedondeado(tiempoTranscurridoLoma)} del *${ultimaUnidadLoma ? ultimaUnidadLoma.numeroUnidad : "N/A"
-    }* *${ultimaUnidadLoma ? ultimaUnidadLoma.tipo : "N/A"
-    }* _Loma_\r\n\r\n- ${formatoTiempoRedondeado(
-      tiempoTranscurridoCalanorte
-    )} del *${ultimaUnidadCalanorte ? ultimaUnidadCalanorte.numeroUnidad : "N/A"
-    }* *${ultimaUnidadCalanorte ? ultimaUnidadCalanorte.tipo : "N/A"
-    }* _Calanorte_\r\n- ${formatoTiempoRedondeado(
-      tiempoTranscurridoPajaco
-    )} del *${ultimaUnidadPajaco ? ultimaUnidadPajaco.numeroUnidad : "N/A"}* *${ultimaUnidadPajaco ? ultimaUnidadPajaco.tipo : "N/A"
-    }* _Pajaco_\r\n© _JoyBoy._`;
+    diferenciaTacopan,
+  )} del *${
+    penultimaUnidadTacopan ? penultimaUnidadTacopan.numeroUnidad : "N/A"
+  }* *${
+    penultimaUnidadTacopan ? penultimaUnidadTacopan.tipo : "N/A"
+  }* _Tacopan_\r\n\r\n- ${formatoTiempoRedondeado(
+    tiempoTranscurridoTalzintan,
+  )} del *${
+    ultimaUnidadTalzintan ? ultimaUnidadTalzintan.numeroUnidad : "N/A"
+  }* *${
+    ultimaUnidadTalzintan ? ultimaUnidadTalzintan.tipo : "N/A"
+  }* _Talzintan_\r\n- ${formatoTiempoRedondeado(tiempoTranscurridoLoma)} del *${
+    ultimaUnidadLoma ? ultimaUnidadLoma.numeroUnidad : "N/A"
+  }* *${
+    ultimaUnidadLoma ? ultimaUnidadLoma.tipo : "N/A"
+  }* _Loma_\r\n\r\n- ${formatoTiempoRedondeado(
+    tiempoTranscurridoCalanorte,
+  )} del *${
+    ultimaUnidadCalanorte ? ultimaUnidadCalanorte.numeroUnidad : "N/A"
+  }* *${
+    ultimaUnidadCalanorte ? ultimaUnidadCalanorte.tipo : "N/A"
+  }* _Calanorte_\r\n- ${formatoTiempoRedondeado(
+    tiempoTranscurridoPajaco,
+  )} del *${ultimaUnidadPajaco ? ultimaUnidadPajaco.numeroUnidad : "N/A"}* *${
+    ultimaUnidadPajaco ? ultimaUnidadPajaco.tipo : "N/A"
+  }* _Pajaco_\r\n© _JoyBoy._`;
 
   // --- FUNCIONES AUXILIARES PARA EL COPY-PASTE
   const formatUnidadInfo = (tiempo, unidad, ubicacion) =>
-    `${formatoTiempoRedondeado(tiempo)} del *${unidad?.numeroUnidad || "N/A"
+    `${formatoTiempoRedondeado(tiempo)} del *${
+      unidad?.numeroUnidad || "N/A"
     }* *${unidad?.tipo || "N/A"}* ${ubicacion ? `_${ubicacion}_` : ""}`;
 
   const formatUnidadInfo2 = (unidad, ubicacion) =>
-    `*${unidad?.numeroUnidad || "N/A"}* *${unidad?.tipo || "N/A"}* ${ubicacion ? `_${ubicacion}_` : ""
+    `*${unidad?.numeroUnidad || "N/A"}* *${unidad?.tipo || "N/A"}* ${
+      ubicacion ? `_${ubicacion}_` : ""
     }`;
 
   // COPY-PASTE TALZINTAN --  COPY-PASTE TALZINTAN --  COPY-PASTE TALZINTAN --  COPY-PASTE TALZINTAN --
@@ -2408,20 +2528,20 @@ useEffect(() => {
     `- ${formatUnidadInfo(
       tiempoTranscurridoTalzintan,
       ultimaUnidadTalzintan,
-      "Talzintan"
+      "Talzintan",
     )}\r\n\r\n` +
     `- *El se llevo:* ${formatUnidadInfo(
       diferenciaTalzintan,
-      penultimaUnidadTalzintan
+      penultimaUnidadTalzintan,
     )}\r\n\r\n` +
     `- *Y del loma hay:* ${formatUnidadInfo(
       tiempoTranscurridoLoma,
       ultimaUnidadLoma,
-      "Loma"
+      "Loma",
     )}\r\n\r\n` +
     `- *Del rojo talzintan hay:* ${formatUnidadInfo(
       tiempoTranscurridoRojaTalzintan,
-      ultimaUnidadRojaTalzintan
+      ultimaUnidadRojaTalzintan,
     )}\r\n© _JoyBoy._`;
 
   const formattedTextTalzintanEstaPasando =
@@ -2430,36 +2550,36 @@ useEffect(() => {
     `*El se lleva:*\r\n\r\n` +
     `- ${formatoTiempoRedondeado(diferenciaTalzintan)} del ${formatUnidadInfo2(
       penultimaUnidadTalzintan,
-      "Talzintan"
+      "Talzintan",
     )}\r\n\r\n` +
     `- y ${formatoTiempoRedondeado(
-      tiempoTranscurridoLoma
+      tiempoTranscurridoLoma,
     )} del ${formatUnidadInfo2(ultimaUnidadLoma, "Loma")}\r\n© _JoyBoy._`;
 
   const formattedTextTalzintanTeLlevas =
     `✅ *Talzintan te llevas:*\r\n\r\n` +
     `- ${formatoTiempoRedondeado(diferenciaTalzintan)} del ${formatUnidadInfo2(
       penultimaUnidadTalzintan,
-      "Talzintan"
+      "Talzintan",
     )}\r\n\r\n` +
     `- ${formatoTiempoRedondeado(
-      tiempoTranscurridoLoma
+      tiempoTranscurridoLoma,
     )} del ${formatUnidadInfo2(ultimaUnidadLoma, "Loma")}\r\n\r\n` +
     `*De rojo a rojo:* \r\n\r\n` +
     `- ${formatoTiempoRedondeado(
-      diferenciaRojaTalzintan
+      diferenciaRojaTalzintan,
     )} del ${formatUnidadInfo2(
       penultimaUnidadRojaTalzintan,
-      "Talzintan"
+      "Talzintan",
     )}\r\n© _JoyBoy._`;
 
   const formattedTextTalzintanAtrasDeTi =
     `*Esta saliendo:*\r\n\r\n` +
     `- ${formatoTiempoRedondeado(
-      diferenciaTalzintan
+      diferenciaTalzintan,
     )} atras de ti ${formatUnidadInfo2(
       ultimaUnidadTalzintan,
-      "Talzintan"
+      "Talzintan",
     )}\r\n© _JoyBoy._`;
 
   // COPY-PASTE LOMA --  COPY-PASTE LOMA --  COPY-PASTE LOMA --  COPY-PASTE LOMA --
@@ -2468,20 +2588,20 @@ useEffect(() => {
     `- ${formatUnidadInfo2(ultimaUnidadLoma, "Loma")}\r\n\r\n` +
     `*El se lleva:*\r\n\r\n` +
     `- ${formatoTiempoRedondeado(
-      tiempoTranscurridoTalzintan
+      tiempoTranscurridoTalzintan,
     )} del ${formatUnidadInfo2(ultimaUnidadTalzintan, "Talzintan")}\r\n\r\n` +
     `- y ${formatoTiempoRedondeado(diferenciaLoma)} del ${formatUnidadInfo2(
       penultimaUnidadLoma,
-      "Loma"
+      "Loma",
     )}\r\n© _JoyBoy._`;
 
   const formattedTextLomaAtrasDeTi =
     `*Esta saliendo:*\r\n\r\n` +
     `- ${formatoTiempoRedondeado(
-      tiempoTranscurridoTalzintan
+      tiempoTranscurridoTalzintan,
     )} atras de ti ${formatUnidadInfo2(
       ultimaUnidadLoma,
-      "Loma"
+      "Loma",
     )}\r\n© _JoyBoy._`;
 
   // COPY-PASTE TEZOTEPEC --  COPY-PASTE TEZOTEPEC --  COPY-PASTE TEZOTEPEC --  COPY-PASTE TEZOTEPEC --
@@ -2490,15 +2610,15 @@ useEffect(() => {
     `- ${formatUnidadInfo(
       tiempoTranscurridoTezotepec,
       ultimaUnidadTezotepec,
-      "Tezotepec"
+      "Tezotepec",
     )}\r\n\r\n` +
     `- *El se llevo:* ${formatUnidadInfo(
       diferenciaTezotepec,
-      penultimaUnidadTezotepec
+      penultimaUnidadTezotepec,
     )}\r\n\r\n` +
     `- *Del rojo tezotepec hay:* ${formatUnidadInfo(
       tiempoTranscurridoRojaTezotepec,
-      ultimaUnidadRojaTezotepec
+      ultimaUnidadRojaTezotepec,
     )}\r\n© _JoyBoy._`;
 
   const formattedTextTezotepecEstaPasando =
@@ -2507,29 +2627,29 @@ useEffect(() => {
     `*El se lleva:*\r\n\r\n` +
     `- ${formatoTiempoRedondeado(diferenciaTezotepec)} del ${formatUnidadInfo2(
       penultimaUnidadTezotepec,
-      "Tezotepec"
+      "Tezotepec",
     )}\r\n© _JoyBoy._`;
 
   const formattedTextTezotepecTeLlevas =
     `✅ *Tezotepec te llevas:*\r\n\r\n` +
     `- ${formatoTiempoRedondeado(diferenciaTezotepec)} del ${formatUnidadInfo2(
       penultimaUnidadTezotepec,
-      "Tezotepec"
+      "Tezotepec",
     )}\r\n\r\n` +
     `- ${formatoTiempoRedondeado(
-      diferenciaRojaTezotepec
+      diferenciaRojaTezotepec,
     )} del ${formatUnidadInfo2(
       penultimaUnidadRojaTezotepec,
-      "Tezotepec"
+      "Tezotepec",
     )}\r\n© _JoyBoy._`;
 
   const formattedTextTezotepecAtrasDeTi =
     `*Esta saliendo:*\r\n\r\n` +
     `- ${formatoTiempoRedondeado(
-      diferenciaTezotepec
+      diferenciaTezotepec,
     )} atras de ti ${formatUnidadInfo2(
       ultimaUnidadTezotepec,
-      "Tezotepec"
+      "Tezotepec",
     )}\r\n© _JoyBoy._`;
 
   // COPY-PASTE CALICAPAN --  COPY-PASTE CALICAPAN --  COPY-PASTE CALICAPAN --  COPY-PASTE CALICAPAN --
@@ -2538,15 +2658,15 @@ useEffect(() => {
     `- ${formatUnidadInfo(
       tiempoTranscurridoCalicapan,
       ultimaUnidadCalicapan,
-      "Calicapan"
+      "Calicapan",
     )}\r\n\r\n` +
     `- *El se llevo:* ${formatUnidadInfo(
       diferenciaCalicapan,
-      penultimaUnidadCalicapan
+      penultimaUnidadCalicapan,
     )}\r\n\r\n` +
     `- *Del rojo Calicapan hay:* ${formatUnidadInfo(
       tiempoTranscurridoRojaCalicapan,
-      ultimaUnidadRojaCalicapan
+      ultimaUnidadRojaCalicapan,
     )}\r\n© _JoyBoy._`;
 
   const formattedTextCalicapanEstaPasando =
@@ -2555,29 +2675,29 @@ useEffect(() => {
     `*El se lleva:*\r\n\r\n` +
     `- ${formatoTiempoRedondeado(diferenciaCalicapan)} del ${formatUnidadInfo2(
       penultimaUnidadCalicapan,
-      "Calicapan"
+      "Calicapan",
     )}\r\n© _JoyBoy._`;
 
   const formattedTextCalicapanTeLlevas =
     `✅ *Calicapan te llevas:*\r\n\r\n` +
     `- ${formatoTiempoRedondeado(diferenciaCalicapan)} del ${formatUnidadInfo2(
       penultimaUnidadCalicapan,
-      "Calicapan"
+      "Calicapan",
     )}\r\n\r\n` +
     `- ${formatoTiempoRedondeado(
-      diferenciaRojaCalicapan
+      diferenciaRojaCalicapan,
     )} del ${formatUnidadInfo2(
       penultimaUnidadRojaCalicapan,
-      "Calicapan"
+      "Calicapan",
     )}\r\n© _JoyBoy._`;
 
   const formattedTextCalicapanAtrasDeTi =
     `*Esta saliendo:*\r\n\r\n` +
     `- ${formatoTiempoRedondeado(
-      diferenciaCalicapan
+      diferenciaCalicapan,
     )} atras de ti ${formatUnidadInfo2(
       ultimaUnidadCalicapan,
-      "Calicapan"
+      "Calicapan",
     )}\r\n© _JoyBoy._`;
 
   // COPY-PASTE SOSA ESCUELA --  COPY-PASTE SOSA ESCUELA --  COPY-PASTE SOSA ESCUELA --  COPY-PASTE SOSA ESCUELA --
@@ -2586,15 +2706,15 @@ useEffect(() => {
     `- ${formatUnidadInfo(
       tiempoTranscurridoSosaEscuela,
       ultimaUnidadSosaEscuela,
-      "Sosa Escuela"
+      "Sosa Escuela",
     )}\r\n\r\n` +
     `- *El se llevo:* ${formatUnidadInfo(
       diferenciaSosaEscuela,
-      penultimaUnidadSosaEscuela
+      penultimaUnidadSosaEscuela,
     )}\r\n\r\n` +
     `- *Del rojo Sosa Escuela hay:* ${formatUnidadInfo(
       tiempoTranscurridoRojaSosaEscuela,
-      ultimaUnidadRojaSosaEscuela
+      ultimaUnidadRojaSosaEscuela,
     )}\r\n© _JoyBoy._`;
 
   const formattedTextSosaEscuelaEstaPasando =
@@ -2602,34 +2722,34 @@ useEffect(() => {
     `- ${formatUnidadInfo2(ultimaUnidadSosaEscuela, "Sosa Escuela")}\r\n\r\n` +
     `*El se lleva:*\r\n\r\n` +
     `- ${formatoTiempoRedondeado(
-      diferenciaSosaEscuela
+      diferenciaSosaEscuela,
     )} del ${formatUnidadInfo2(
       penultimaUnidadSosaEscuela,
-      "Sosa Escuela"
+      "Sosa Escuela",
     )}\r\n© _JoyBoy._`;
 
   const formattedTextSosaEscuelaTeLlevas =
     `✅ *Sosa Escuela te llevas:*\r\n\r\n` +
     `- ${formatoTiempoRedondeado(
-      diferenciaSosaEscuela
+      diferenciaSosaEscuela,
     )} del ${formatUnidadInfo2(
       penultimaUnidadSosaEscuela,
-      "Sosa Escuela"
+      "Sosa Escuela",
     )}\r\n\r\n` +
     `- ${formatoTiempoRedondeado(
-      diferenciaRojaSosaEscuela
+      diferenciaRojaSosaEscuela,
     )} del ${formatUnidadInfo2(
       penultimaUnidadRojaSosaEscuela,
-      "Sosa Escuela"
+      "Sosa Escuela",
     )}\r\n© _JoyBoy._`;
 
   const formattedTextSosaEscuelaAtrasDeTi =
     `*Esta saliendo:*\r\n\r\n` +
     `- ${formatoTiempoRedondeado(
-      diferenciaSosaEscuela
+      diferenciaSosaEscuela,
     )} atras de ti ${formatUnidadInfo2(
       ultimaUnidadSosaEscuela,
-      "Sosa Escuela"
+      "Sosa Escuela",
     )}\r\n© _JoyBoy._`;
 
   // COPY-PASTE SAN ISIDRO --  COPY-PASTE SAN ISIDRO --  COPY-PASTE SAN ISIDRO --  COPY-PASTE SAN ISIDRO --
@@ -2638,15 +2758,15 @@ useEffect(() => {
     `- ${formatUnidadInfo(
       tiempoTranscurridoSanIsidro,
       ultimaUnidadSanIsidro,
-      "San Isidro"
+      "San Isidro",
     )}\r\n\r\n` +
     `- *El se llevo:* ${formatUnidadInfo(
       diferenciaSanIsidro,
-      penultimaUnidadSanIsidro
+      penultimaUnidadSanIsidro,
     )}\r\n\r\n` +
     `- *Del rojo San Isidro hay:* ${formatUnidadInfo(
       tiempoTranscurridoRojaSanIsidro,
-      ultimaUnidadRojaSanIsidro
+      ultimaUnidadRojaSanIsidro,
     )}\r\n© _JoyBoy._`;
 
   const formattedTextSanIsidroEstaPasando =
@@ -2655,29 +2775,29 @@ useEffect(() => {
     `*El se lleva:*\r\n\r\n` +
     `- ${formatoTiempoRedondeado(diferenciaSanIsidro)} del ${formatUnidadInfo2(
       penultimaUnidadSanIsidro,
-      "San Isidro"
+      "San Isidro",
     )}\r\n© _JoyBoy._`;
 
   const formattedTextSanIsidroTeLlevas =
     `✅ *San Isidro te llevas:*\r\n\r\n` +
     `- ${formatoTiempoRedondeado(diferenciaSanIsidro)} del ${formatUnidadInfo2(
       penultimaUnidadSanIsidro,
-      "San Isidro"
+      "San Isidro",
     )}\r\n\r\n` +
     `- ${formatoTiempoRedondeado(
-      diferenciaRojaSanIsidro
+      diferenciaRojaSanIsidro,
     )} del ${formatUnidadInfo2(
       penultimaUnidadRojaSanIsidro,
-      "San Isidro"
+      "San Isidro",
     )}\r\n© _JoyBoy._`;
 
   const formattedTextSanIsidroAtrasDeTi =
     `*Esta saliendo:*\r\n\r\n` +
     `- ${formatoTiempoRedondeado(
-      diferenciaSanIsidro
+      diferenciaSanIsidro,
     )} atras de ti ${formatUnidadInfo2(
       ultimaUnidadSanIsidro,
-      "San Isidro"
+      "San Isidro",
     )}\r\n© _JoyBoy._`;
 
   const graficoPorcentajeTalzintan = (() => {
@@ -2745,11 +2865,9 @@ useEffect(() => {
     }
   })();
 
-
-
-
-
-  {/*FORMATEAR FECHA ACTUAL - FORMATEAR FECHA ACTUAL - FORMATEAR FECHA ACTUAL*/ }
+  {
+    /*FORMATEAR FECHA ACTUAL - FORMATEAR FECHA ACTUAL - FORMATEAR FECHA ACTUAL*/
+  }
   const formatFechaActual = () => {
     const fecha = new Date().toLocaleDateString("es-ES", {
       weekday: "long",
@@ -2760,7 +2878,9 @@ useEffect(() => {
 
     return fecha.charAt(0).toUpperCase() + fecha.slice(1); // Primera letra en mayúscula
   };
-  {/*FORMATEAR HORA ACTUAL - FORMATEAR HORA ACTUAL - FORMATEAR HORA ACTUAL*/ }
+  {
+    /*FORMATEAR HORA ACTUAL - FORMATEAR HORA ACTUAL - FORMATEAR HORA ACTUAL*/
+  }
   const formatHoraActual = () => {
     return new Date().toLocaleTimeString("es-ES", {
       hour: "2-digit",
@@ -2769,8 +2889,6 @@ useEffect(() => {
       hour12: false, // Formato 24 horas
     });
   };
-
-
 
   // ✅ Reactividad automática
   const pila = useLiveQuery(async () => {
@@ -2789,7 +2907,7 @@ useEffect(() => {
     if (valor === "talzintan") {
       // Filtrar registros que son "talzintan"
       const talzintanRegistros = registros.filter(
-        (r) => r.valor === "talzintan"
+        (r) => r.valor === "talzintan",
       );
 
       if (talzintanRegistros.length >= 2) {
@@ -2864,12 +2982,24 @@ useEffect(() => {
     reproducir(texto);
   };
 
-  {/* AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC */ }
-  {/* AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC */ }
-  {/* AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC */ }
-  {/* AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC */ }
-  {/* AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC */ }
-  {/* AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC */ }
+  {
+    /* AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC */
+  }
+  {
+    /* AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC */
+  }
+  {
+    /* AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC */
+  }
+  {
+    /* AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC */
+  }
+  {
+    /* AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC */
+  }
+  {
+    /* AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC AMOTAC */
+  }
   const numerosAmotac = [11, 25, 35, 44, 55];
   const rutas = [
     { nombre: "Talzintan", color: "green" },
@@ -2881,24 +3011,40 @@ useEffect(() => {
   const tipos = ["Con pasaje", "Sin pasaje"];
 
   const [fase, setFase] = useState(0); // 0 = nada, 1 = numero, 2 = ruta, 3 = tipo
-  const [seleccion, setSeleccion] = useState({ numero: null, ruta: null, tipo: null });
+  const [seleccion, setSeleccion] = useState({
+    numero: null,
+    ruta: null,
+    tipo: null,
+  });
   const [textToCopyAmotac, setTextToCopyAmotac] = useState("");
   const [botonesActivos, setBotonesActivos] = useState([]);
 
   // === Función para convertir número a emojis ===
   const numeroAEmojis = (num) => {
     const mapa = {
-      "0": "0️⃣", "1": "1️⃣", "2": "2️⃣", "3": "3️⃣", "4": "4️⃣",
-      "5": "5️⃣", "6": "6️⃣", "7": "7️⃣", "8": "8️⃣", "9": "9️⃣",
+      0: "0️⃣",
+      1: "1️⃣",
+      2: "2️⃣",
+      3: "3️⃣",
+      4: "4️⃣",
+      5: "5️⃣",
+      6: "6️⃣",
+      7: "7️⃣",
+      8: "8️⃣",
+      9: "9️⃣",
     };
-    return num.toString().split("").map((d) => mapa[d] || d).join("");
+    return num
+      .toString()
+      .split("")
+      .map((d) => mapa[d] || d)
+      .join("");
   };
 
   // === Cronómetro para cada botón activo ===
   useEffect(() => {
     const interval = setInterval(() => {
       setBotonesActivos((prev) =>
-        prev.map((b) => ({ ...b, tiempo: b.tiempo + 1 }))
+        prev.map((b) => ({ ...b, tiempo: b.tiempo + 1 })),
       );
     }, 1000);
     return () => clearInterval(interval);
@@ -2923,23 +3069,17 @@ useEffect(() => {
       setSeleccion(final);
       // Crear texto final
       const textoFinal = `🤬 *Pasando Amotac ${numeroAEmojis(final.numero)}*\n\n📍 *${final.ruta.nombre}*\n (${final.tipo})\n\n🔔 * Probabilidades * 📊\r\n\r\n - Talzintan:   ${formatoTiempo(
-        tiempoTranscurridoTalzintan
-      )
-        } ${graficoPorcentajeTalzintan} \r\n - Tezotepec: ${formatoTiempo(
-          tiempoTranscurridoTezotepec
-        )
-        } ${graficoPorcentajeTezotepec} \r\n - Calicapan:  ${formatoTiempo(
-          tiempoTranscurridoCalicapan
-        )
-        } ${graficoPorcentajeCalicapan} \r\n - Sosa Escu:  ${formatoTiempo(
-          tiempoTranscurridoSosaEscuela
-        )
-        } ${graficoPorcentajeSosaEscuela} \r\n - San Isidro:  ${formatoTiempo(
-          tiempoTranscurridoSanIsidro
-        )
-        } ${graficoPorcentajeSanIsidro} \r\n\r\n© _JoyBoy._`;
+        tiempoTranscurridoTalzintan,
+      )} ${graficoPorcentajeTalzintan} \r\n - Tezotepec: ${formatoTiempo(
+        tiempoTranscurridoTezotepec,
+      )} ${graficoPorcentajeTezotepec} \r\n - Calicapan:  ${formatoTiempo(
+        tiempoTranscurridoCalicapan,
+      )} ${graficoPorcentajeCalicapan} \r\n - Sosa Escu:  ${formatoTiempo(
+        tiempoTranscurridoSosaEscuela,
+      )} ${graficoPorcentajeSosaEscuela} \r\n - San Isidro:  ${formatoTiempo(
+        tiempoTranscurridoSanIsidro,
+      )} ${graficoPorcentajeSanIsidro} \r\n\r\n© _JoyBoy._`;
       setTextToCopyAmotac(textoFinal);
-
 
       // Agregar botón activo
       setBotonesActivos((prev) => [
@@ -2962,7 +3102,6 @@ useEffect(() => {
     [103, 105, 122, 123, 131, 139],
     [144, 163, 177, 205],
   ];
-
 
   return (
     <div>
@@ -3029,7 +3168,7 @@ useEffect(() => {
                   className="save-button-r3"
                   type="submit"
                   onClick={() => handleAgregarTipo("blanco")}
-                // disabled={["tacopan"].includes(ruta)}
+                  // disabled={["tacopan"].includes(ruta)}
                 >
                   R-3
                 </button>
@@ -3585,7 +3724,6 @@ useEffect(() => {
         </div>
       )}
 
-
       {/* INICIA TABLA PRINCIPAL: TIEMPOS - TABLA PRINCIPAL: TIEMPOS - TABLA PRINCIPAL: TIEMPOS*/}
       {/* INICIA TABLA PRINCIPAL: TIEMPOS - TABLA PRINCIPAL: TIEMPOS - TABLA PRINCIPAL: TIEMPOS*/}
       {/* INICIA TABLA PRINCIPAL: TIEMPOS - TABLA PRINCIPAL: TIEMPOS - TABLA PRINCIPAL: TIEMPOS*/}
@@ -3660,8 +3798,8 @@ useEffect(() => {
                     className="boton-activo"
                     style={{ backgroundColor: b.ruta.color }}
                   >
-                    {numeroAEmojis(b.numero)} - {b.ruta.nombre} <br />
-                    ⏱ {formatoTiempoAmotac(b.tiempo)}
+                    {numeroAEmojis(b.numero)} - {b.ruta.nombre} <br />⏱{" "}
+                    {formatoTiempoAmotac(b.tiempo)}
                   </button>
                 ))}
               </div>
@@ -3682,14 +3820,15 @@ useEffect(() => {
               <td className="celda-otra">
                 {" "}
                 <button
-                  className={`${ultimaUnidadOtra.tipo === "blanco" ? "white-bg" : "red-bg"
-                    }`}
+                  className={`${
+                    ultimaUnidadOtra.tipo === "blanco" ? "white-bg" : "red-bg"
+                  }`}
                 >
                   {ultimaUnidadOtra.numeroUnidad}
                 </button>{" "}
               </td>
             )}
-            
+
             <td colSpan={2}>
               <div
                 style={{
@@ -3764,10 +3903,11 @@ useEffect(() => {
               <td className="celda-talzintan">
                 <button
                   onClick={() => setMenuVisibleTalzintan(!menuVisibleTalzintan)}
-                  className={`${ultimaUnidadTalzintan.tipo === "blanco"
-                    ? "white-bg"
-                    : "red-bg"
-                    }`}
+                  className={`${
+                    ultimaUnidadTalzintan.tipo === "blanco"
+                      ? "white-bg"
+                      : "red-bg"
+                  }`}
                 >
                   {ultimaUnidadTalzintan.numeroUnidad}
                 </button>
@@ -3778,10 +3918,11 @@ useEffect(() => {
                       {formatoTiempo(diferenciaTalzintan)}
                     </button>
                     <button
-                      className={`${penultimaUnidadTalzintan.tipo === "blanco"
-                        ? "white-bg"
-                        : "red-bg"
-                        }`}
+                      className={`${
+                        penultimaUnidadTalzintan.tipo === "blanco"
+                          ? "white-bg"
+                          : "red-bg"
+                      }`}
                       onClick={handleObtenerUnidadesTalzintan}
                     >
                       {penultimaUnidadTalzintan.numeroUnidad}
@@ -3812,7 +3953,6 @@ useEffect(() => {
                   </>
                 )}
               </td>
-
             )}
             <td className="celda-talzintan">
               <button className="boton-voz boton-play" onClick={handlePlay}>
@@ -3838,7 +3978,9 @@ useEffect(() => {
                     // quitar TODOS los puntos
                     const numeroLimpio = u.numeroUnidad.replace(/\./g, "");
 
-                    const horaFormateada = formatHoraRegistro(add70Minutes(u.horaRegistro));
+                    const horaFormateada = formatHoraRegistro(
+                      add70Minutes(u.horaRegistro),
+                    );
 
                     return (
                       <div
@@ -3849,9 +3991,7 @@ useEffect(() => {
                           color: "blue",
                         }}
                       >
-                        <span style={{ marginRight: 8 }}>
-                          {numeroLimpio}
-                        </span>
+                        <span style={{ marginRight: 8 }}>{numeroLimpio}</span>
                         <span>{horaFormateada}</span>
                       </div>
                     );
@@ -3864,24 +4004,26 @@ useEffect(() => {
               </div>
             </td>
 
-
-
-
             <td className="celda-talzintan">
               <div>
                 {unidadesTalzintan.length > 0 ? (
                   unidadesTalzintan
                     .filter(
                       (u) =>
-                        u.numeroUnidad.startsWith(".") || u.numeroUnidad.endsWith(".")
+                        u.numeroUnidad.startsWith(".") ||
+                        u.numeroUnidad.endsWith("."),
                     )
                     .map((u) => {
                       let horaFormateada;
 
                       if (u.numeroUnidad.startsWith(".")) {
-                        horaFormateada = formatHoraRegistro(add90Minutes(u.horaRegistro));
+                        horaFormateada = formatHoraRegistro(
+                          add90Minutes(u.horaRegistro),
+                        );
                       } else if (u.numeroUnidad.endsWith(".")) {
-                        horaFormateada = formatHoraRegistro(add180Minutes(u.horaRegistro));
+                        horaFormateada = formatHoraRegistro(
+                          add180Minutes(u.horaRegistro),
+                        );
                       }
 
                       return (
@@ -3901,12 +4043,12 @@ useEffect(() => {
                       );
                     })
                 ) : (
-                  <div style={{ color: "gray", fontStyle: "italic" }}>JoyBoy</div>
+                  <div style={{ color: "gray", fontStyle: "italic" }}>
+                    JoyBoy
+                  </div>
                 )}
               </div>
             </td>
-
-
           </tr>
 
           {/*FILA LOMA  FILA LOMA  FILA LOMA  FILA LOMA  FILA LOMA  FILA LOMA  FILA LOMA  FILA LOMA   */}
@@ -3929,8 +4071,9 @@ useEffect(() => {
                 {" "}
                 <button
                   onClick={() => setMenuVisibleLoma(!menuVisibleLoma)}
-                  className={`${ultimaUnidadLoma.tipo === "blanco" ? "white-bg" : "red-bg"
-                    }`}
+                  className={`${
+                    ultimaUnidadLoma.tipo === "blanco" ? "white-bg" : "red-bg"
+                  }`}
                 >
                   {ultimaUnidadLoma.numeroUnidad}
                 </button>{" "}
@@ -3940,17 +4083,17 @@ useEffect(() => {
                       {formatoTiempo(diferenciaLoma)}
                     </button>
                     <button
-                      className={`${penultimaUnidadLoma.tipo === "blanco"
-                        ? "white-bg"
-                        : "red-bg"
-                        }`}
+                      className={`${
+                        penultimaUnidadLoma.tipo === "blanco"
+                          ? "white-bg"
+                          : "red-bg"
+                      }`}
                       onClick={handleObtenerUnidadesLoma}
                     >
                       {penultimaUnidadLoma.numeroUnidad}
                     </button>
                   </>
                 )}
-
               </td>
             )}
             <td className="celda-loma">
@@ -3964,28 +4107,28 @@ useEffect(() => {
 
             <td className="celda-sosa">
               <div>
-                {unidadesSosaLoma.length > 0 &&
-                  unidadesSosaLoma.map((u, index) => {
-                    const esPar = index % 2 === 0;
+                {pilaLoma.slice(0, 3).map((u) => (
+                  <div
+                    key={u.id}
+                    style={{
+                      fontSize: 16,
+                      marginBottom: -5,
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontWeight: "bold",
+                        marginRight: 8,
+                      }}
+                    >
+                      {u.numeroUnidad}
+                    </span>
 
-                    return (
-                      <div
-                        key={u.id}
-                        style={{
-                          fontSize: 16,
-                          marginBottom: -5,
-                          backgroundColor: esPar ? "#ff00ff" : "#363636",
-                        }}
-                      >
-                        <span style={{ fontWeight: "bold", marginRight: 8 }}>
-                          {u.numeroUnidad}
-                        </span>
-                        <span>
-                          {formatHoraRegistro(add80Minutes(u.horaRegistro))}
-                        </span>
-                      </div>
-                    );
-                  })}
+                    <span>
+                      {formatHoraRegistro(add60Minutes(u.horaRegistro))}
+                    </span>
+                  </div>
+                ))}
               </div>
             </td>
           </tr>
@@ -4010,10 +4153,11 @@ useEffect(() => {
               <td className="celda-tezotepec">
                 <button
                   onClick={() => setMenuVisibleTezotepec(!menuVisibleLoma)}
-                  className={`${ultimaUnidadTezotepec.tipo === "blanco"
-                    ? "white-bg"
-                    : "red-bg"
-                    }`}
+                  className={`${
+                    ultimaUnidadTezotepec.tipo === "blanco"
+                      ? "white-bg"
+                      : "red-bg"
+                  }`}
                 >
                   {ultimaUnidadTezotepec.numeroUnidad}
                 </button>
@@ -4026,10 +4170,11 @@ useEffect(() => {
                       {formatoTiempo(diferenciaTezotepec)}
                     </button>
                     <button
-                      className={`${penultimaUnidadTezotepec.tipo === "blanco"
-                        ? "white-bg"
-                        : "red-bg"
-                        }`}
+                      className={`${
+                        penultimaUnidadTezotepec.tipo === "blanco"
+                          ? "white-bg"
+                          : "red-bg"
+                      }`}
                       onClick={handleObtenerUnidadesTezotepec}
                     >
                       {penultimaUnidadTezotepec.numeroUnidad}
@@ -4061,13 +4206,15 @@ useEffect(() => {
                 )}
               </td>
             )}
-            <td className="celda-tezotepec"><input
-              type="number"
-              inputMode="numeric"
-              pattern="[0-9]*"
-              className="numeric-input"
-            />
-              <BotonEliminarUnidad ruta="tezotepec" /></td>
+            <td className="celda-tezotepec">
+              <input
+                type="number"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                className="numeric-input"
+              />
+              <BotonEliminarUnidad ruta="tezotepec" />
+            </td>
             <td className="celda-tezotepec">
               <div>
                 {unidadesTezotepec.length > 0 ? (
@@ -4094,32 +4241,28 @@ useEffect(() => {
             </td>
             <td className="celda-tezotepec">
               <div>
-                {unidadesTezotepecReverse.length > 0 ? (
-                  unidadesTezotepecReverse.map((u, index) => (
-                    <div
-                      key={u.id}
+                {pilaTezo.slice(0, 3).map((u) => (
+                  <div
+                    key={u.id}
+                    style={{
+                      fontSize: 16,
+                      marginBottom: -5,
+                    }}
+                  >
+                    <span
                       style={{
-                        fontSize: 14,
-                        marginBottom: -5,
-                        fontWeight:
-                          index === unidadesTezotepecReverse.length - 1
-                            ? "bold"
-                            : "normal",
-                        color:
-                          index === unidadesTezotepecReverse.length - 1
-                            ? "#0070f3"
-                            : "inherit",
+                        fontWeight: "bold",
+                        marginRight: 8,
                       }}
                     >
-                      {u.numeroUnidad}{" "}
-                      {formatHoraRegistro(add75Minutes(u.horaRegistro))}
-                    </div>
-                  ))
-                ) : (
-                  <div style={{ color: "gray", fontStyle: "italic" }}>
-                    JoyBoy
+                      {u.numeroUnidad}
+                    </span>
+
+                    <span>
+                      {formatHoraRegistro(add60Minutes(u.horaRegistro))}
+                    </span>
                   </div>
-                )}
+                ))}
               </div>
             </td>
           </tr>
@@ -4144,10 +4287,11 @@ useEffect(() => {
               <td className="celda-calicapan">
                 <button
                   onClick={() => setMenuVisibleCalicapan(!menuVisibleCalicapan)}
-                  className={`${ultimaUnidadCalicapan.tipo === "blanco"
-                    ? "white-bg"
-                    : "red-bg"
-                    }`}
+                  className={`${
+                    ultimaUnidadCalicapan.tipo === "blanco"
+                      ? "white-bg"
+                      : "red-bg"
+                  }`}
                 >
                   {ultimaUnidadCalicapan.numeroUnidad}
                 </button>
@@ -4157,10 +4301,11 @@ useEffect(() => {
                       {formatoTiempo(diferenciaCalicapan)}
                     </button>
                     <button
-                      className={`${penultimaUnidadCalicapan.tipo === "blanco"
-                        ? "white-bg"
-                        : "red-bg"
-                        }`}
+                      className={`${
+                        penultimaUnidadCalicapan.tipo === "blanco"
+                          ? "white-bg"
+                          : "red-bg"
+                      }`}
                       onClick={handleObtenerUnidadesCalicapan}
                     >
                       {penultimaUnidadCalicapan.numeroUnidad}
@@ -4192,13 +4337,15 @@ useEffect(() => {
                 )}
               </td>
             )}
-            <td className="celda-calicapan"><input
-              type="number"
-              inputMode="numeric"
-              pattern="[0-9]*"
-              className="numeric-input"
-            />
-              <BotonEliminarUnidad ruta="calicapan" /></td>
+            <td className="celda-calicapan">
+              <input
+                type="number"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                className="numeric-input"
+              />
+              <BotonEliminarUnidad ruta="calicapan" />
+            </td>
             <td className="celda-calicapan">
               <div>
                 {unidades.length > 0 &&
@@ -4267,10 +4414,11 @@ useEffect(() => {
                   onClick={() =>
                     setMenuVisibleSosaEscuela(!menuVisibleSosaEscuela)
                   }
-                  className={`${ultimaUnidadSosaEscuela.tipo === "blanco"
-                    ? "white-bg"
-                    : "red-bg"
-                    }`}
+                  className={`${
+                    ultimaUnidadSosaEscuela.tipo === "blanco"
+                      ? "white-bg"
+                      : "red-bg"
+                  }`}
                 >
                   {ultimaUnidadSosaEscuela.numeroUnidad}
                 </button>
@@ -4283,10 +4431,11 @@ useEffect(() => {
                       {formatoTiempo(diferenciaSosaEscuela)}
                     </button>
                     <button
-                      className={`${penultimaUnidadSosaEscuela.tipo === "blanco"
-                        ? "white-bg"
-                        : "red-bg"
-                        }`}
+                      className={`${
+                        penultimaUnidadSosaEscuela.tipo === "blanco"
+                          ? "white-bg"
+                          : "red-bg"
+                      }`}
                       onClick={handleObtenerUnidadesSosa}
                     >
                       {penultimaUnidadSosaEscuela.numeroUnidad}
@@ -4318,54 +4467,67 @@ useEffect(() => {
                 )}
               </td>
             )}
-            <td className="celda-sosa"><input
-              type="number"
-              inputMode="numeric"
-              pattern="[0-9]*"
-              className="numeric-input"
-            />
-              <BotonEliminarUnidad ruta="sosa escuela" /></td>
             <td className="celda-sosa">
-              <div>
-                {unidadesSosa912.length > 0 &&
-                  unidadesSosa912.map((u, index) => {
-                    const esPar = index % 2 === 0;
-
-                    return (
-                      <div
-                        key={u.id}
-                        style={{
-                          fontSize: 16,
-                          marginBottom: -5,
-                          backgroundColor: esPar ? "#c42fff" : "#334155", // colores alternados
-                          color: "#fff",
-                          borderRadius: 4,
-                        }}
-                      >
-                        <span style={{ fontWeight: "bold", marginRight: 8 }}>
-                          {u.numeroUnidad}
-                        </span>
-                        <span>
-                          {formatHoraRegistro(add80Minutes(u.horaRegistro))}
-                        </span>
-                      </div>
-                    );
-                  })}
-              </div>
+              <input
+                type="number"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                className="numeric-input"
+              />
+              <BotonEliminarUnidad ruta="sosa escuela" />
             </td>
             <td className="celda-loma">
               <div>
-                {unidadesLoma47.length > 0 &&
-                  unidadesLoma47.map((u) => (
-                    <div key={u.id} style={{ fontSize: 16, marginBottom: -5 , color: "black"}}>
-                      <span style={{ fontWeight: "bold", marginRight: 8 }}>
-                        {u.numeroUnidad}
-                      </span>
-                      <span>
-                        {formatHoraRegistro(add60Minutes(u.horaRegistro))}
-                      </span>
-                    </div>
-                  ))}
+                {pilaLoma.slice(0, 3).map((u) => (
+                  <div
+                    key={u.id}
+                    style={{
+                      fontSize: 16,
+                      marginBottom: -5,
+                      color: "black",
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontWeight: "bold",
+                        marginRight: 8,
+                        color: "black",
+                      }}
+                    >
+                      {u.numeroUnidad}
+                    </span>
+
+                    <span>
+                      {formatHoraRegistro(add60Minutes(u.horaRegistro))}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </td>
+            <td className="celda-sosa">
+              <div>
+                {pilaSosa.slice(0, 3).map((u) => (
+                  <div
+                    key={u.id}
+                    style={{
+                      fontSize: 16,
+                      marginBottom: -5,
+                    }}
+                  >
+                    <span
+                      style={{
+                        fontWeight: "bold",
+                        marginRight: 8,
+                      }}
+                    >
+                      {u.numeroUnidad}
+                    </span>
+
+                    <span>
+                      {formatHoraRegistro(add80Minutes(u.horaRegistro))}
+                    </span>
+                  </div>
+                ))}
               </div>
             </td>
           </tr>
@@ -4390,10 +4552,11 @@ useEffect(() => {
               <td className="celda-sanisidro">
                 <button
                   onClick={() => setMenuVisibleSanIsidro(!menuVisibleSanIsidro)}
-                  className={`${ultimaUnidadSanIsidro.tipo === "blanco"
-                    ? "white-bg"
-                    : "red-bg"
-                    }`}
+                  className={`${
+                    ultimaUnidadSanIsidro.tipo === "blanco"
+                      ? "white-bg"
+                      : "red-bg"
+                  }`}
                 >
                   {ultimaUnidadSanIsidro.numeroUnidad}
                 </button>
@@ -4406,10 +4569,11 @@ useEffect(() => {
                       {formatoTiempo(diferenciaSanIsidro)}
                     </button>
                     <button
-                      className={`${penultimaUnidadSanIsidro.tipo === "blanco"
-                        ? "white-bg"
-                        : "red-bg"
-                        }`}
+                      className={`${
+                        penultimaUnidadSanIsidro.tipo === "blanco"
+                          ? "white-bg"
+                          : "red-bg"
+                      }`}
                       onClick={handleObtenerUnidadesSanisidro}
                     >
                       {penultimaUnidadSanIsidro.numeroUnidad}
@@ -4441,13 +4605,15 @@ useEffect(() => {
                 )}
               </td>
             )}
-            <td className="celda-sanisidro"><input
-              type="number"
-              inputMode="numeric"
-              pattern="[0-9]*"
-              className="numeric-input"
-            />
-              <BotonEliminarUnidad ruta="san isidro" /></td>
+            <td className="celda-sanisidro">
+              <input
+                type="number"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                className="numeric-input"
+              />
+              <BotonEliminarUnidad ruta="san isidro" />
+            </td>
             <td className="celda-sanisidro">
               <div>
                 {unidadesSanIsidro.length > 0 &&
@@ -4494,10 +4660,11 @@ useEffect(() => {
               <td className="celda-tacopan">
                 <CopyToClipboard text={formattedTextTacopanAlMomento}>
                   <button
-                    className={`${ultimaUnidadTacopan.tipo === "blanco"
-                      ? "white-bg"
-                      : "red-bg"
-                      }`}
+                    className={`${
+                      ultimaUnidadTacopan.tipo === "blanco"
+                        ? "white-bg"
+                        : "red-bg"
+                    }`}
                   >
                     {ultimaUnidadTacopan.numeroUnidad}
                   </button>
@@ -4510,10 +4677,11 @@ useEffect(() => {
                       </button>
                     </CopyToClipboard>
                     <button
-                      className={`${penultimaUnidadTacopan.tipo === "blanco"
-                        ? "white-bg"
-                        : "red-bg"
-                        }`}
+                      className={`${
+                        penultimaUnidadTacopan.tipo === "blanco"
+                          ? "white-bg"
+                          : "red-bg"
+                      }`}
                       onClick={handleObtenerUnidadesTacopan}
                     >
                       {penultimaUnidadTacopan.numeroUnidad}
@@ -4545,16 +4713,16 @@ useEffect(() => {
                 )}
               </td>
             )}
-            <td className="celda-tacopan"><input
-              type="number"
-              inputMode="numeric"
-              pattern="[0-9]*"
-              className="numeric-input"
-            />
-              <BotonEliminarUnidad ruta="tacopan" /></td>
+            <td className="celda-tacopan">
+              <input
+                type="number"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                className="numeric-input"
+              />
+              <BotonEliminarUnidad ruta="tacopan" />
+            </td>
           </tr>
-
-
 
           {/*FILA TEQUIMILA  FILA TEQUIMILA  FILA TEQUIMILA  FILA TEQUIMILA  FILA TEQUIMILA  */}
           <tr>
@@ -4576,10 +4744,11 @@ useEffect(() => {
               <td className="celda-tequimila">
                 {" "}
                 <button
-                  className={`${ultimaUnidadTequimila.tipo === "blanco"
-                    ? "white-bg"
-                    : "red-bg"
-                    }`}
+                  className={`${
+                    ultimaUnidadTequimila.tipo === "blanco"
+                      ? "white-bg"
+                      : "red-bg"
+                  }`}
                 >
                   {ultimaUnidadTequimila.numeroUnidad}
                 </button>{" "}
@@ -4589,20 +4758,22 @@ useEffect(() => {
                       {formatoTiempo(diferenciaTequimila)}
                     </button>
                     <button
-                      className={`${penultimaUnidadTequimila.tipo === "blanco"
-                        ? "white-bg"
-                        : "red-bg"
-                        }`}
+                      className={`${
+                        penultimaUnidadTequimila.tipo === "blanco"
+                          ? "white-bg"
+                          : "red-bg"
+                      }`}
                       onClick={handleObtenerUnidadesTequimila}
                     >
                       {penultimaUnidadTequimila.numeroUnidad}
                     </button>
                   </>
                 )}
-
               </td>
             )}
-            <td className="celda-tequimila"><BotonEliminarUnidad ruta="tequimila" /></td>
+            <td className="celda-tequimila">
+              <BotonEliminarUnidad ruta="tequimila" />
+            </td>
             <td className="celda-tequimila">
               <div>
                 {unidadesQuinta.length > 0 &&
@@ -4647,8 +4818,9 @@ useEffect(() => {
               <td className="celda-quinta">
                 {" "}
                 <button
-                  className={`${ultimaUnidadQuinta.tipo === "blanco" ? "white-bg" : "red-bg"
-                    }`}
+                  className={`${
+                    ultimaUnidadQuinta.tipo === "blanco" ? "white-bg" : "red-bg"
+                  }`}
                 >
                   {ultimaUnidadQuinta.numeroUnidad}
                 </button>{" "}
@@ -4658,20 +4830,22 @@ useEffect(() => {
                       {formatoTiempo(diferenciaQuinta)}
                     </button>
                     <button
-                      className={`${penultimaUnidadQuinta.tipo === "blanco"
-                        ? "white-bg"
-                        : "red-bg"
-                        }`}
+                      className={`${
+                        penultimaUnidadQuinta.tipo === "blanco"
+                          ? "white-bg"
+                          : "red-bg"
+                      }`}
                       onClick={handleObtenerUnidadesQuinta}
                     >
                       {penultimaUnidadQuinta.numeroUnidad}
                     </button>
                   </>
                 )}
-
               </td>
             )}
-            <td className="celda-quinta"><BotonEliminarUnidad ruta="quinta" /></td>
+            <td className="celda-quinta">
+              <BotonEliminarUnidad ruta="quinta" />
+            </td>
             <td className="celda-quinta">
               <div>
                 {unidadesCalicapan.length > 0 ? (
@@ -4721,10 +4895,11 @@ useEffect(() => {
               <td className="celda-calanorte">
                 {" "}
                 <button
-                  className={`${ultimaUnidadCalanorte.tipo === "blanco"
-                    ? "white-bg"
-                    : "red-bg"
-                    }`}
+                  className={`${
+                    ultimaUnidadCalanorte.tipo === "blanco"
+                      ? "white-bg"
+                      : "red-bg"
+                  }`}
                 >
                   {ultimaUnidadCalanorte.numeroUnidad}
                 </button>{" "}
@@ -4734,20 +4909,22 @@ useEffect(() => {
                       {formatoTiempo(diferenciaCalanorte)}
                     </button>
                     <button
-                      className={`${penultimaUnidadCalanorte.tipo === "blanco"
-                        ? "white-bg"
-                        : "red-bg"
-                        }`}
+                      className={`${
+                        penultimaUnidadCalanorte.tipo === "blanco"
+                          ? "white-bg"
+                          : "red-bg"
+                      }`}
                       onClick={handleObtenerUnidadesCalanorte}
                     >
                       {penultimaUnidadCalanorte.numeroUnidad}
                     </button>
                   </>
                 )}
-
               </td>
             )}
-            <td className="celda-calanorte"><BotonEliminarUnidad ruta="calanorte" /></td>
+            <td className="celda-calanorte">
+              <BotonEliminarUnidad ruta="calanorte" />
+            </td>
           </tr>
 
           {/*FILA PAJACO  FILA PAJACO  FILA PAJACO  FILA PAJACO  FILA PAJACO  FILA PAJACO  */}
@@ -4769,8 +4946,9 @@ useEffect(() => {
               <td className="celda-pajaco">
                 {" "}
                 <button
-                  className={`${ultimaUnidadPajaco.tipo === "blanco" ? "white-bg" : "red-bg"
-                    }`}
+                  className={`${
+                    ultimaUnidadPajaco.tipo === "blanco" ? "white-bg" : "red-bg"
+                  }`}
                 >
                   {ultimaUnidadPajaco.numeroUnidad}
                 </button>{" "}
@@ -4780,20 +4958,22 @@ useEffect(() => {
                       {formatoTiempo(diferenciaPajaco)}
                     </button>
                     <button
-                      className={`${penultimaUnidadPajaco.tipo === "blanco"
-                        ? "white-bg"
-                        : "red-bg"
-                        }`}
+                      className={`${
+                        penultimaUnidadPajaco.tipo === "blanco"
+                          ? "white-bg"
+                          : "red-bg"
+                      }`}
                       onClick={handleObtenerUnidadesPajaco}
                     >
                       {penultimaUnidadPajaco.numeroUnidad}
                     </button>
                   </>
                 )}
-
               </td>
             )}
-            <td className="celda-pajaco"><BotonEliminarUnidad ruta="pajaco" /></td>
+            <td className="celda-pajaco">
+              <BotonEliminarUnidad ruta="pajaco" />
+            </td>
           </tr>
 
           {/*FILA ANALCO  FILA ANALCO  FILA ANALCO  FILA ANALCO  FILA ANALCO  FILA ANALCO  */}
@@ -4815,8 +4995,9 @@ useEffect(() => {
               <td className="celda-analco">
                 {" "}
                 <button
-                  className={`${ultimaUnidadAnalco.tipo === "blanco" ? "white-bg" : "red-bg"
-                    }`}
+                  className={`${
+                    ultimaUnidadAnalco.tipo === "blanco" ? "white-bg" : "red-bg"
+                  }`}
                 >
                   {ultimaUnidadAnalco.numeroUnidad}
                 </button>{" "}
@@ -4826,20 +5007,22 @@ useEffect(() => {
                       {formatoTiempo(diferenciaAnalco)}
                     </button>
                     <button
-                      className={`${penultimaUnidadAnalco.tipo === "blanco"
-                        ? "white-bg"
-                        : "red-bg"
-                        }`}
+                      className={`${
+                        penultimaUnidadAnalco.tipo === "blanco"
+                          ? "white-bg"
+                          : "red-bg"
+                      }`}
                       onClick={handleObtenerUnidadesAnalco}
                     >
                       {penultimaUnidadAnalco.numeroUnidad}
                     </button>
                   </>
                 )}
-
               </td>
             )}
-            <td className="celda-analco"><BotonEliminarUnidad ruta="analco" /></td>
+            <td className="celda-analco">
+              <BotonEliminarUnidad ruta="analco" />
+            </td>
           </tr>
 
           {/* FILA YAONAHUAC FILA YAONAHUAC FILA YAONAHUAC FILA YAONAHUAC FILA YAONAHUAC FILA YAONAHUAC */}
@@ -4861,10 +5044,11 @@ useEffect(() => {
               <td className="celda-yaonahuac">
                 {" "}
                 <button
-                  className={`${ultimaUnidadYaonahuac.tipo === "blanco"
-                    ? "blue-bg"
-                    : "green-bg"
-                    }`}
+                  className={`${
+                    ultimaUnidadYaonahuac.tipo === "blanco"
+                      ? "blue-bg"
+                      : "green-bg"
+                  }`}
                 >
                   {ultimaUnidadYaonahuac.numeroUnidad}
                 </button>{" "}
@@ -4874,17 +5058,17 @@ useEffect(() => {
                       {formatoTiempo(diferenciaYaonahuac)}
                     </button>
                     <button
-                      className={`${penultimaUnidadYaonahuac.tipo === "blanco"
-                        ? "blue-bg"
-                        : "green-bg"
-                        }`}
+                      className={`${
+                        penultimaUnidadYaonahuac.tipo === "blanco"
+                          ? "blue-bg"
+                          : "green-bg"
+                      }`}
                       onClick={handleObtenerUnidadesYaonahuac}
                     >
                       {penultimaUnidadYaonahuac.numeroUnidad}
                     </button>
                   </>
                 )}
-                
               </td>
             )}
             <td className="celda-yaonahuac">
@@ -4894,7 +5078,7 @@ useEffect(() => {
                 pattern="[0-9]*"
                 className="numeric-input"
               />
-            <BotonEliminarUnidad ruta="yaonahuac" />
+              <BotonEliminarUnidad ruta="yaonahuac" />
             </td>
             <td className="celda-yaonahuac">
               <div className="lista-horizontal-yaonahuac">
@@ -4904,7 +5088,8 @@ useEffect(() => {
                       key={u.id}
                       className={`item-yaonahuac ${index === 0 ? "item-primero" : ""}`}
                     >
-                      {u.numeroUnidad} / {formatHoraRegistroSinPM(add180Minutes(u.horaRegistro))}
+                      {u.numeroUnidad} /{" "}
+                      {formatHoraRegistroSinPM(add180Minutes(u.horaRegistro))}
                     </button>
                   ))}
               </div>
@@ -4930,10 +5115,11 @@ useEffect(() => {
               <td className="celda-hueyapan">
                 {" "}
                 <button
-                  className={`${ultimaUnidadHueyapan.tipo === "blanco"
-                    ? "blue-bg"
-                    : "green-bg"
-                    }`}
+                  className={`${
+                    ultimaUnidadHueyapan.tipo === "blanco"
+                      ? "blue-bg"
+                      : "green-bg"
+                  }`}
                 >
                   {ultimaUnidadHueyapan.numeroUnidad}
                 </button>{" "}
@@ -4943,18 +5129,17 @@ useEffect(() => {
                       {formatoTiempo(diferenciaHueyapan)}
                     </button>
                     <button
-                      className={`${penultimaUnidadHueyapan.tipo === "blanco"
-                        ? "blue-bg"
-                        : "green-bg"
-                        }`}
+                      className={`${
+                        penultimaUnidadHueyapan.tipo === "blanco"
+                          ? "blue-bg"
+                          : "green-bg"
+                      }`}
                       onClick={handleObtenerUnidadesHueyapan}
                     >
                       {penultimaUnidadHueyapan.numeroUnidad}
                     </button>
                   </>
                 )}
-                
-                
               </td>
             )}
             <td className="celda-hueyapan">
@@ -4965,9 +5150,8 @@ useEffect(() => {
                 className="numeric-input"
               />
               <BotonEliminarUnidad ruta="hueyapan" />
-              </td>
+            </td>
             <td className="celda-hueyapan">
-
               <div className="lista-horizontal-hueyapan">
                 {unidadesHueyapan.length > 0 &&
                   unidadesHueyapan.map((u, index) => (
@@ -4975,31 +5159,31 @@ useEffect(() => {
                       key={u.id}
                       className={`item-yaonahuac ${index === 0 ? "item-primero" : ""}`}
                     >
-                      {u.numeroUnidad} / {formatHoraRegistroSinPM(add180Minutes(u.horaRegistro))}
+                      {u.numeroUnidad} /{" "}
+                      {formatHoraRegistroSinPM(add180Minutes(u.horaRegistro))}
                     </button>
                   ))}
               </div>
-              </td>
-            <td><div className="grid-numeros">
-              {numeros.flat().map((num, i) => (
-                <span key={i}>{num}</span>
-              ))}
-            </div></td>
+            </td>
+            <td>
+              <div className="grid-numeros">
+                {numeros.flat().map((num, i) => (
+                  <span key={i}>{num}</span>
+                ))}
+              </div>
+            </td>
           </tr>
 
           {/*FILA OTRA  FILA OTRA  FILA OTRA  FILA OTRA  FILA OTRA  FILA OTRA  FILA OTRA  */}
-          <tr>
-            
-          </tr>
-
+          <tr></tr>
         </tbody>
       </table>
 
-      {/*TABLAS FLOTANTE TALZINTAN LISTA DE UNIDADES PARA CAPTURAR*/} 
-      {/*TABLAS FLOTANTE TALZINTAN LISTA DE UNIDADES PARA CAPTURAR*/} 
-      {/*TABLAS FLOTANTE TALZINTAN LISTA DE UNIDADES PARA CAPTURAR*/} 
-      {/*TABLAS FLOTANTE TALZINTAN LISTA DE UNIDADES PARA CAPTURAR*/} 
-      {/*TABLAS FLOTANTE TALZINTAN LISTA DE UNIDADES PARA CAPTURAR*/} 
+      {/*TABLAS FLOTANTE TALZINTAN LISTA DE UNIDADES PARA CAPTURAR*/}
+      {/*TABLAS FLOTANTE TALZINTAN LISTA DE UNIDADES PARA CAPTURAR*/}
+      {/*TABLAS FLOTANTE TALZINTAN LISTA DE UNIDADES PARA CAPTURAR*/}
+      {/*TABLAS FLOTANTE TALZINTAN LISTA DE UNIDADES PARA CAPTURAR*/}
+      {/*TABLAS FLOTANTE TALZINTAN LISTA DE UNIDADES PARA CAPTURAR*/}
       <div>
         {mostrarListaTalzintan && (
           <div className="floating-list-talzintan">
@@ -5030,7 +5214,7 @@ useEffect(() => {
                   const leftItem = numerosTalzintan[index]; // Primera mitad
                   const rightItem =
                     numerosTalzintan[
-                    index + Math.ceil(numerosTalzintan.length / 2)
+                      index + Math.ceil(numerosTalzintan.length / 2)
                     ]; // Segunda mitad
 
                   return (
@@ -5041,8 +5225,9 @@ useEffect(() => {
                           <td className="celda-lista">{index + 1}</td>
                           <td className="celda-lista">
                             <button
-                              className={`unidad-button ${leftItem.tipo === "rojo" ? "rojo" : ""
-                                }`}
+                              className={`unidad-button ${
+                                leftItem.tipo === "rojo" ? "rojo" : ""
+                              }`}
                             >
                               {leftItem.numeroUnidad}
                             </button>
@@ -5067,8 +5252,9 @@ useEffect(() => {
                           </td>
                           <td className="celda-lista">
                             <button
-                              className={`unidad-button ${rightItem.tipo === "rojo" ? "rojo" : ""
-                                }`}
+                              className={`unidad-button ${
+                                rightItem.tipo === "rojo" ? "rojo" : ""
+                              }`}
                             >
                               {rightItem.numeroUnidad}
                             </button>
@@ -5099,7 +5285,7 @@ useEffect(() => {
         )}
       </div>
 
-      {/*TABLAS FLOTANTE LOMA LISTA DE UNIDADES PARA CAPTURAR*/} 
+      {/*TABLAS FLOTANTE LOMA LISTA DE UNIDADES PARA CAPTURAR*/}
       <div>
         {mostrarListaLoma && (
           <div className="floating-list-loma">
@@ -5126,7 +5312,7 @@ useEffect(() => {
                 {[...numerosLoma]
                   .sort(
                     (a, b) =>
-                      new Date(b.horaRegistro) - new Date(a.horaRegistro)
+                      new Date(b.horaRegistro) - new Date(a.horaRegistro),
                   )
                   .slice(0, 10)
                   .map((item, index) => (
@@ -5137,8 +5323,9 @@ useEffect(() => {
 
                       <td className="celda-loma">
                         <button
-                          className={`unidad-button ${item.tipo === "rojo" ? "rojo" : ""
-                            }`}
+                          className={`unidad-button ${
+                            item.tipo === "rojo" ? "rojo" : ""
+                          }`}
                         >
                           {item.numeroUnidad}
                         </button>
@@ -5161,7 +5348,7 @@ useEffect(() => {
         )}
       </div>
 
-      {/*TABLAS FLOTANTE TEZOTEPEC LISTA DE UNIDADES PARA CAPTURAR*/} 
+      {/*TABLAS FLOTANTE TEZOTEPEC LISTA DE UNIDADES PARA CAPTURAR*/}
       <div>
         {mostrarListaTezotepec && (
           <div className="floating-list-tezotepec">
@@ -5192,7 +5379,7 @@ useEffect(() => {
                   const leftItem = numerosTezotepec[index]; // Primera mitad
                   const rightItem =
                     numerosTezotepec[
-                    index + Math.ceil(numerosTezotepec.length / 2)
+                      index + Math.ceil(numerosTezotepec.length / 2)
                     ]; // Segunda mitad
 
                   return (
@@ -5203,8 +5390,9 @@ useEffect(() => {
                           <td className="celda-tezotepec">{index + 1}</td>
                           <td className="celda-tezotepec">
                             <button
-                              className={`unidad-button ${leftItem.tipo === "rojo" ? "rojo" : ""
-                                }`}
+                              className={`unidad-button ${
+                                leftItem.tipo === "rojo" ? "rojo" : ""
+                              }`}
                             >
                               {leftItem.numeroUnidad}
                             </button>
@@ -5229,8 +5417,9 @@ useEffect(() => {
                           </td>
                           <td className="celda-tezotepec">
                             <button
-                              className={`unidad-button ${rightItem.tipo === "rojo" ? "rojo" : ""
-                                }`}
+                              className={`unidad-button ${
+                                rightItem.tipo === "rojo" ? "rojo" : ""
+                              }`}
                             >
                               {rightItem.numeroUnidad}
                             </button>
@@ -5261,7 +5450,7 @@ useEffect(() => {
         )}
       </div>
 
-      {/*TABLAS FLOTANTE TEZOTEPEC PARA PREDICCION LISTA DE UNIDADES PARA CAPTURAR*/} 
+      {/*TABLAS FLOTANTE TEZOTEPEC PARA PREDICCION LISTA DE UNIDADES PARA CAPTURAR*/}
       <div>
         {mostrarListaTezotepecBlancas && (
           <div className="floating-list-tezotepec-blancas">
@@ -5327,12 +5516,12 @@ useEffect(() => {
                         </td>
                         <td className="celda-tezotepec-prediccion-tezo">
                           {formatHoraRegistro(
-                            add75Minutes(unidad.horaRegistro)
+                            add75Minutes(unidad.horaRegistro),
                           )}
                         </td>
                         <td className="celda-tezotepec-prediccion-tenex">
                           {formatHoraRegistro(
-                            add75Minutes(unidad.horaRegistro)
+                            add75Minutes(unidad.horaRegistro),
                           )}
                         </td>
                       </tr>
@@ -5350,7 +5539,7 @@ useEffect(() => {
         )}
       </div>
 
-      {/*TABLAS FLOTANTE CALICAPAN LISTA DE UNIDADES PARA CAPTURAR*/} 
+      {/*TABLAS FLOTANTE CALICAPAN LISTA DE UNIDADES PARA CAPTURAR*/}
       <div>
         {mostrarListaCalicapan && (
           <div className="floating-list-calicapan">
@@ -5383,7 +5572,7 @@ useEffect(() => {
                   const leftItem = numerosCalicapan[index]; // Primera mitad
                   const rightItem =
                     numerosCalicapan[
-                    index + Math.ceil(numerosCalicapan.length / 2)
+                      index + Math.ceil(numerosCalicapan.length / 2)
                     ]; // Segunda mitad
 
                   return (
@@ -5394,8 +5583,9 @@ useEffect(() => {
                           <td className="celda-calicapan">{index + 1}</td>
                           <td className="celda-calicapan">
                             <button
-                              className={`unidad-button ${leftItem.tipo === "rojo" ? "rojo" : ""
-                                }`}
+                              className={`unidad-button ${
+                                leftItem.tipo === "rojo" ? "rojo" : ""
+                              }`}
                             >
                               {leftItem.numeroUnidad}
                             </button>
@@ -5420,8 +5610,9 @@ useEffect(() => {
                           </td>
                           <td className="celda-calicapan">
                             <button
-                              className={`unidad-button ${rightItem.tipo === "rojo" ? "rojo" : ""
-                                }`}
+                              className={`unidad-button ${
+                                rightItem.tipo === "rojo" ? "rojo" : ""
+                              }`}
                             >
                               {rightItem.numeroUnidad}
                             </button>
@@ -5452,7 +5643,7 @@ useEffect(() => {
         )}
       </div>
 
-{/*TABLAS FLOTANTE SOSA LISTA DE UNIDADES PARA CAPTURAR*/} 
+      {/*TABLAS FLOTANTE SOSA LISTA DE UNIDADES PARA CAPTURAR*/}
       <div>
         {mostrarListaSosa && (
           <div className="floating-list-sosa">
@@ -5491,8 +5682,9 @@ useEffect(() => {
                             <td className="celda-sosa">{index + 1}</td>
                             <td className="celda-sosa">
                               <button
-                                className={`unidad-button ${leftItem.tipo === "rojo" ? "rojo" : ""
-                                  }`}
+                                className={`unidad-button ${
+                                  leftItem.tipo === "rojo" ? "rojo" : ""
+                                }`}
                               >
                                 {leftItem.numeroUnidad}
                               </button>
@@ -5517,8 +5709,9 @@ useEffect(() => {
                             </td>
                             <td className="celda-sosa">
                               <button
-                                className={`unidad-button ${rightItem.tipo === "rojo" ? "rojo" : ""
-                                  }`}
+                                className={`unidad-button ${
+                                  rightItem.tipo === "rojo" ? "rojo" : ""
+                                }`}
                               >
                                 {rightItem.numeroUnidad}
                               </button>
@@ -5536,7 +5729,7 @@ useEffect(() => {
                         )}
                       </tr>
                     );
-                  }
+                  },
                 )}
               </tbody>
             </table>
@@ -5550,7 +5743,7 @@ useEffect(() => {
         )}
       </div>
 
-      {/*TABLAS FLOTANTE SOSA PARA PREDICCION LISTA DE UNIDADES PARA CAPTURAR*/} 
+      {/*TABLAS FLOTANTE SOSA PARA PREDICCION LISTA DE UNIDADES PARA CAPTURAR*/}
       <div>
         {mostrarListaSosaBlancas && (
           <div className="floating-list-sosa-blancas">
@@ -5602,7 +5795,7 @@ useEffect(() => {
                         </td>
                         <td className="celda-sanisidro-prediccion">
                           {formatHoraRegistro(
-                            add80Minutes(unidad.horaRegistro)
+                            add80Minutes(unidad.horaRegistro),
                           )}
                         </td>
                       </tr>
@@ -5620,7 +5813,7 @@ useEffect(() => {
         )}
       </div>
 
-      {/*TABLAS FLOTANTE SAN ISIDRO LISTA DE UNIDADES PARA CAPTURAR*/} 
+      {/*TABLAS FLOTANTE SAN ISIDRO LISTA DE UNIDADES PARA CAPTURAR*/}
       <div>
         {mostrarListaSanisidro && (
           <div className="floating-list-sanisidro">
@@ -5651,7 +5844,7 @@ useEffect(() => {
                   const leftItem = numerosSanisidro[index]; // Primera mitad
                   const rightItem =
                     numerosSanisidro[
-                    index + Math.ceil(numerosSanisidro.length / 2)
+                      index + Math.ceil(numerosSanisidro.length / 2)
                     ]; // Segunda mitad
 
                   return (
@@ -5662,8 +5855,9 @@ useEffect(() => {
                           <td className="celda-sanisidro">{index + 1}</td>
                           <td className="celda-sanisidro">
                             <button
-                              className={`unidad-button ${leftItem.tipo === "rojo" ? "rojo" : ""
-                                }`}
+                              className={`unidad-button ${
+                                leftItem.tipo === "rojo" ? "rojo" : ""
+                              }`}
                             >
                               {leftItem.numeroUnidad}
                             </button>
@@ -5688,8 +5882,9 @@ useEffect(() => {
                           </td>
                           <td className="celda-sanisidro">
                             <button
-                              className={`unidad-button ${rightItem.tipo === "rojo" ? "rojo" : ""
-                                }`}
+                              className={`unidad-button ${
+                                rightItem.tipo === "rojo" ? "rojo" : ""
+                              }`}
                             >
                               {rightItem.numeroUnidad}
                             </button>
@@ -5720,7 +5915,7 @@ useEffect(() => {
         )}
       </div>
 
-{/*TABLAS FLOTANTE SAN ISIDRO PARA PREDICCION LISTA DE UNIDADES PARA CAPTURAR*/} 
+      {/*TABLAS FLOTANTE SAN ISIDRO PARA PREDICCION LISTA DE UNIDADES PARA CAPTURAR*/}
       <div>
         {mostrarListaSanisidroBlancas && (
           <div className="floating-list-sanisidro-blancas">
@@ -5777,7 +5972,7 @@ useEffect(() => {
                         </td>
                         <td className="celda-sosa-prediccion">
                           {formatHoraRegistro(
-                            add65Minutes(unidad.horaRegistro)
+                            add65Minutes(unidad.horaRegistro),
                           )}
                         </td>
                       </tr>
@@ -5795,7 +5990,7 @@ useEffect(() => {
         )}
       </div>
 
-      {/*TABLAS FLOTANTE TACOPAN LISTA DE UNIDADES PARA CAPTURAR*/} 
+      {/*TABLAS FLOTANTE TACOPAN LISTA DE UNIDADES PARA CAPTURAR*/}
       <div>
         {mostrarListaTacopan && (
           <div className="floating-list-tacopan">
@@ -5825,8 +6020,9 @@ useEffect(() => {
                       <td className="celda-tacopan">{index + 1}</td>
                       <td className="celda-tacopan">
                         <button
-                          className={`unidad-button ${unidad.tipo === "rojo" ? "rojo" : ""
-                            }`}
+                          className={`unidad-button ${
+                            unidad.tipo === "rojo" ? "rojo" : ""
+                          }`}
                         >
                           {unidad.numeroUnidad}
                         </button>
@@ -5848,7 +6044,7 @@ useEffect(() => {
         )}
       </div>
 
-{/*TABLAS FLOTANTE TEQUIMILA LISTA DE UNIDADES PARA CAPTURAR*/} 
+      {/*TABLAS FLOTANTE TEQUIMILA LISTA DE UNIDADES PARA CAPTURAR*/}
       <div>
         {mostrarListaTequimila && (
           <div className="floating-list-tequimila">
@@ -5888,8 +6084,9 @@ useEffect(() => {
                         <td className="celda-tequimila">{index + 1}</td>
                         <td className="celda-tequimila">
                           <button
-                            className={`unidad-button ${unidad.tipo === "rojo" ? "rojo" : ""
-                              }`}
+                            className={`unidad-button ${
+                              unidad.tipo === "rojo" ? "rojo" : ""
+                            }`}
                           >
                             {unidad.numeroUnidad}
                           </button>
@@ -5902,7 +6099,7 @@ useEffect(() => {
                           style={{ backgroundColor }}
                         >
                           {formatHoraRegistro(
-                            add46Minutes(unidad.horaRegistro)
+                            add46Minutes(unidad.horaRegistro),
                           )}
                         </td>
                       </tr>
@@ -5920,7 +6117,7 @@ useEffect(() => {
         )}
       </div>
 
-      {/*TABLAS FLOTANTE QUINTA LISTA DE UNIDADES PARA CAPTURAR*/} 
+      {/*TABLAS FLOTANTE QUINTA LISTA DE UNIDADES PARA CAPTURAR*/}
       <div>
         {mostrarListaQuinta && (
           <div className="floating-list-quinta">
@@ -5951,8 +6148,9 @@ useEffect(() => {
                         <td className="celda-quinta">{index + 1}</td>
                         <td className="celda-quinta">
                           <button
-                            className={`unidad-button ${unidad.tipo === "rojo" ? "rojo" : ""
-                              }`}
+                            className={`unidad-button ${
+                              unidad.tipo === "rojo" ? "rojo" : ""
+                            }`}
                           >
                             {unidad.numeroUnidad}
                           </button>
@@ -5962,7 +6160,7 @@ useEffect(() => {
                         </td>
                         <td className="celda-tequimila">
                           {formatHoraRegistro(
-                            add46Minutes(unidad.horaRegistro)
+                            add46Minutes(unidad.horaRegistro),
                           )}
                         </td>
                       </tr>
@@ -5980,7 +6178,7 @@ useEffect(() => {
         )}
       </div>
 
-      {/*TABLAS FLOTANTE CALANORTE LISTA DE UNIDADES PARA CAPTURAR*/} 
+      {/*TABLAS FLOTANTE CALANORTE LISTA DE UNIDADES PARA CAPTURAR*/}
       <div>
         {mostrarListaCalanorte && (
           <div className="floating-list-calanorte">
@@ -6005,8 +6203,9 @@ useEffect(() => {
                       <td className="celda-calanorte">{index + 1}</td>
                       <td className="celda-calanorte">
                         <button
-                          className={`unidad-button ${unidad.tipo === "rojo" ? "rojo" : ""
-                            }`}
+                          className={`unidad-button ${
+                            unidad.tipo === "rojo" ? "rojo" : ""
+                          }`}
                         >
                           {unidad.numeroUnidad}
                         </button>
@@ -6028,7 +6227,7 @@ useEffect(() => {
         )}
       </div>
 
-      {/*TABLAS FLOTANTE PAJACO LISTA DE UNIDADES PARA CAPTURAR*/} 
+      {/*TABLAS FLOTANTE PAJACO LISTA DE UNIDADES PARA CAPTURAR*/}
       <div>
         {mostrarListaPajaco && (
           <div className="floating-list-pajaco">
@@ -6059,8 +6258,9 @@ useEffect(() => {
                         <td className="celda-pajaco">{index + 1}</td>
                         <td className="celda-pajaco">
                           <button
-                            className={`unidad-button ${unidad.tipo === "rojo" ? "rojo" : ""
-                              }`}
+                            className={`unidad-button ${
+                              unidad.tipo === "rojo" ? "rojo" : ""
+                            }`}
                           >
                             {unidad.numeroUnidad}
                           </button>
@@ -6070,7 +6270,7 @@ useEffect(() => {
                         </td>
                         <td className="celda-calicapan">
                           {formatHoraRegistro(
-                            add70Minutes(unidad.horaRegistro)
+                            add70Minutes(unidad.horaRegistro),
                           )}
                         </td>
                       </tr>
@@ -6088,7 +6288,7 @@ useEffect(() => {
         )}
       </div>
 
-      {/*TABLAS FLOTANTE ANALCO LISTA DE UNIDADES PARA CAPTURAR*/} 
+      {/*TABLAS FLOTANTE ANALCO LISTA DE UNIDADES PARA CAPTURAR*/}
       <div>
         {mostrarListaAnalco && (
           <div className="floating-list-analco">
@@ -6119,8 +6319,9 @@ useEffect(() => {
                         <td className="celda-analco">{index + 1}</td>
                         <td className="celda-analco">
                           <button
-                            className={`unidad-button ${unidad.tipo === "rojo" ? "rojo" : ""
-                              }`}
+                            className={`unidad-button ${
+                              unidad.tipo === "rojo" ? "rojo" : ""
+                            }`}
                           >
                             {unidad.numeroUnidad}
                           </button>
@@ -6130,7 +6331,7 @@ useEffect(() => {
                         </td>
                         <td className="celda-calicapan">
                           {formatHoraRegistro(
-                            add50Minutes(unidad.horaRegistro)
+                            add50Minutes(unidad.horaRegistro),
                           )}
                         </td>
                       </tr>
@@ -6148,8 +6349,7 @@ useEffect(() => {
         )}
       </div>
 
-
-      {/*TABLAS FLOTANTE OTRA LISTA DE UNIDADES PARA CAPTURAR*/} 
+      {/*TABLAS FLOTANTE OTRA LISTA DE UNIDADES PARA CAPTURAR*/}
       <div>
         {mostrarListaOtra && (
           <div className="floating-list-otra">
@@ -6174,8 +6374,9 @@ useEffect(() => {
                       <td className="celda-otra">{index + 1}</td>
                       <td className="celda-otra">
                         <button
-                          className={`unidad-button ${unidad.tipo === "rojo" ? "rojo" : ""
-                            }`}
+                          className={`unidad-button ${
+                            unidad.tipo === "rojo" ? "rojo" : ""
+                          }`}
                         >
                           {unidad.numeroUnidad}
                         </button>
@@ -6219,8 +6420,9 @@ useEffect(() => {
                       <td className="celda-yaonahuac">{index + 1}</td>
                       <td className="celda-yaonahuac">
                         <button
-                          className={`unidad-button ${unidad.tipo === "verde" ? "verde" : ""
-                            }`}
+                          className={`unidad-button ${
+                            unidad.tipo === "verde" ? "verde" : ""
+                          }`}
                         >
                           {unidad.numeroUnidad}
                         </button>
@@ -6267,8 +6469,9 @@ useEffect(() => {
                       <td className="celda-hueyapan">{index + 1}</td>
                       <td className="celda-hueyapan">
                         <button
-                          className={`unidad-button ${unidad.tipo === "verde" ? "verde" : ""
-                            }`}
+                          className={`unidad-button ${
+                            unidad.tipo === "verde" ? "verde" : ""
+                          }`}
                         >
                           {unidad.numeroUnidad}
                         </button>
@@ -6289,7 +6492,6 @@ useEffect(() => {
           </div>
         )}
       </div>
-
 
       <Comision></Comision>
     </div>

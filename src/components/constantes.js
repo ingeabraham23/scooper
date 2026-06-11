@@ -577,4 +577,12 @@ export const buscarHueyapanParaPrediccion = async () => {
 };
 
 
+//FUNCIONES PARA PILAS - FUNCIONES PARA PILAS - FUNCIONES PARA PILAS - FUNCIONES PARA PILAS
+export const obtenerPilaRuta = async (ruta) => {
+  const resultado = await db.pilas
+    .where("ruta")
+    .equals(ruta)
+    .toArray();
 
+  return resultado.sort((a, b) => a.id - b.id);
+};

@@ -14,18 +14,19 @@ function Datos() {
   // Función para limpiar la tabla de unidades y reiniciar el contador de ID
   const handleClearRegistros = async () => {
     const confirmed = window.confirm(
-      "¿Estás seguro de que deseas limpiar la tabla de unidades? Esta acción no se puede deshacer."
+      "¿Estás seguro de que deseas limpiar la tabla de unidades? Esta acción no se puede deshacer.",
     );
     if (confirmed) {
       try {
         await Dexie.delete("UnidadesDB"); // Elimina la base de datos
         // Vuelve a inicializar la base de datos
         const newDb = new Dexie("UnidadesDB");
-        newDb.version(1).stores({
+        newDb.version(3).stores({
           unidades: "++id,ruta,tipo,numeroUnidad,horaRegistro",
+          pilas: "++id,numeroUnidad,ruta,tipo,horaRegistro",
         });
         toast.success(
-          "¡Tabla de registros limpiada y contador de ID reiniciado correctamente!"
+          "¡Tabla de registros limpiada y contador de ID reiniciado correctamente!",
         );
       } catch (error) {
         console.error("Error al limpiar la tabla de registros:", error);
